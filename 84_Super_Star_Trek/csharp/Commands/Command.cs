@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace SuperStarTrek.Commands;
 
-internal enum Command
+public enum Command
 {
     [Description("To set course")]
     NAV,

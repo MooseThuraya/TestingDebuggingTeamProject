@@ -38,8 +38,8 @@ public class Enterprise {
 
     public Enterprise() {
         // random initial position
-        this.setQuadrant(new int[]{ Util.fnr(), Util.fnr() });
-        this.setSector(new int[]{ Util.fnr(), Util.fnr() });
+        this.setQuadrant(new int[]{Util.fnr(), Util.fnr()});
+        this.setSector(new int[]{Util.fnr(), Util.fnr()});
         // init cardinal directions
         IntStream.range(1, 9).forEach(i -> {
             cardinalDirections[i][1] = 0;
@@ -68,6 +68,7 @@ public class Enterprise {
 
     /**
      * Enterprise is hit by enemies.
+     *
      * @param hits the number of hit points
      */
     public void sufferHitPoints(int hits) {
@@ -128,7 +129,7 @@ public class Enterprise {
     }
 
     public int[] getQuadrant() {
-        return new int[] {quadrantX, quadrantY};
+        return new int[]{quadrantX, quadrantY};
     }
 
     public void setQuadrant(final int[] quadrant) {
@@ -137,7 +138,7 @@ public class Enterprise {
     }
 
     public int[] getSector() {
-        return new int[] {sectorX, sectorY};
+        return new int[]{sectorX, sectorY};
     }
 
     public void setSector(final int[] sector) {

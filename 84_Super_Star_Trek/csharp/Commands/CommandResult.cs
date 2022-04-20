@@ -1,6 +1,6 @@
 namespace SuperStarTrek.Commands;
 
-internal class CommandResult
+public class CommandResult
 {
     public static readonly CommandResult Ok = new(false);
     public static readonly CommandResult GameOver = new(true);
