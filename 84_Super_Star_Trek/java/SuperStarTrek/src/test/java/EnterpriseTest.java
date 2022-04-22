@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -5,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
  * Version: 1.0
- * Date: 4/20/2022 12:28
+ * Date: 4/20/2022 12:285
  */
 
 class EnterpriseTest {
@@ -25,17 +26,54 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
-    void getEnergy() {
+    public void getEnergy_must_return_current_energy() {
+        //ARRANGE
+        Enterprise enterprise = new Enterprise();
+        int energy;
+
+        //ACT
+        //change energy = 2000
+        enterprise.energy = 2000;
+        energy = enterprise.energy;
+
+        //ASSERT
+        Assertions.assertEquals(energy, enterprise.getEnergy());
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
-    void replenishSupplies() {
+    void replenishSupplies_must_return_energy_and_torpedoes_equalTo_initialEnergy_and_initialTorpedoes() {
+        //ARRANGE
+        Enterprise enterprise = new Enterprise();
+        int energy;
+        int torpedoes;
+
+        //initial energy = 3000
+        energy = enterprise.energy;
+        //initial torpedoes = 10
+        torpedoes = enterprise.torpedoes;
+
+
+        //ACT
+        // energy left = 3000-50 = 2950
+        enterprise.decreaseEnergy(50.0);
+
+        // torpedoes left = 10-3 = 7
+        enterprise.decreaseTorpedoes(3);
+
+        //replenishSupplies:
+        //energy left = 3000
+        //torpedoes left = 10
+        enterprise.replenishSupplies();
+
+        //ASSERT
+        Assertions.assertEquals(energy, enterprise.energy);
+        Assertions.assertEquals(torpedoes, enterprise.torpedoes);
     }
 
     /**
@@ -74,10 +112,20 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
-    void getTorpedoes() {
+    void getTorpedoes_must_return_current_torpedoes() {
+        //ARRANGE
+        Enterprise enterprise = new Enterprise();
+        int torpedoes;
+
+        //ACT
+        enterprise.torpedoes = 7;
+        torpedoes = enterprise.torpedoes;
+
+        //ASSERT
+        Assertions.assertEquals(torpedoes, enterprise.getTorpedoes());
     }
 
     /**
