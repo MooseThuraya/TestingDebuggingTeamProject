@@ -257,6 +257,9 @@ public class Enterprise {
         if (shields <= 0) shields = 0;
     }
 
+    /**
+     * TODO: refactor method to allow for increase of same number
+     */
     void shieldControl() {
         if (deviceStatus[DEVICE_SHIELD_CONTROL] < 0) {
             util.println("SHIELD CONTROL INOPERABLE");
@@ -270,7 +273,7 @@ public class Enterprise {
             util.println("<SHIELDS UNCHANGED>");
             return;
         }
-        if (energyToShields > energy + energyToShields) {
+        if (energyToShields > energy) {
             util.println("SHIELD CONTROL REPORTS  'THIS IS NOT THE FEDERATION TREASURY.'");
             util.println("<SHIELDS UNCHANGED>");
             return;

@@ -44,12 +44,12 @@ public class SuperStarTrekGame implements GameCallback {
     // game state
     final GalaxyMap galaxyMap;
 
-    double stardate = util.toInt(util.random() * 20 + 20);
+    double stardate;
     int missionDuration;    // T9 (mission duration in stardates)
     boolean restart = false;
 
     // initial values
-    final double initialStardate = stardate;
+    final double initialStardate;
 
     public static void main(String[] args) {
         Util util = new Util();
@@ -68,6 +68,8 @@ public class SuperStarTrekGame implements GameCallback {
         this.util = util;
         this.galaxyMap = new GalaxyMap(util);
         this.missionDuration = Math.max((25 + util.toInt(util.random() * 10)), galaxyMap.getKlingonsInGalaxy() + 1);
+        this.stardate = util.toInt(util.random() * 20 + 20);
+        this.initialStardate = stardate;
     }
 
     static void printBanner(Util util) {

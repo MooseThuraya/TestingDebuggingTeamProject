@@ -18,7 +18,7 @@ public class GalaxyMap {
 
     // galaxy map
     public static final String QUADRANT_ROW = "                         ";
-    String quadrantMap = QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + util.leftStr(QUADRANT_ROW, 17);       // current quadrant map
+    String quadrantMap;       // current quadrant map
     final int[][] galaxy = new int[9][9];    // 8x8 galaxy map G
     final int[][] klingonQuadrants = new int[4][4];    // 3x3 position of klingons K
     final int[][] chartedGalaxy = new int[9][9];    // 8x8 charted galaxy map Z
@@ -53,15 +53,27 @@ public class GalaxyMap {
     }
 
     double fnd(int i) {
-        return Math.sqrt((klingonQuadrants[i][1] - enterprise.getSector()[Enterprise.COORD_X]) ^ 2 + (klingonQuadrants[i][2] - enterprise.getSector()[Enterprise.COORD_Y]) ^ 2);
+        return Math.sqrt((klingonQuadrants[i][1] -
+                            enterprise.getSector()[Enterprise.COORD_X]) ^ 2 +
+                        (klingonQuadrants[i][2] -
+                            enterprise.getSector()[Enterprise.COORD_Y]) ^ 2);
     }
 
     public GalaxyMap(Util util) {
         this.util = util;
-        this.enterprise  = new Enterprise(util);
+        this.enterprise = new Enterprise(util);
+        this.quadrantMap = QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           QUADRANT_ROW +
+                           util.leftStr(QUADRANT_ROW, 17);
 
         int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
         int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
+
         // populate Klingons, Starbases, Stars
         IntStream.range(1, 8).forEach(x -> {
             IntStream.range(1, 8).forEach(y -> {
@@ -93,7 +105,7 @@ public class GalaxyMap {
             }
             basesInGalaxy = 1;
             galaxy[quadrantX][quadrantY] = +10;
-            enterprise.setQuadrant(new int[]{ util.fnr(), util.fnr() });
+            enterprise.setQuadrant(new int[]{util.fnr(), util.fnr()});
         }
         remainingKlingons = klingonsInGalaxy;
     }
@@ -187,7 +199,7 @@ public class GalaxyMap {
             if (hits < 20) continue;
             if ((util.random() > .6) || (hits / enterprise.getShields() <= .02)) continue;
             int randomDevice = util.fnr();
-            enterprise.setDeviceStatus(randomDevice, enterprise.getDeviceStatus()[randomDevice]- hits / enterprise.getShields() - .5 * util.random());
+            enterprise.setDeviceStatus(randomDevice, enterprise.getDeviceStatus()[randomDevice] - hits / enterprise.getShields() - .5 * util.random());
             util.println("DAMAGE CONTROL REPORTS " + Enterprise.printDeviceName(randomDevice) + " DAMAGED BY THE HIT'");
         }
     }
@@ -331,7 +343,8 @@ public class GalaxyMap {
             if (enterprise.getEnergy() - nrUnitsToFire >= 0) break;
         }
         enterprise.decreaseEnergy(nrUnitsToFire);
-        if (deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0) nrUnitsToFire = util.toInt(nrUnitsToFire * util.random());
+        if (deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0)
+            nrUnitsToFire = util.toInt(nrUnitsToFire * util.random());
         int h1 = util.toInt(nrUnitsToFire / klingons);
         for (int i = 1; i <= 3; i++) {
             if (klingonQuadrants[i][3] <= 0) break;
@@ -392,7 +405,7 @@ public class GalaxyMap {
                 return;
             }
             util.println("               " + x3 + "," + y3);
-            if (compareMarker(quadrantMap, MARKER_EMPTY, util.toInt(x), util.toInt(y)))  {
+            if (compareMarker(quadrantMap, MARKER_EMPTY, util.toInt(x), util.toInt(y))) {
                 continue;
             } else if (compareMarker(quadrantMap, MARKER_KLINGON, util.toInt(x), util.toInt(y))) {
                 util.println("*** KLINGON DESTROYED ***");
@@ -479,7 +492,7 @@ public class GalaxyMap {
             printNoEnemyShipsMessage();
             return;
         }
-        util.println("FROM ENTERPRISE TO KLINGON BATTLE CRUISER" + ((klingons > 1)? "S" : ""));
+        util.println("FROM ENTERPRISE TO KLINGON BATTLE CRUISER" + ((klingons > 1) ? "S" : ""));
         for (int i = 1; i <= 3; i++) {
             if (klingonQuadrants[i][3] > 0) {
                 printDirection(sectorX, sectorY, klingonQuadrants[i][1], klingonQuadrants[i][2]);
