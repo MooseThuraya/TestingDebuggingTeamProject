@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
  * The starship Enterprise.
  */
 public class Enterprise {
-    public Util util = new Util();
+    public Util util;
     public static final int COORD_X = 0;
     public static final int COORD_Y = 1;
 
@@ -36,7 +36,9 @@ public class Enterprise {
     final int initialEnergy = energy;
     final int initialTorpedoes = torpedoes;
 
-    public Enterprise() {
+    public Enterprise(Util util) {
+        this.util = util;
+
         // random initial position
         this.setQuadrant(new int[]{util.fnr(), util.fnr()});
         this.setSector(new int[]{util.fnr(), util.fnr()});

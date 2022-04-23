@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
  */
 public class SuperStarTrekGame implements GameCallback {
 
-    Util util = new Util();
+    public Util util;
 
     // commands
     static final int COMMAND_NAV = 1;
@@ -42,9 +42,10 @@ public class SuperStarTrekGame implements GameCallback {
     static final String COMMANDS = "NAVSRSLRSPHATORSHEDAMCOMXXX";
 
     // game state
-    final GalaxyMap galaxyMap = new GalaxyMap();
+    final GalaxyMap galaxyMap;
+
     double stardate = util.toInt(util.random() * 20 + 20);
-    int missionDuration = Math.max((25 + util.toInt(util.random() * 10)), galaxyMap.getKlingonsInGalaxy() + 1);    // T9 (mission duration in stardates)
+    int missionDuration;    // T9 (mission duration in stardates)
     boolean restart = false;
 
     // initial values
@@ -53,7 +54,7 @@ public class SuperStarTrekGame implements GameCallback {
     public static void main(String[] args) {
         Util util = new Util();
 
-        final SuperStarTrekGame game = new SuperStarTrekGame();
+        final SuperStarTrekGame game = new SuperStarTrekGame(util);
         printBanner(util);
         while (true) {
             game.orders();
@@ -61,6 +62,12 @@ public class SuperStarTrekGame implements GameCallback {
             game.restart = false;
             game.commandLoop();
         }
+    }
+
+    public SuperStarTrekGame(Util util) {
+        this.util = util;
+        this.galaxyMap = new GalaxyMap(util);
+        this.missionDuration = Math.max((25 + util.toInt(util.random() * 10)), galaxyMap.getKlingonsInGalaxy() + 1);
     }
 
     static void printBanner(Util util) {

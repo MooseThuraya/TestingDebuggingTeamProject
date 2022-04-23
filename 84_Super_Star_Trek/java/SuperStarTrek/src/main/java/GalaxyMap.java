@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
  */
 public class GalaxyMap {
 
-    Util util = new Util();
+    Util util;
     // markers
     static final String MARKER_EMPTY = "   ";
     static final String MARKER_ENTERPRISE = "<*>";
@@ -27,7 +27,7 @@ public class GalaxyMap {
     int basesInGalaxy = 0;
     int remainingKlingons;
     int klingonsInGalaxy = 0;
-    final Enterprise enterprise = new Enterprise();
+    final Enterprise enterprise;
 
     // quadrant state
     int klingons = 0;
@@ -56,7 +56,10 @@ public class GalaxyMap {
         return Math.sqrt((klingonQuadrants[i][1] - enterprise.getSector()[Enterprise.COORD_X]) ^ 2 + (klingonQuadrants[i][2] - enterprise.getSector()[Enterprise.COORD_Y]) ^ 2);
     }
 
-    public GalaxyMap() {
+    public GalaxyMap(Util util) {
+        this.util = util;
+        this.enterprise  = new Enterprise(util);
+
         int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
         int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
         // populate Klingons, Starbases, Stars
