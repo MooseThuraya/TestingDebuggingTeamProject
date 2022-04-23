@@ -6,6 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
  * Version: 1.0
  * Date: 4/20/2022 12:29
+ *
+ *  **********************************************************************
+ *  **********************************************************************
+ *  **********************************************************************
+ *  ************************** READ ME! **********************************
+ *  THE TESTS BELOW ARE PLACEHOLDER AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
+ *  YOUR TESTS AND DETERMINING WHAT TO TEST. PLEASE BE SURE TO CLAIM YOUR SECTION
+ *  OF CODE YOU'RE TESTING AND PUSH YOUR CHANGES IMMEDIATELY AND NOTIFY THE TEAM
+ *  **********************************************************************
+ *  **********************************************************************
+ *  **********************************************************************
  */
 
 class SuperStarTrekGameTest {
@@ -15,6 +26,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void main() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -22,6 +38,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void printBanner() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -29,6 +50,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void orders() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -36,6 +62,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void enterNewQuadrant() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -43,6 +74,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void commandLoop() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -50,6 +86,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void checkShipEnergy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -57,6 +98,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void printCommandOptions() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -64,6 +110,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void navigation() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -71,6 +122,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void repairDamagedDevices() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -78,6 +134,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void longRangeSensorScan() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -85,6 +146,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void firePhasers() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -92,6 +158,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void firePhotonTorpedo() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -99,6 +170,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void shieldControl() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -106,6 +182,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void shortRangeSensorScan() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -113,6 +194,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void libraryComputer() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -120,6 +206,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void statusReport() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -127,6 +218,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void incrementStardate() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -134,6 +230,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void endGameFail() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -141,6 +242,11 @@ class SuperStarTrekGameTest {
      */
     @Test
     void endGameSuccess() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -148,5 +254,10 @@ class SuperStarTrekGameTest {
      */
     @Test
     void repeatGame() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 }

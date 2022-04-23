@@ -6,6 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
  * Version: 1.0
  * Date: 4/20/2022 12:28
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
+ * ****************************** READ ME! ******************************
+ * THE TESTS BELOW ARE PLACEHOLDER AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
+ * YOUR TESTS AND DETERMINING WHAT TO TEST. PLEASE BE SURE TO CLAIM YOUR SECTION
+ * OF CODE YOU'RE TESTING AND PUSH YOUR CHANGES IMMEDIATELY AND NOTIFY THE TEAM
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
  */
 
 class GalaxyMapTest {
@@ -15,6 +25,11 @@ class GalaxyMapTest {
      */
     @Test
     void getEnterprise() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -22,6 +37,11 @@ class GalaxyMapTest {
      */
     @Test
     void getBasesInGalaxy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -29,6 +49,11 @@ class GalaxyMapTest {
      */
     @Test
     void getRemainingKlingons() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -36,6 +61,11 @@ class GalaxyMapTest {
      */
     @Test
     void getKlingonsInGalaxy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -43,6 +73,11 @@ class GalaxyMapTest {
      */
     @Test
     void fnd() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -50,6 +85,11 @@ class GalaxyMapTest {
      */
     @Test
     void newQuadrant() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -57,6 +97,11 @@ class GalaxyMapTest {
      */
     @Test
     void klingonsMoveAndFire() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -64,6 +109,11 @@ class GalaxyMapTest {
      */
     @Test
     void klingonsShoot() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -71,6 +121,11 @@ class GalaxyMapTest {
      */
     @Test
     void moveEnterprise() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -78,6 +133,11 @@ class GalaxyMapTest {
      */
     @Test
     void shortRangeSensorScan() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -85,6 +145,11 @@ class GalaxyMapTest {
      */
     @Test
     void longRangeSensorScan() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -92,6 +157,11 @@ class GalaxyMapTest {
      */
     @Test
     void firePhasers() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -99,6 +169,11 @@ class GalaxyMapTest {
      */
     @Test
     void firePhotonTorpedo() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -106,6 +181,11 @@ class GalaxyMapTest {
      */
     @Test
     void cumulativeGalacticRecord() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -113,6 +193,11 @@ class GalaxyMapTest {
      */
     @Test
     void photonTorpedoData() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -120,6 +205,11 @@ class GalaxyMapTest {
      */
     @Test
     void directionDistanceCalculator() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -127,6 +217,11 @@ class GalaxyMapTest {
      */
     @Test
     void printDirection() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -134,6 +229,11 @@ class GalaxyMapTest {
      */
     @Test
     void starbaseNavData() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -141,6 +241,11 @@ class GalaxyMapTest {
      */
     @Test
     void printNoEnemyShipsMessage() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -148,6 +253,11 @@ class GalaxyMapTest {
      */
     @Test
     void getRegionName() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -155,6 +265,11 @@ class GalaxyMapTest {
      */
     @Test
     void getQuadrantName() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -162,6 +277,11 @@ class GalaxyMapTest {
      */
     @Test
     void insertMarker() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -169,6 +289,11 @@ class GalaxyMapTest {
      */
     @Test
     void findEmptyPlaceInQuadrant() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -176,5 +301,10 @@ class GalaxyMapTest {
      */
     @Test
     void compareMarker() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 }

@@ -7,6 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
  * Version: 1.0
  * Date: 4/20/2022 12:285
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
+ * ********************  READ ME!   **************************************
+ * THE TESTS BELOW ARE PLACEHOLDER AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
+ * YOUR TESTS AND DETERMINING WHAT TO TEST. PLEASE BE SURE TO CLAIM YOUR SECTION
+ * OF CODE YOU'RE TESTING AND PUSH YOUR CHANGES IMMEDIATELY AND NOTIFY THE TEAM
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
  */
 
 class EnterpriseTest {
@@ -16,13 +26,48 @@ class EnterpriseTest {
      */
     @Test
     void getShields() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+
     }
 
     /**
      * OWNER: ALICIA
      */
     @Test
+    void dropShields() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void shieldControl() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
     void sufferHitPoints() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -81,6 +126,11 @@ class EnterpriseTest {
      */
     @Test
     void decreaseEnergy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -88,20 +138,25 @@ class EnterpriseTest {
      */
     @Test
     void decreaseTorpedoes() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
-    /**
-     * OWNER:
-     */
-    @Test
-    void dropShields() {
-    }
+
 
     /**
      * OWNER:
      */
     @Test
     void getTotalEnergy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -109,6 +164,11 @@ class EnterpriseTest {
      */
     @Test
     void getInitialEnergy() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -133,6 +193,11 @@ class EnterpriseTest {
      */
     @Test
     void getDeviceStatus() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -140,6 +205,11 @@ class EnterpriseTest {
      */
     @Test
     void getCardinalDirections() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -147,6 +217,11 @@ class EnterpriseTest {
      */
     @Test
     void setDeviceStatus() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -154,6 +229,11 @@ class EnterpriseTest {
      */
     @Test
     void isDocked() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -161,6 +241,11 @@ class EnterpriseTest {
      */
     @Test
     void setDocked() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -168,6 +253,11 @@ class EnterpriseTest {
      */
     @Test
     void getQuadrant() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -175,6 +265,11 @@ class EnterpriseTest {
      */
     @Test
     void setQuadrant() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -182,6 +277,11 @@ class EnterpriseTest {
      */
     @Test
     void getSector() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -189,6 +289,11 @@ class EnterpriseTest {
      */
     @Test
     void setSector() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -196,6 +301,11 @@ class EnterpriseTest {
      */
     @Test
     void moveShip() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -203,6 +313,11 @@ class EnterpriseTest {
      */
     @Test
     void randomRepairCost() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -210,6 +325,11 @@ class EnterpriseTest {
      */
     @Test
     void repairDamagedDevices() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -217,13 +337,11 @@ class EnterpriseTest {
      */
     @Test
     void maneuverEnergySR() {
-    }
+        // ARRANGE
 
-    /**
-     * OWNER:
-     */
-    @Test
-    void shieldControl() {
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -231,6 +349,11 @@ class EnterpriseTest {
      */
     @Test
     void damageControl() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -238,5 +361,10 @@ class EnterpriseTest {
      */
     @Test
     void printDeviceName() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 }

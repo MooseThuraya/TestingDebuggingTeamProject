@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.stream.IntStream;
 
 /**
@@ -10,7 +11,7 @@ import java.util.stream.IntStream;
  * **** MODIFICATIONS TO THE LATTER (PLUS DEBUGGING) BY BOB
  * *** LEEDOM - APRIL & DECEMBER 1974,
  * *** WITH A LITTLE HELP FROM HIS FRIENDS . . .
- *
+ * <p>
  * Ported to Java in Jan-Mar 2022 by
  * Taciano Dreckmann Perez (taciano.perez@gmail.com)
  */
@@ -41,7 +42,7 @@ public class SuperStarTrekGame implements GameCallback {
     // game state
     final GalaxyMap galaxyMap = new GalaxyMap();
     double stardate = Util.toInt(Util.random() * 20 + 20);
-    int missionDuration = Math.max((25 + Util.toInt(Util.random() * 10)), galaxyMap.getKlingonsInGalaxy()+1);    // T9 (mission duration in stardates)
+    int missionDuration = Math.max((25 + Util.toInt(Util.random() * 10)), galaxyMap.getKlingonsInGalaxy() + 1);    // T9 (mission duration in stardates)
     boolean restart = false;
 
     // initial values
@@ -63,14 +64,14 @@ public class SuperStarTrekGame implements GameCallback {
             Util.println("");
         });
         Util.println(
-            "                ,------*------,\n" +
-            "-------------   '---  ------'\n" +
-            " '-------- --'      / /\n" +
-            "     ,---' '-------/ /--,\n" +
-            "     '----------------'\n" +
-            "\n" +
-            "THE USS ENTERPRISE --- NCC-1701\n" +
-            "\n"
+                "                ,------*------,\n" +
+                        "-------------   '---  ------'\n" +
+                        " '-------- --'      / /\n" +
+                        "     ,---' '-------/ /--,\n" +
+                        "     '----------------'\n" +
+                        "\n" +
+                        "THE USS ENTERPRISE --- NCC-1701\n" +
+                        "\n"
         );
     }
 
@@ -94,47 +95,48 @@ public class SuperStarTrekGame implements GameCallback {
             while ("".equals(cmdStr)) cmdStr = Util.inputStr("COMMAND");
             boolean foundCommand = false;
             for (int i = 1; i <= 9; i++) {
-                if (Util.leftStr(cmdStr, 3).equals(Util.midStr(COMMANDS, 3 * i - 2, 3))) {
+                if (Util.leftStr(cmdStr.toUpperCase(Locale.ROOT), 3).equals(Util.midStr(COMMANDS, 3 * i - 2, 3))) {
                     switch (i) {
-                        case COMMAND_NAV:
+                        case COMMAND_NAV -> {
                             navigation();
                             foundCommand = true;
-                            break;
-                        case COMMAND_SRS:
+                        }
+                        case COMMAND_SRS -> {
                             shortRangeSensorScan();
                             foundCommand = true;
-                            break;
-                        case COMMAND_LRS:
+                        }
+                        case COMMAND_LRS -> {
                             longRangeSensorScan();
                             foundCommand = true;
-                            break;
-                        case COMMAND_PHA:
+                        }
+                        case COMMAND_PHA -> {
                             firePhasers();
                             foundCommand = true;
-                            break;
-                        case COMMAND_TOR:
+                        }
+                        case COMMAND_TOR -> {
                             firePhotonTorpedo();
                             foundCommand = true;
-                            break;
-                        case COMMAND_SHE:
+                        }
+                        case COMMAND_SHE -> {
                             shieldControl();
                             foundCommand = true;
-                            break;
-                        case COMMAND_DAM:
+                        }
+                        case COMMAND_DAM -> {
                             galaxyMap.getEnterprise().damageControl(this);
                             foundCommand = true;
-                            break;
-                        case COMMAND_COM:
+                        }
+                        case COMMAND_COM -> {
                             libraryComputer();
                             foundCommand = true;
-                            break;
-                        case COMMAND_XXX:
+                        }
+                        case COMMAND_XXX -> {
                             endGameFail(false);
                             foundCommand = true;
-                            break;
-                        default:
+                        }
+                        default -> {
                             printCommandOptions();
                             foundCommand = true;
+                        }
                     }
                 }
             }
@@ -170,7 +172,9 @@ public class SuperStarTrekGame implements GameCallback {
 
     void navigation() {
         float course = Util.toInt(Util.inputFloat("COURSE (0-9)"));
-        if (course == 9) course = 1;
+        if (course == 9)
+            course = 1;
+
         if (course < 1 || course >= 9) {
             Util.println("   LT. SULU REPORTS, 'INCORRECT COURSE DATA, SIR!'");
             return;
@@ -193,7 +197,8 @@ public class SuperStarTrekGame implements GameCallback {
             } else {
                 Util.println("ENGINEERING REPORTS   'INSUFFICIENT ENERGY AVAILABLE");
                 Util.println("                       FOR MANEUVERING AT WARP " + warp + "!'");
-                if (enterprise.getShields() < n - enterprise.getEnergy() || deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0) return;
+                if (enterprise.getShields() < n - enterprise.getEnergy() || deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0)
+                    return;
                 Util.println("DEFLECTOR CONTROL ROOM ACKNOWLEDGES " + enterprise.getShields() + " UNITS OF ENERGY");
                 Util.println("                         PRESENTLY DEPLOYED TO SHIELDS.");
             }
@@ -289,10 +294,10 @@ public class SuperStarTrekGame implements GameCallback {
 
     void statusReport() {
         Util.println("   STATUS REPORT:");
-        Util.println("KLINGON" + ((galaxyMap.getKlingonsInGalaxy() > 1)? "S" : "")  + " LEFT: " + galaxyMap.getKlingonsInGalaxy());
+        Util.println("KLINGON" + ((galaxyMap.getKlingonsInGalaxy() > 1) ? "S" : "") + " LEFT: " + galaxyMap.getKlingonsInGalaxy());
         Util.println("MISSION MUST BE COMPLETED IN " + .1 * Util.toInt((initialStardate + missionDuration - stardate) * 10) + " STARDATES");
         if (galaxyMap.getBasesInGalaxy() >= 1) {
-            Util.println("THE FEDERATION IS MAINTAINING " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() > 1)? "S" : "") + " IN THE GALAXY");
+            Util.println("THE FEDERATION IS MAINTAINING " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() > 1) ? "S" : "") + " IN THE GALAXY");
         } else {
             Util.println("YOUR STUPIDITY HAS LEFT YOU ON YOUR OWN IN");
             Util.println("  THE GALAXY -- YOU HAVE NO STARBASES LEFT!");

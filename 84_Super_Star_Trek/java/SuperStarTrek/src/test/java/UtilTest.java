@@ -6,6 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
  * Version: 1.0
  * Date: 4/20/2022 12:30
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
+ * *********************  READ ME!   **************************************
+ * THE TESTS BELOW ARE PLACEHOLDER AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
+ * YOUR TESTS AND DETERMINING WHAT TO TEST. PLEASE BE SURE TO CLAIM YOUR SECTION
+ * OF CODE YOU'RE TESTING AND PUSH YOUR CHANGES IMMEDIATELY AND NOTIFY THE TEAM
+ * **********************************************************************
+ * **********************************************************************
+ * **********************************************************************
  */
 
 class UtilTest {
@@ -15,6 +25,11 @@ class UtilTest {
      */
     @Test
     void random() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -22,6 +37,11 @@ class UtilTest {
      */
     @Test
     void fnr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -29,6 +49,11 @@ class UtilTest {
      */
     @Test
     void toInt() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -36,6 +61,11 @@ class UtilTest {
      */
     @Test
     void println() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -43,6 +73,11 @@ class UtilTest {
      */
     @Test
     void print() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -50,6 +85,11 @@ class UtilTest {
      */
     @Test
     void tab() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -57,6 +97,11 @@ class UtilTest {
      */
     @Test
     void strlen() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -64,6 +109,11 @@ class UtilTest {
      */
     @Test
     void inputStr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -71,6 +121,11 @@ class UtilTest {
      */
     @Test
     void inputCoords() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -78,6 +133,11 @@ class UtilTest {
      */
     @Test
     void inputFloat() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -85,6 +145,11 @@ class UtilTest {
      */
     @Test
     void leftStr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -92,6 +157,11 @@ class UtilTest {
      */
     @Test
     void midStr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -99,6 +169,11 @@ class UtilTest {
      */
     @Test
     void rightStr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
     /**
@@ -106,5 +181,10 @@ class UtilTest {
      */
     @Test
     void round() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 }
