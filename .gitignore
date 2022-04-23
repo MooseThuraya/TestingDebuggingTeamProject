@@ -3,7 +3,7 @@
 .gradle/
 node_modules/
 buildJvm/bin
-buildJvm/*/build/
+build/
 
 .classpath
 .project

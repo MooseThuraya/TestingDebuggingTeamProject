@@ -33,7 +33,7 @@ public class Enterprise {
     int shields = 0;
     double repairCost;
 
-    final int initialEnergy = energy;
+        final int initialEnergy = energy;
     final int initialTorpedoes = torpedoes;
 
     public Enterprise(Util util) {
@@ -42,6 +42,7 @@ public class Enterprise {
         // random initial position
         this.setQuadrant(new int[]{util.fnr(), util.fnr()});
         this.setSector(new int[]{util.fnr(), util.fnr()});
+
         // init cardinal directions
         IntStream.range(1, 9).forEach(i -> {
             cardinalDirections[i][1] = 0;

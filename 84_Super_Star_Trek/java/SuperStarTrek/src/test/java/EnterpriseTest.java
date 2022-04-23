@@ -28,8 +28,7 @@ class EnterpriseTest {
     void setup_testing_environment() {
         this.util = mock(Util.class);
     }
-
-    /**
+/**
      * OWNER: ALICIA
      */
     @Test
@@ -56,7 +55,6 @@ class EnterpriseTest {
 
         // ASSERT
     }
-
     /**
      * OWNER: ALICIA
      */
