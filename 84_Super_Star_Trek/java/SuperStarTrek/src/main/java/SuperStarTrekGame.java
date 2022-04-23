@@ -110,43 +110,43 @@ public class SuperStarTrekGame implements GameCallback {
             for (int i = 1; i <= 9; i++) {
                 if (util.leftStr(cmdStr.toUpperCase(Locale.ROOT), 3).equals(util.midStr(COMMANDS, 3 * i - 2, 3))) {
                     switch (i) {
-                        case COMMAND_NAV -> {
+                        case COMMAND_NAV : {
                             navigation();
                             foundCommand = true;
                         }
-                        case COMMAND_SRS -> {
+                        case COMMAND_SRS : {
                             shortRangeSensorScan();
                             foundCommand = true;
                         }
-                        case COMMAND_LRS -> {
+                        case COMMAND_LRS : {
                             longRangeSensorScan();
                             foundCommand = true;
                         }
-                        case COMMAND_PHA -> {
+                        case COMMAND_PHA : {
                             firePhasers();
                             foundCommand = true;
                         }
-                        case COMMAND_TOR -> {
+                        case COMMAND_TOR : {
                             firePhotonTorpedo();
                             foundCommand = true;
                         }
-                        case COMMAND_SHE -> {
+                        case COMMAND_SHE : {
                             shieldControl();
                             foundCommand = true;
                         }
-                        case COMMAND_DAM -> {
+                        case COMMAND_DAM : {
                             galaxyMap.getEnterprise().damageControl(this);
                             foundCommand = true;
                         }
-                        case COMMAND_COM -> {
+                        case COMMAND_COM : {
                             libraryComputer();
                             foundCommand = true;
                         }
-                        case COMMAND_XXX -> {
+                        case COMMAND_XXX : {
                             endGameFail(false);
                             foundCommand = true;
                         }
-                        default -> {
+                        default: {
                             printCommandOptions();
                             foundCommand = true;
                         }
