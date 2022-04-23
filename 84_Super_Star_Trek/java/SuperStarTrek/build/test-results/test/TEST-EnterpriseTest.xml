@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="EnterpriseTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-23T00:19:05" hostname="CHUPI_DESKTOP" time="0.013">
+<testsuite name="EnterpriseTest" tests="26" skipped="0" failures="0" errors="0" timestamp="2022-04-23T02:01:10" hostname="CHUPI_DESKTOP" time="0.43">
   <properties/>
-  <testcase name="getEnergy_must_return_current_energy()" classname="EnterpriseTest" time="0.013"/>
+  <testcase name="getShields_value_is_zero_atGame_start()" classname="EnterpriseTest" time="0.409"/>
+  <testcase name="dropShields()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="repairDamagedDevices()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getCardinalDirections()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getTotalEnergy()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getInitialEnergy()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="isDocked()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="moveShip()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getTorpedoes_must_return_current_torpedoes()" classname="EnterpriseTest" time="0.002"/>
+  <testcase name="setDocked()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="sufferHitPoints()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="decreaseTorpedoes()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="setSector()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="printDeviceName()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="setQuadrant()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="getDeviceStatus()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="getQuadrant()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getSector()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="decreaseEnergy()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="maneuverEnergySR()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="damageControl()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="setDeviceStatus()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="replenishSupplies_must_return_energy_and_torpedoes_equalTo_initialEnergy_and_initialTorpedoes()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="randomRepairCost()" classname="EnterpriseTest" time="0.001"/>
+  <testcase name="shieldControl()" classname="EnterpriseTest" time="0.0"/>
+  <testcase name="getEnergy_must_return_current_energy()" classname="EnterpriseTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -20,6 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class EnterpriseTest {
+    Util util;
+
+    @BeforeEach
+    void setup_testing_environment() {
+        this.util = mock(Util.class);
+    }
 
     /**
      * OWNER: ALICIA
@@ -27,7 +35,7 @@ class EnterpriseTest {
     @Test
     void getShields_value_is_zero_atGame_start() {
         // ARRANGE
-        Enterprise enterprise = new Enterprise();
+        Enterprise enterprise = new Enterprise(util);
 
 
 
@@ -79,7 +87,7 @@ class EnterpriseTest {
     @Test
     public void getEnergy_must_return_current_energy() {
         //ARRANGE
-        Enterprise enterprise = new Enterprise();
+        Enterprise enterprise = new Enterprise(util);
         int energy;
 
         //ACT
@@ -97,7 +105,7 @@ class EnterpriseTest {
     @Test
     void replenishSupplies_must_return_energy_and_torpedoes_equalTo_initialEnergy_and_initialTorpedoes() {
         //ARRANGE
-        Enterprise enterprise = new Enterprise();
+        Enterprise enterprise = new Enterprise(util);
         int energy;
         int torpedoes;
 
@@ -180,7 +188,7 @@ class EnterpriseTest {
     @Test
     void getTorpedoes_must_return_current_torpedoes() {
         //ARRANGE
-        Enterprise enterprise = new Enterprise();
+        Enterprise enterprise = new Enterprise(util);
         int torpedoes;
 
         //ACT
