@@ -25,8 +25,11 @@ class EnterpriseTest {
      * OWNER: ALICIA
      */
     @Test
-    void getShields() {
+    void getShields_value_is_zero_atGame_start() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise();
+
+
 
         // ACT
 

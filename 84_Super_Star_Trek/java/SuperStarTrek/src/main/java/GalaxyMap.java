@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
  */
 public class GalaxyMap {
 
+    Util util = new Util();
     // markers
     static final String MARKER_EMPTY = "   ";
     static final String MARKER_ENTERPRISE = "<*>";
@@ -17,7 +18,7 @@ public class GalaxyMap {
 
     // galaxy map
     public static final String QUADRANT_ROW = "                         ";
-    String quadrantMap = QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + Util.leftStr(QUADRANT_ROW, 17);       // current quadrant map
+    String quadrantMap = QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + QUADRANT_ROW + util.leftStr(QUADRANT_ROW, 17);       // current quadrant map
     final int[][] galaxy = new int[9][9];    // 8x8 galaxy map G
     final int[][] klingonQuadrants = new int[4][4];    // 3x3 position of klingons K
     final int[][] chartedGalaxy = new int[9][9];    // 8x8 charted galaxy map Z
@@ -63,7 +64,7 @@ public class GalaxyMap {
             IntStream.range(1, 8).forEach(y -> {
                 klingons = 0;
                 chartedGalaxy[x][y] = 0;
-                float random = Util.random();
+                float random = util.random();
                 if (random > .98) {
                     klingons = 3;
                     klingonsInGalaxy += 3;
@@ -75,11 +76,11 @@ public class GalaxyMap {
                     klingonsInGalaxy += 1;
                 }
                 starbases = 0;
-                if (Util.random() > .96) {
+                if (util.random() > .96) {
                     starbases = 1;
                     basesInGalaxy = +1;
                 }
-                galaxy[x][y] = klingons * 100 + starbases * 10 + Util.fnr();
+                galaxy[x][y] = klingons * 100 + starbases * 10 + util.fnr();
             });
         });
         if (basesInGalaxy == 0) {
@@ -89,7 +90,7 @@ public class GalaxyMap {
             }
             basesInGalaxy = 1;
             galaxy[quadrantX][quadrantY] = +10;
-            enterprise.setQuadrant(new int[]{ Util.fnr(), Util.fnr() });
+            enterprise.setQuadrant(new int[]{ util.fnr(), util.fnr() });
         }
         remainingKlingons = klingonsInGalaxy;
     }
@@ -105,19 +106,19 @@ public class GalaxyMap {
         if (!(quadrantX < 1 || quadrantX > 8 || quadrantY < 1 || quadrantY > 8)) {
             final String quadrantName = getQuadrantName(false, quadrantX, quadrantY);
             if (initialStardate == stardate) {
-                Util.println("YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +
+                util.println("YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +
                         "IN THE GALACTIC QUADRANT, '" + quadrantName + "'.");
             } else {
-                Util.println("NOW ENTERING " + quadrantName + " QUADRANT . . .");
+                util.println("NOW ENTERING " + quadrantName + " QUADRANT . . .");
             }
-            Util.println("");
+            util.println("");
             klingons = (int) Math.round(galaxy[quadrantX][quadrantY] * .01);
             starbases = (int) Math.round(galaxy[quadrantX][quadrantY] * .1) - 10 * klingons;
             stars = galaxy[quadrantX][quadrantY] - 100 * klingons - 10 * starbases;
             if (klingons != 0) {
-                Util.println("COMBAT AREA      CONDITION RED");
+                util.println("COMBAT AREA      CONDITION RED");
                 if (enterprise.getShields() <= 200) {
-                    Util.println("   SHIELDS DANGEROUSLY LOW");
+                    util.println("   SHIELDS DANGEROUSLY LOW");
                 }
             }
             IntStream.range(1, 3).forEach(i -> {
@@ -137,7 +138,7 @@ public class GalaxyMap {
                 insertMarker(MARKER_KLINGON, emptyCoordinate[0], emptyCoordinate[1]);
                 klingonQuadrants[i][1] = emptyCoordinate[0];
                 klingonQuadrants[i][2] = emptyCoordinate[1];
-                klingonQuadrants[i][3] = (int) Math.round(AVG_KLINGON_SHIELD_ENERGY * (0.5 + Util.random()));
+                klingonQuadrants[i][3] = (int) Math.round(AVG_KLINGON_SHIELD_ENERGY * (0.5 + util.random()));
             }
         }
         // position bases
@@ -169,34 +170,34 @@ public class GalaxyMap {
     void klingonsShoot(GameCallback callback) {
         if (klingons <= 0) return; // no klingons
         if (enterprise.isDocked()) {
-            Util.println("STARBASE SHIELDS PROTECT THE ENTERPRISE");
+            util.println("STARBASE SHIELDS PROTECT THE ENTERPRISE");
             return;
         }
         for (int i = 1; i <= 3; i++) {
             if (klingonQuadrants[i][3] <= 0) continue;
-            int hits = Util.toInt((klingonQuadrants[i][3] / fnd(1)) * (2 + Util.random()));
+            int hits = util.toInt((klingonQuadrants[i][3] / fnd(1)) * (2 + util.random()));
             enterprise.sufferHitPoints(hits);
-            klingonQuadrants[i][3] = Util.toInt(klingonQuadrants[i][3] / (3 + Util.random()));
-            Util.println(hits + " UNIT HIT ON ENTERPRISE FROM SECTOR " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
+            klingonQuadrants[i][3] = util.toInt(klingonQuadrants[i][3] / (3 + util.random()));
+            util.println(hits + " UNIT HIT ON ENTERPRISE FROM SECTOR " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
             if (enterprise.getShields() <= 0) callback.endGameFail(true);
-            Util.println("      <SHIELDS DOWN TO " + enterprise.getShields() + " UNITS>");
+            util.println("      <SHIELDS DOWN TO " + enterprise.getShields() + " UNITS>");
             if (hits < 20) continue;
-            if ((Util.random() > .6) || (hits / enterprise.getShields() <= .02)) continue;
-            int randomDevice = Util.fnr();
-            enterprise.setDeviceStatus(randomDevice, enterprise.getDeviceStatus()[randomDevice]- hits / enterprise.getShields() - .5 * Util.random());
-            Util.println("DAMAGE CONTROL REPORTS " + Enterprise.printDeviceName(randomDevice) + " DAMAGED BY THE HIT'");
+            if ((util.random() > .6) || (hits / enterprise.getShields() <= .02)) continue;
+            int randomDevice = util.fnr();
+            enterprise.setDeviceStatus(randomDevice, enterprise.getDeviceStatus()[randomDevice]- hits / enterprise.getShields() - .5 * util.random());
+            util.println("DAMAGE CONTROL REPORTS " + Enterprise.printDeviceName(randomDevice) + " DAMAGED BY THE HIT'");
         }
     }
 
     public void moveEnterprise(final float course, final float warp, final int n, final double stardate, final double initialStardate, final int missionDuration, final GameCallback callback) {
-        insertMarker(MARKER_EMPTY, Util.toInt(enterprise.getSector()[Enterprise.COORD_X]), Util.toInt(enterprise.getSector()[Enterprise.COORD_Y]));
+        insertMarker(MARKER_EMPTY, util.toInt(enterprise.getSector()[Enterprise.COORD_X]), util.toInt(enterprise.getSector()[Enterprise.COORD_Y]));
         final int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, initialStardate, missionDuration, callback);
         int sectorX = sector[Enterprise.COORD_X];
         int sectorY = sector[Enterprise.COORD_Y];
-        insertMarker(MARKER_ENTERPRISE, Util.toInt(sectorX), Util.toInt(sectorY));
+        insertMarker(MARKER_ENTERPRISE, util.toInt(sectorX), util.toInt(sectorY));
         enterprise.maneuverEnergySR(n);
         double stardateDelta = 1;
-        if (warp < 1) stardateDelta = .1 * Util.toInt(10 * warp);
+        if (warp < 1) stardateDelta = .1 * util.toInt(10 * warp);
         callback.incrementStardate(stardateDelta);
         if (stardate > initialStardate + missionDuration) callback.endGameFail(false);
     }
@@ -208,7 +209,7 @@ public class GalaxyMap {
         String shipCondition; // ship condition (docked, red, yellow, green)
         for (int i = sectorX - 1; i <= sectorX + 1; i++) {
             for (int j = sectorY - 1; j <= sectorY + 1; j++) {
-                if ((Util.toInt(i) >= 1) && (Util.toInt(i) <= 8) && (Util.toInt(j) >= 1) && (Util.toInt(j) <= 8)) {
+                if ((util.toInt(i) >= 1) && (util.toInt(i) <= 8) && (util.toInt(j) >= 1) && (util.toInt(j) <= 8)) {
                     if (compareMarker(quadrantMap, MARKER_STARBASE, i, j)) {
                         docked = true;
                     }
@@ -229,59 +230,59 @@ public class GalaxyMap {
             enterprise.setDocked(true);
             shipCondition = "DOCKED";
             enterprise.replenishSupplies();
-            Util.println("SHIELDS DROPPED FOR DOCKING PURPOSES");
+            util.println("SHIELDS DROPPED FOR DOCKING PURPOSES");
             enterprise.dropShields();
         }
         if (enterprise.getDeviceStatus()[Enterprise.DEVICE_SHORT_RANGE_SENSORS] < 0) { // are short range sensors out?
-            Util.println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
+            util.println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
             return;
         }
         final String row = "---------------------------------";
-        Util.println(row);
+        util.println(row);
         for (int i = 1; i <= 8; i++) {
             String sectorMapRow = "";
             for (int j = (i - 1) * 24 + 1; j <= (i - 1) * 24 + 22; j += 3) {
-                sectorMapRow += " " + Util.midStr(quadrantMap, j, 3);
+                sectorMapRow += " " + util.midStr(quadrantMap, j, 3);
             }
             switch (i) {
                 case 1:
-                    Util.println(sectorMapRow + "        STARDATE           " + Util.toInt(stardate * 10) * .1);
+                    util.println(sectorMapRow + "        STARDATE           " + util.toInt(stardate * 10) * .1);
                     break;
                 case 2:
-                    Util.println(sectorMapRow + "        CONDITION          " + shipCondition);
+                    util.println(sectorMapRow + "        CONDITION          " + shipCondition);
                     break;
                 case 3:
-                    Util.println(sectorMapRow + "        QUADRANT           " + enterprise.getQuadrant()[Enterprise.COORD_X] + "," + enterprise.getQuadrant()[Enterprise.COORD_Y]);
+                    util.println(sectorMapRow + "        QUADRANT           " + enterprise.getQuadrant()[Enterprise.COORD_X] + "," + enterprise.getQuadrant()[Enterprise.COORD_Y]);
                     break;
                 case 4:
-                    Util.println(sectorMapRow + "        SECTOR             " + sectorX + "," + sectorY);
+                    util.println(sectorMapRow + "        SECTOR             " + sectorX + "," + sectorY);
                     break;
                 case 5:
-                    Util.println(sectorMapRow + "        PHOTON TORPEDOES   " + Util.toInt(enterprise.getTorpedoes()));
+                    util.println(sectorMapRow + "        PHOTON TORPEDOES   " + util.toInt(enterprise.getTorpedoes()));
                     break;
                 case 6:
-                    Util.println(sectorMapRow + "        TOTAL ENERGY       " + Util.toInt(enterprise.getTotalEnergy()));
+                    util.println(sectorMapRow + "        TOTAL ENERGY       " + util.toInt(enterprise.getTotalEnergy()));
                     break;
                 case 7:
-                    Util.println(sectorMapRow + "        SHIELDS            " + Util.toInt(enterprise.getShields()));
+                    util.println(sectorMapRow + "        SHIELDS            " + util.toInt(enterprise.getShields()));
                     break;
                 case 8:
-                    Util.println(sectorMapRow + "        KLINGONS REMAINING " + Util.toInt(klingonsInGalaxy));
+                    util.println(sectorMapRow + "        KLINGONS REMAINING " + util.toInt(klingonsInGalaxy));
             }
         }
-        Util.println(row);
+        util.println(row);
     }
 
     void longRangeSensorScan() {
         final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
         final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
         if (enterprise.getDeviceStatus()[Enterprise.DEVICE_LONG_RANGE_SENSORS] < 0) {
-            Util.println("LONG RANGE SENSORS ARE INOPERABLE");
+            util.println("LONG RANGE SENSORS ARE INOPERABLE");
             return;
         }
-        Util.println("LONG RANGE SCAN FOR QUADRANT " + quadrantX + "," + quadrantY);
+        util.println("LONG RANGE SCAN FOR QUADRANT " + quadrantX + "," + quadrantY);
         final String rowStr = "-------------------";
-        Util.println(rowStr);
+        util.println(rowStr);
         final int[] n = new int[4];
         for (int i = quadrantX - 1; i <= quadrantX + 1; i++) {
             n[1] = -1;
@@ -294,14 +295,14 @@ public class GalaxyMap {
                 }
             }
             for (int l = 1; l <= 3; l++) {
-                Util.print(": ");
+                util.print(": ");
                 if (n[l] < 0) {
-                    Util.print("*** ");
+                    util.print("*** ");
                     continue;
                 }
-                Util.print(Util.rightStr(Integer.toString(n[l] + 1000), 3) + " ");
+                util.print(util.rightStr(Integer.toString(n[l] + 1000), 3) + " ");
             }
-            Util.println(": \n" + rowStr);
+            util.println(": \n" + rowStr);
         }
     }
 
@@ -310,36 +311,36 @@ public class GalaxyMap {
         final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
         final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
         if (deviceStatus[Enterprise.DEVICE_PHASER_CONTROL] < 0) {
-            Util.println("PHASERS INOPERATIVE");
+            util.println("PHASERS INOPERATIVE");
             return;
         }
         if (klingons <= 0) {
             printNoEnemyShipsMessage();
             return;
         }
-        if (deviceStatus[Enterprise.DEVICE_LIBRARY_COMPUTER] < 0) Util.println("COMPUTER FAILURE HAMPERS ACCURACY");
-        Util.println("PHASERS LOCKED ON TARGET;  ");
+        if (deviceStatus[Enterprise.DEVICE_LIBRARY_COMPUTER] < 0) util.println("COMPUTER FAILURE HAMPERS ACCURACY");
+        util.println("PHASERS LOCKED ON TARGET;  ");
         int nrUnitsToFire;
         while (true) {
-            Util.println("ENERGY AVAILABLE = " + enterprise.getEnergy() + " UNITS");
-            nrUnitsToFire = Util.toInt(Util.inputFloat("NUMBER OF UNITS TO FIRE"));
+            util.println("ENERGY AVAILABLE = " + enterprise.getEnergy() + " UNITS");
+            nrUnitsToFire = util.toInt(util.inputFloat("NUMBER OF UNITS TO FIRE"));
             if (nrUnitsToFire <= 0) return;
             if (enterprise.getEnergy() - nrUnitsToFire >= 0) break;
         }
         enterprise.decreaseEnergy(nrUnitsToFire);
-        if (deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0) nrUnitsToFire = Util.toInt(nrUnitsToFire * Util.random());
-        int h1 = Util.toInt(nrUnitsToFire / klingons);
+        if (deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0) nrUnitsToFire = util.toInt(nrUnitsToFire * util.random());
+        int h1 = util.toInt(nrUnitsToFire / klingons);
         for (int i = 1; i <= 3; i++) {
             if (klingonQuadrants[i][3] <= 0) break;
-            int hitPoints = Util.toInt((h1 / fnd(0)) * (Util.random() + 2));
+            int hitPoints = util.toInt((h1 / fnd(0)) * (util.random() + 2));
             if (hitPoints <= .15 * klingonQuadrants[i][3]) {
-                Util.println("SENSORS SHOW NO DAMAGE TO ENEMY AT " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
+                util.println("SENSORS SHOW NO DAMAGE TO ENEMY AT " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
                 continue;
             }
             klingonQuadrants[i][3] = klingonQuadrants[i][3] - hitPoints;
-            Util.println(hitPoints + " UNIT HIT ON KLINGON AT SECTOR " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
+            util.println(hitPoints + " UNIT HIT ON KLINGON AT SECTOR " + klingonQuadrants[i][1] + "," + klingonQuadrants[i][2]);
             if (klingonQuadrants[i][3] <= 0) {
-                Util.println("*** KLINGON DESTROYED ***");
+                util.println("*** KLINGON DESTROYED ***");
                 klingons -= 1;
                 klingonsInGalaxy -= 1;
                 insertMarker(MARKER_EMPTY, klingonQuadrants[i][1], klingonQuadrants[i][2]);
@@ -348,7 +349,7 @@ public class GalaxyMap {
                 chartedGalaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY];
                 if (klingonsInGalaxy <= 0) callback.endGameSuccess();
             } else {
-                Util.println("   (SENSORS SHOW " + klingonQuadrants[i][3] + " UNITS REMAINING)");
+                util.println("   (SENSORS SHOW " + klingonQuadrants[i][3] + " UNITS REMAINING)");
             }
         }
         klingonsShoot(callback);
@@ -356,19 +357,19 @@ public class GalaxyMap {
 
     void firePhotonTorpedo(final double stardate, final double initialStardate, final double missionDuration, GameCallback callback) {
         if (enterprise.getTorpedoes() <= 0) {
-            Util.println("ALL PHOTON TORPEDOES EXPENDED");
+            util.println("ALL PHOTON TORPEDOES EXPENDED");
             return;
         }
         if (enterprise.getDeviceStatus()[Enterprise.DEVICE_PHOTON_TUBES] < 0) {
-            Util.println("PHOTON TUBES ARE NOT OPERATIONAL");
+            util.println("PHOTON TUBES ARE NOT OPERATIONAL");
         }
-        float c1 = Util.inputFloat("PHOTON TORPEDO COURSE (1-9)");
+        float c1 = util.inputFloat("PHOTON TORPEDO COURSE (1-9)");
         if (c1 == 9) c1 = 1;
         if (c1 < 1 && c1 >= 9) {
-            Util.println("ENSIGN CHEKOV REPORTS,  'INCORRECT COURSE DATA, SIR!'");
+            util.println("ENSIGN CHEKOV REPORTS,  'INCORRECT COURSE DATA, SIR!'");
             return;
         }
-        int ic1 = Util.toInt(c1);
+        int ic1 = util.toInt(c1);
         final int[][] cardinalDirections = enterprise.getCardinalDirections();
         float x1 = cardinalDirections[ic1][1] + (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (c1 - ic1);
         enterprise.decreaseEnergy(2);
@@ -376,22 +377,22 @@ public class GalaxyMap {
         float x2 = cardinalDirections[ic1][2] + (cardinalDirections[ic1 + 1][2] - cardinalDirections[ic1][2]) * (c1 - ic1);
         float x = enterprise.getSector()[Enterprise.COORD_X];
         float y = enterprise.getSector()[Enterprise.COORD_Y];
-        Util.println("TORPEDO TRACK:");
+        util.println("TORPEDO TRACK:");
         while (true) {
             x = x + x1;
             y = y + x2;
             int x3 = Math.round(x);
             int y3 = Math.round(y);
             if (x3 < 1 || x3 > 8 || y3 < 1 || y3 > 8) {
-                Util.println("TORPEDO MISSED"); // 5490
+                util.println("TORPEDO MISSED"); // 5490
                 klingonsShoot(callback);
                 return;
             }
-            Util.println("               " + x3 + "," + y3);
-            if (compareMarker(quadrantMap, MARKER_EMPTY, Util.toInt(x), Util.toInt(y)))  {
+            util.println("               " + x3 + "," + y3);
+            if (compareMarker(quadrantMap, MARKER_EMPTY, util.toInt(x), util.toInt(y)))  {
                 continue;
-            } else if (compareMarker(quadrantMap, MARKER_KLINGON, Util.toInt(x), Util.toInt(y))) {
-                Util.println("*** KLINGON DESTROYED ***");
+            } else if (compareMarker(quadrantMap, MARKER_KLINGON, util.toInt(x), util.toInt(y))) {
+                util.println("*** KLINGON DESTROYED ***");
                 klingons = klingons - 1;
                 klingonsInGalaxy = klingonsInGalaxy - 1;
                 if (klingonsInGalaxy <= 0) callback.endGameSuccess();
@@ -400,25 +401,25 @@ public class GalaxyMap {
                 }
                 int i = 3;
                 klingonQuadrants[i][3] = 0;
-            } else if (compareMarker(quadrantMap, MARKER_STAR, Util.toInt(x), Util.toInt(y))) {
-                Util.println("STAR AT " + x3 + "," + y3 + " ABSORBED TORPEDO ENERGY.");
+            } else if (compareMarker(quadrantMap, MARKER_STAR, util.toInt(x), util.toInt(y))) {
+                util.println("STAR AT " + x3 + "," + y3 + " ABSORBED TORPEDO ENERGY.");
                 klingonsShoot(callback);
                 return;
-            } else if (compareMarker(quadrantMap, MARKER_STARBASE, Util.toInt(x), Util.toInt(y))) {
-                Util.println("*** STARBASE DESTROYED ***");
+            } else if (compareMarker(quadrantMap, MARKER_STARBASE, util.toInt(x), util.toInt(y))) {
+                util.println("*** STARBASE DESTROYED ***");
                 starbases = starbases - 1;
                 basesInGalaxy = basesInGalaxy - 1;
                 if (basesInGalaxy == 0 && klingonsInGalaxy <= stardate - initialStardate - missionDuration) {
-                    Util.println("THAT DOES IT, CAPTAIN!!  YOU ARE HEREBY RELIEVED OF COMMAND");
-                    Util.println("AND SENTENCED TO 99 STARDATES AT HARD LABOR ON CYGNUS 12!!");
+                    util.println("THAT DOES IT, CAPTAIN!!  YOU ARE HEREBY RELIEVED OF COMMAND");
+                    util.println("AND SENTENCED TO 99 STARDATES AT HARD LABOR ON CYGNUS 12!!");
                     callback.endGameFail(false);
                 } else {
-                    Util.println("STARFLEET COMMAND REVIEWING YOUR RECORD TO CONSIDER");
-                    Util.println("COURT MARTIAL!");
+                    util.println("STARFLEET COMMAND REVIEWING YOUR RECORD TO CONSIDER");
+                    util.println("COURT MARTIAL!");
                     enterprise.setDocked(false);
                 }
             }
-            insertMarker(MARKER_EMPTY, Util.toInt(x), Util.toInt(y));
+            insertMarker(MARKER_EMPTY, util.toInt(x), util.toInt(y));
             final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
             final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
             galaxy[quadrantX][quadrantY] = klingons * 100 + starbases * 10 + stars;
@@ -431,41 +432,41 @@ public class GalaxyMap {
         final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
         final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
         if (cumulativeReport) {
-            Util.println("");
-            Util.println("        ");
-            Util.println("COMPUTER RECORD OF GALAXY FOR QUADRANT " + quadrantX + "," + quadrantY);
-            Util.println("");
+            util.println("");
+            util.println("        ");
+            util.println("COMPUTER RECORD OF GALAXY FOR QUADRANT " + quadrantX + "," + quadrantY);
+            util.println("");
         } else {
-            Util.println("                        THE GALAXY");
+            util.println("                        THE GALAXY");
         }
-        Util.println("       1     2     3     4     5     6     7     8");
+        util.println("       1     2     3     4     5     6     7     8");
         final String rowDivider = "     ----- ----- ----- ----- ----- ----- ----- -----";
-        Util.println(rowDivider);
+        util.println(rowDivider);
         for (int i = 1; i <= 8; i++) {
-            Util.print(i + "  ");
+            util.print(i + "  ");
             if (cumulativeReport) {
                 int y = 1;
                 String quadrantName = getQuadrantName(false, i, y);
-                int tabLen = Util.toInt(15 - .5 * Util.strlen(quadrantName));
-                Util.println(Util.tab(tabLen) + quadrantName);
+                int tabLen = util.toInt(15 - .5 * util.strlen(quadrantName));
+                util.println(util.tab(tabLen) + quadrantName);
                 y = 5;
                 quadrantName = getQuadrantName(false, i, y);
-                tabLen = Util.toInt(39 - .5 * Util.strlen(quadrantName));
-                Util.println(Util.tab(tabLen) + quadrantName);
+                tabLen = util.toInt(39 - .5 * util.strlen(quadrantName));
+                util.println(util.tab(tabLen) + quadrantName);
             } else {
                 for (int j = 1; j <= 8; j++) {
-                    Util.print("   ");
+                    util.print("   ");
                     if (chartedGalaxy[i][j] == 0) {
-                        Util.print("***");
+                        util.print("***");
                     } else {
-                        Util.print(Util.rightStr(Integer.toString(chartedGalaxy[i][j] + 1000), 3));
+                        util.print(util.rightStr(Integer.toString(chartedGalaxy[i][j] + 1000), 3));
                     }
                 }
             }
-            Util.println("");
-            Util.println(rowDivider);
+            util.println("");
+            util.println(rowDivider);
         }
-        Util.println("");
+        util.println("");
     }
 
     public void photonTorpedoData() {
@@ -475,7 +476,7 @@ public class GalaxyMap {
             printNoEnemyShipsMessage();
             return;
         }
-        Util.println("FROM ENTERPRISE TO KLINGON BATTLE CRUISER" + ((klingons > 1)? "S" : ""));
+        util.println("FROM ENTERPRISE TO KLINGON BATTLE CRUISER" + ((klingons > 1)? "S" : ""));
         for (int i = 1; i <= 3; i++) {
             if (klingonQuadrants[i][3] > 0) {
                 printDirection(sectorX, sectorY, klingonQuadrants[i][1], klingonQuadrants[i][2]);
@@ -488,11 +489,11 @@ public class GalaxyMap {
         int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
         int sectorX = enterprise.getSector()[Enterprise.COORD_X];
         int sectorY = enterprise.getSector()[Enterprise.COORD_Y];
-        Util.println("DIRECTION/DISTANCE CALCULATOR:");
-        Util.println("YOU ARE AT QUADRANT " + quadrantX + "," + quadrantY + " SECTOR " + sectorX + "," + sectorY);
-        Util.print("PLEASE ENTER ");
-        int[] initialCoords = Util.inputCoords("  INITIAL COORDINATES (X,Y)");
-        int[] finalCoords = Util.inputCoords("  FINAL COORDINATES (X,Y)");
+        util.println("DIRECTION/DISTANCE CALCULATOR:");
+        util.println("YOU ARE AT QUADRANT " + quadrantX + "," + quadrantY + " SECTOR " + sectorX + "," + sectorY);
+        util.print("PLEASE ENTER ");
+        int[] initialCoords = util.inputCoords("  INITIAL COORDINATES (X,Y)");
+        int[] finalCoords = util.inputCoords("  FINAL COORDINATES (X,Y)");
         printDirection(initialCoords[0], initialCoords[1], finalCoords[0], finalCoords[1]);
     }
 
@@ -524,29 +525,29 @@ public class GalaxyMap {
 
         if (from_y > 0 || to_y > 0) {
             if (from_y >= to_y) {
-                Util.println("DIRECTION = " + (from_x + to_y / from_y));
+                util.println("DIRECTION = " + (from_x + to_y / from_y));
             } else {
-                Util.println("DIRECTION = " + (from_x + 2 - to_y / from_y));
+                util.println("DIRECTION = " + (from_x + 2 - to_y / from_y));
             }
         }
-        Util.println("DISTANCE = " + Util.round(Math.sqrt(to_y ^ 2 + from_y ^ 2), 6));
+        util.println("DISTANCE = " + util.round(Math.sqrt(to_y ^ 2 + from_y ^ 2), 6));
     }
 
     void starbaseNavData() {
         int sectorX = enterprise.getSector()[Enterprise.COORD_X];
         int sectorY = enterprise.getSector()[Enterprise.COORD_Y];
         if (starbases != 0) {
-            Util.println("FROM ENTERPRISE TO STARBASE:");
+            util.println("FROM ENTERPRISE TO STARBASE:");
             printDirection(sectorX, sectorY, starbaseX, starbaseY);
         } else {
-            Util.println("MR. SPOCK REPORTS,  'SENSORS SHOW NO STARBASES IN THIS");
-            Util.println(" QUADRANT.'");
+            util.println("MR. SPOCK REPORTS,  'SENSORS SHOW NO STARBASES IN THIS");
+            util.println(" QUADRANT.'");
         }
     }
 
     void printNoEnemyShipsMessage() {
-        Util.println("SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS");
-        Util.println("                                IN THIS QUADRANT'");
+        util.println("SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS");
+        util.println("                                IN THIS QUADRANT'");
     }
 
     String getRegionName(final boolean regionNameOnly, final int y) {
@@ -609,18 +610,18 @@ public class GalaxyMap {
     }
 
     void insertMarker(final String marker, final int x, final int y) {
-        final int pos = Util.toInt(y) * 3 + Util.toInt(x) * 24 + 1;
+        final int pos = util.toInt(y) * 3 + util.toInt(x) * 24 + 1;
         if (marker.length() != 3) {
             System.err.println("ERROR");
             System.exit(-1);
         }
         if (pos == 1) {
-            quadrantMap = marker + Util.rightStr(quadrantMap, 189);
+            quadrantMap = marker + util.rightStr(quadrantMap, 189);
         }
         if (pos == 190) {
-            quadrantMap = Util.leftStr(quadrantMap, 189) + marker;
+            quadrantMap = util.leftStr(quadrantMap, 189) + marker;
         }
-        quadrantMap = Util.leftStr(quadrantMap, (pos - 1)) + marker + Util.rightStr(quadrantMap, (190 - pos));
+        quadrantMap = util.leftStr(quadrantMap, (pos - 1)) + marker + util.rightStr(quadrantMap, (190 - pos));
     }
 
     /**
@@ -630,8 +631,8 @@ public class GalaxyMap {
      * @return an array with a pair of coordinates x, y
      */
     int[] findEmptyPlaceInQuadrant(final String quadrantString) {
-        final int x = Util.fnr();
-        final int y = Util.fnr();
+        final int x = util.fnr();
+        final int y = util.fnr();
         if (!compareMarker(quadrantString, MARKER_EMPTY, x, y)) {
             return findEmptyPlaceInQuadrant(quadrantString);
         }
@@ -640,7 +641,7 @@ public class GalaxyMap {
 
     boolean compareMarker(final String quadrantString, final String marker, final int x, final int y) {
         final int markerRegion = (y - 1) * 3 + (x - 1) * 24 + 1;
-        if (Util.midStr(quadrantString, markerRegion, 3).equals(marker)) {
+        if (util.midStr(quadrantString, markerRegion, 3).equals(marker)) {
             return true;
         }
         return false;

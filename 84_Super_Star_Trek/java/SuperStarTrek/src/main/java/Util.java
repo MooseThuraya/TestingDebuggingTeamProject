@@ -12,40 +12,40 @@ import java.util.stream.IntStream;
  */
 public class Util {
 
-    static final Random random = new Random();
+    final Random random = new Random();
 
-    public static float random() {
+    public float random() {
         return random.nextFloat();
     }
 
-    public static int fnr() {    // 475
+    public int fnr() {    // 475
         // Generate a random integer from 1 to 8 inclusive.
         return toInt(random() * 7 + 1);
     }
 
-    public static int toInt(final double num) {
+    public int toInt(final double num) {
         int x = (int) Math.floor(num);
         if (x < 0) x *= -1;
         return x;
     }
 
-    public static void println(final String s) {
+    public void println(final String s) {
         System.out.println(s);
     }
 
-    public static void print(final String s) {
+    public void print(final String s) {
         System.out.print(s);
     }
 
-    public static String tab(final int n) {
+    public String tab(final int n) {
         return IntStream.range(1, n).mapToObj(num -> " ").collect(Collectors.joining());
     }
 
-    public static int strlen(final String s) {
+    public int strlen(final String s) {
         return s.length();
     }
 
-    public static String inputStr(final String message) {
+    public String inputStr(final String message) {
         System.out.print(message + "? ");
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -56,7 +56,7 @@ public class Util {
         }
     }
 
-    public static int[] inputCoords(final String message) {
+    public int[] inputCoords(final String message) {
         while (true) {
             final String input = inputStr(message);
             try {
@@ -72,7 +72,7 @@ public class Util {
         }
     }
 
-    public static float inputFloat(final String message) {
+    public float inputFloat(final String message) {
         while (true) {
             System.out.print(message + "? ");
             final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -87,22 +87,22 @@ public class Util {
         }
     }
 
-    public static String leftStr(final String input, final int len) {
+    public String leftStr(final String input, final int len) {
         if (input == null || input.length() < len) return input;
         return input.substring(0, len);
     }
 
-    public static String midStr(final String input, final int start, final int len) {
+    public String midStr(final String input, final int start, final int len) {
         if (input == null || input.length() < ((start - 1) + len)) return input;
         return input.substring(start - 1, (start - 1) + len);
     }
 
-    public static String rightStr(final String input, final int len) {
+    public String rightStr(final String input, final int len) {
         if (input == null || input.length() < len) return "";
         return input.substring(input.length() - len);
     }
 
-    public static double round(double value, int places) {
+    public double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);

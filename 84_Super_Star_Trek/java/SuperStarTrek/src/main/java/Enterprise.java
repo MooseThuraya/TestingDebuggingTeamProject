@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
  * The starship Enterprise.
  */
 public class Enterprise {
-
+    public Util util = new Util();
     public static final int COORD_X = 0;
     public static final int COORD_Y = 1;
 
@@ -38,8 +38,8 @@ public class Enterprise {
 
     public Enterprise() {
         // random initial position
-        this.setQuadrant(new int[]{Util.fnr(), Util.fnr()});
-        this.setSector(new int[]{Util.fnr(), Util.fnr()});
+        this.setQuadrant(new int[]{util.fnr(), util.fnr()});
+        this.setSector(new int[]{util.fnr(), util.fnr()});
         // init cardinal directions
         IntStream.range(1, 9).forEach(i -> {
             cardinalDirections[i][1] = 0;
@@ -147,7 +147,7 @@ public class Enterprise {
     }
 
     public int[] moveShip(final float course, final int n, final String quadrantMap, final double stardate, final double initialStardate, final int missionDuration, final GameCallback callback) {
-        int ic1 = Util.toInt(course);
+        int ic1 = util.toInt(course);
         float x1 = cardinalDirections[ic1][1] + (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (course - ic1);
         float x = sectorX;
         float y = sectorY;
@@ -161,10 +161,10 @@ public class Enterprise {
                 // exceeded quadrant limits
                 x = 8 * quadrantX + x + n * x1;
                 y = 8 * quadrantY + y + n * x2;
-                quadrantX = Util.toInt(x / 8);
-                quadrantY = Util.toInt(y / 8);
-                sectorX = Util.toInt(x - quadrantX * 8);
-                sectorY = Util.toInt(y - quadrantY * 8);
+                quadrantX = util.toInt(x / 8);
+                quadrantY = util.toInt(y / 8);
+                sectorX = util.toInt(x - quadrantX * 8);
+                sectorY = util.toInt(y - quadrantY * 8);
                 if (sectorX == 0) {
                     quadrantX = quadrantX - 1;
                     sectorX = 8;
@@ -195,11 +195,11 @@ public class Enterprise {
                     sectorY = 8;
                 }
                 if (hitEdge) {
-                    Util.println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
-                    Util.println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
-                    Util.println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
-                    Util.println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
-                    Util.println("  AT SECTOR " + sectorX + "," + sectorY + " OF QUADRANT " + quadrantX + "," + quadrantY + ".'");
+                    util.println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
+                    util.println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
+                    util.println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
+                    util.println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
+                    util.println("  AT SECTOR " + sectorX + "," + sectorY + " OF QUADRANT " + quadrantX + "," + quadrantY + ".'");
                     if (stardate > initialStardate + missionDuration) callback.endGameFail(false);
                 }
                 if (8 * quadrantX + quadrantY == 8 * initialQuadrantX + initialQuadrantY) {
@@ -210,23 +210,23 @@ public class Enterprise {
                 callback.enterNewQuadrant();
                 return this.getSector();
             } else {
-                int S8 = Util.toInt(sectorX) * 24 + Util.toInt(sectorY) * 3 - 26; // S8 = pos
-                if (!("  ".equals(Util.midStr(quadrantMap, S8, 2)))) {
-                    sectorX = Util.toInt(sectorX - x1);
-                    sectorY = Util.toInt(sectorY - x2);
-                    Util.println("WARP ENGINES SHUT DOWN AT ");
-                    Util.println("SECTOR " + sectorX + "," + sectorY + " DUE TO BAD NAVIGATION");
+                int S8 = util.toInt(sectorX) * 24 + util.toInt(sectorY) * 3 - 26; // S8 = pos
+                if (!("  ".equals(util.midStr(quadrantMap, S8, 2)))) {
+                    sectorX = util.toInt(sectorX - x1);
+                    sectorY = util.toInt(sectorY - x2);
+                    util.println("WARP ENGINES SHUT DOWN AT ");
+                    util.println("SECTOR " + sectorX + "," + sectorY + " DUE TO BAD NAVIGATION");
                     break;
                 }
             }
         }
-        sectorX = Util.toInt(sectorX);
-        sectorY = Util.toInt(sectorY);
+        sectorX = util.toInt(sectorX);
+        sectorY = util.toInt(sectorY);
         return this.getSector();
     }
 
     void randomRepairCost() {
-        repairCost = .5 * Util.random();
+        repairCost = .5 * util.random();
     }
 
     public void repairDamagedDevices(final float warp) {
@@ -238,8 +238,8 @@ public class Enterprise {
                     deviceStatus[i] = -.1;
                     break;
                 } else if (deviceStatus[i] >= 0) {
-                    Util.println("DAMAGE CONTROL REPORT:  ");
-                    Util.println(Util.tab(8) + printDeviceName(i) + " REPAIR COMPLETED.");
+                    util.println("DAMAGE CONTROL REPORT:  ");
+                    util.println(util.tab(8) + printDeviceName(i) + " REPAIR COMPLETED.");
                 }
             }
         }
@@ -248,7 +248,7 @@ public class Enterprise {
     public void maneuverEnergySR(final int N) {
         energy = energy - N - 10;
         if (energy >= 0) return;
-        Util.println("SHIELD CONTROL SUPPLIES ENERGY TO COMPLETE THE MANEUVER.");
+        util.println("SHIELD CONTROL SUPPLIES ENERGY TO COMPLETE THE MANEUVER.");
         shields = shields + energy;
         energy = 0;
         if (shields <= 0) shields = 0;
@@ -256,33 +256,37 @@ public class Enterprise {
 
     void shieldControl() {
         if (deviceStatus[DEVICE_SHIELD_CONTROL] < 0) {
-            Util.println("SHIELD CONTROL INOPERABLE");
+            util.println("SHIELD CONTROL INOPERABLE");
             return;
         }
-        Util.println("ENERGY AVAILABLE = " + (energy + shields));
-        int energyToShields = Util.toInt(Util.inputFloat("NUMBER OF UNITS TO SHIELDS"));
+
+        util.println("ENERGY AVAILABLE = " + (energy + shields));
+        int energyToShields = util.toInt(util.inputFloat("NUMBER OF UNITS TO SHIELDS"));
+
         if (energyToShields < 0 || shields == energyToShields) {
-            Util.println("<SHIELDS UNCHANGED>");
+            util.println("<SHIELDS UNCHANGED>");
             return;
         }
         if (energyToShields > energy + energyToShields) {
-            Util.println("SHIELD CONTROL REPORTS  'THIS IS NOT THE FEDERATION TREASURY.'");
-            Util.println("<SHIELDS UNCHANGED>");
+            util.println("SHIELD CONTROL REPORTS  'THIS IS NOT THE FEDERATION TREASURY.'");
+            util.println("<SHIELDS UNCHANGED>");
             return;
         }
+
         energy = energy + shields - energyToShields;
         shields = energyToShields;
-        Util.println("DEFLECTOR CONTROL ROOM REPORT:");
-        Util.println("  'SHIELDS NOW AT " + Util.toInt(shields) + " UNITS PER YOUR COMMAND.'");
+
+        util.println("DEFLECTOR CONTROL ROOM REPORT:");
+        util.println("  'SHIELDS NOW AT " + util.toInt(shields) + " UNITS PER YOUR COMMAND.'");
     }
 
     void damageControl(GameCallback callback) {
         if (deviceStatus[DEVICE_DAMAGE_CONTROL] < 0) {
-            Util.println("DAMAGE CONTROL REPORT NOT AVAILABLE");
+            util.println("DAMAGE CONTROL REPORT NOT AVAILABLE");
         } else {
-            Util.println("\nDEVICE             STATE OF REPAIR");
+            util.println("\nDEVICE             STATE OF REPAIR");
             for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
-                Util.print(printDeviceName(deviceNr) + Util.leftStr(GalaxyMap.QUADRANT_ROW, 25 - Util.strlen(printDeviceName(deviceNr))) + " " + Util.toInt(deviceStatus[deviceNr] * 100) * .01 + "\n");
+                util.print(printDeviceName(deviceNr) + util.leftStr(GalaxyMap.QUADRANT_ROW, 25 - util.strlen(printDeviceName(deviceNr))) + " " + util.toInt(deviceStatus[deviceNr] * 100) * .01 + "\n");
             }
         }
         if (!docked) return;
@@ -294,9 +298,9 @@ public class Enterprise {
         if (deltaToRepair > 0) {
             deltaToRepair += repairCost;
             if (deltaToRepair >= 1) deltaToRepair = .9;
-            Util.println("TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;");
-            Util.println("ESTIMATED TIME TO REPAIR:'" + .01 * Util.toInt(100 * deltaToRepair) + " STARDATES");
-            final String reply = Util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
+            util.println("TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;");
+            util.println("ESTIMATED TIME TO REPAIR:'" + .01 * util.toInt(100 * deltaToRepair) + " STARDATES");
+            final String reply = util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
             if ("Y".equals(reply)) {
                 for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
                     if (deviceStatus[deviceNr] < 0) deviceStatus[deviceNr] = 0;
