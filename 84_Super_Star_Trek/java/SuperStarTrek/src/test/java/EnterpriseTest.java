@@ -167,14 +167,25 @@ class EnterpriseTest {
 
     /**
      * OWNER: ALICIA
+     * Verify the shields will decrease when the enterprise takes damage
      */
     @Test
-    void sufferHitPoints() {
+    void sufferHitPoints_will_reduce_shields_when_damage_taken() {
         // ARRANGE
+        int userShieldInput = 500;
+        int shipHitDamage = 300;
 
         // ACT
+        Enterprise enterprise = new Enterprise(util);
+        // create the mock environment for user input commands
+        when(util.inputFloat(any())).thenReturn((float)userShieldInput);
+        when(util.toInt((float)userShieldInput)).thenReturn(userShieldInput);
+
+        enterprise.shieldControl();
+        enterprise.sufferHitPoints(shipHitDamage);
 
         // ASSERT
+        assertEquals((userShieldInput - shipHitDamage), enterprise.getShields());
     }
 
     /**
