@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.stream.IntStream;
 
 /**
@@ -292,7 +293,11 @@ public class Enterprise {
         } else {
             util.println("\nDEVICE             STATE OF REPAIR");
             for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
-                util.print(printDeviceName(deviceNr) + util.leftStr(GalaxyMap.QUADRANT_ROW, 25 - util.strlen(printDeviceName(deviceNr))) + " " + util.toInt(deviceStatus[deviceNr] * 100) * .01 + "\n");
+                util.print(printDeviceName(deviceNr) + util.leftStr(GalaxyMap.QUADRANT_ROW,
+                        25 - util.strlen(printDeviceName(deviceNr))) +
+                        " " +
+                        util.toInt(deviceStatus[deviceNr] * 100) * .01 +
+                        "\n");
             }
         }
         if (!docked) return;
@@ -301,13 +306,16 @@ public class Enterprise {
         for (int i = 1; i <= 8; i++) {
             if (deviceStatus[i] < 0) deltaToRepair += .1;
         }
+
         if (deltaToRepair > 0) {
             deltaToRepair += repairCost;
             if (deltaToRepair >= 1) deltaToRepair = .9;
             util.println("TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;");
-            util.println("ESTIMATED TIME TO REPAIR:'" + .01 * util.toInt(100 * deltaToRepair) + " STARDATES");
+            util.println("ESTIMATED TIME TO REPAIR:'" +
+                    .01 * util.toInt(100 * deltaToRepair) +
+                    " STARDATES");
             final String reply = util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
-            if ("Y".equals(reply)) {
+            if ("Y".equals(reply.toUpperCase(Locale.ROOT))) {
                 for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
                     if (deviceStatus[deviceNr] < 0) deviceStatus[deviceNr] = 0;
                 }
