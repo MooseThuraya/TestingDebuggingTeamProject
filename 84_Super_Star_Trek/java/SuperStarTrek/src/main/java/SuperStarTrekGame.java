@@ -185,6 +185,7 @@ public class SuperStarTrekGame implements GameCallback {
 
     void navigation() {
         float course = util.toInt(util.inputFloat("COURSE (0-9)"));
+
         if (course == 9)
             course = 1;
 
@@ -192,15 +193,19 @@ public class SuperStarTrekGame implements GameCallback {
             util.println("   LT. SULU REPORTS, 'INCORRECT COURSE DATA, SIR!'");
             return;
         }
+
         final Enterprise enterprise = galaxyMap.getEnterprise();
         final double[] deviceStatus = enterprise.getDeviceStatus();
         util.println("WARP FACTOR (0-" + ((deviceStatus[Enterprise.DEVICE_WARP_ENGINES] < 0) ? "0.2" : "8") + ")");
         float warp = util.inputFloat("");
+
         if (deviceStatus[Enterprise.DEVICE_WARP_ENGINES] < 0 && warp > .2) {
             util.println("WARP ENGINES ARE DAMAGED.  MAXIMUM SPEED = WARP 0.2");
             return;
         }
+
         if (warp == 0) return;
+
         if (warp > 0 && warp <= 8) {
             int n = util.toInt(warp * 8);
             if (enterprise.getEnergy() - n >= 0) {
@@ -223,11 +228,16 @@ public class SuperStarTrekGame implements GameCallback {
 
     void repairDamagedDevices(final float course, final float warp, final int N) {
         final Enterprise enterprise = galaxyMap.getEnterprise();
+
         // repair damaged devices and print damage report
         enterprise.repairDamagedDevices(warp);
-        if (util.random() > .2) return;  // 80% chance no damage nor repair
+
+        if (util.random() > .2)
+            return;  // 80% chance no damage nor repair
+
         int randomDevice = util.fnr();    // random device
         final double[] deviceStatus = enterprise.getDeviceStatus();
+
         if (util.random() >= .6) {   // 40% chance of repair of random device
             enterprise.setDeviceStatus(randomDevice, deviceStatus[randomDevice] + util.random() * 3 + 1);
             util.println("DAMAGE CONTROL REPORT:  " + Enterprise.printDeviceName(randomDevice) + " STATE OF REPAIR IMPROVED\n");
@@ -307,14 +317,20 @@ public class SuperStarTrekGame implements GameCallback {
 
     void statusReport() {
         util.println("   STATUS REPORT:");
-        util.println("KLINGON" + ((galaxyMap.getKlingonsInGalaxy() > 1) ? "S" : "") + " LEFT: " + galaxyMap.getKlingonsInGalaxy());
-        util.println("MISSION MUST BE COMPLETED IN " + .1 * util.toInt((initialStardate + missionDuration - stardate) * 10) + " STARDATES");
+        util.println("KLINGON" + ((galaxyMap.getKlingonsInGalaxy() > 1) ? "S" : "") +
+                " LEFT: " +
+                galaxyMap.getKlingonsInGalaxy());
+        util.println("MISSION MUST BE COMPLETED IN " +
+                .1 * util.toInt((initialStardate + missionDuration - stardate) * 10) +
+                " STARDATES");
+
         if (galaxyMap.getBasesInGalaxy() >= 1) {
             util.println("THE FEDERATION IS MAINTAINING " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() > 1) ? "S" : "") + " IN THE GALAXY");
         } else {
             util.println("YOUR STUPIDITY HAS LEFT YOU ON YOUR OWN IN");
             util.println("  THE GALAXY -- YOU HAVE NO STARBASES LEFT!");
         }
+
         galaxyMap.getEnterprise().damageControl(this);
     }
 

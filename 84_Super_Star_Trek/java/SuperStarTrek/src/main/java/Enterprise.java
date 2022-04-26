@@ -288,8 +288,8 @@ public class Enterprise {
     }
 
     void damageControl(GameCallback callback) {
-        if (deviceStatus[DEVICE_DAMAGE_CONTROL] < 0) {
-            util.println("DAMAGE CONTROL REPORT NOT AVAILABLE");
+        if (deviceStatus[DEVICE_DAMAGE_CONTROL] <= 0) {
+            util.println("ALL SYSTEMS OPERABLE! NO DAMAGE TO REPORT!");
         } else {
             util.println("\nDEVICE             STATE OF REPAIR");
             for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
@@ -305,6 +305,7 @@ public class Enterprise {
         if (!docked) return;
 
         double deltaToRepair = 0;
+
         for (int i = 1; i <= 8; i++) {
             if (deviceStatus[i] < 0) deltaToRepair += .1;
         }

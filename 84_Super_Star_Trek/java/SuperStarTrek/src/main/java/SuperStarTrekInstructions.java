@@ -15,13 +15,14 @@ import java.util.stream.IntStream;
  */
 public class SuperStarTrekInstructions {
 
+    // TODO: This whole thing should be in the Game, not it's own thing
+
     public static void main(String[] args) {
         printBanner();
         final String reply = inputStr("DO YOU NEED INSTRUCTIONS (Y/N)? ");
         if (reply.toUpperCase(Locale.ROOT).equals("Y")) {
             printInstructions();
         }
-        // TODO: This should be in the Game, not it's  own thing
     }
 
     static void printBanner() {

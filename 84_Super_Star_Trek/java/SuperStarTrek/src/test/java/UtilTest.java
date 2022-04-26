@@ -165,7 +165,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void rightStr() {
