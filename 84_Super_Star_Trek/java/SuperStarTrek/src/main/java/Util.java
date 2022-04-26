@@ -97,8 +97,15 @@ public class Util {
         return input.substring(start - 1, (start - 1) + len);
     }
 
+    /**
+     * TODO: Index out of bounds hit randomly, test to solve this
+     * @param input
+     * @param len
+     * @return
+     */
     public String rightStr(final String input, final int len) {
-        if (input == null || input.length() < len) return "";
+        if (input == null || input.length() < len)
+            return "";
         return input.substring(input.length() - len);
     }
 

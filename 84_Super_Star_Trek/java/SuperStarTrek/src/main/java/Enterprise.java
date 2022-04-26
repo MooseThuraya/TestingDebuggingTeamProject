@@ -293,13 +293,15 @@ public class Enterprise {
         } else {
             util.println("\nDEVICE             STATE OF REPAIR");
             for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
-                util.print(printDeviceName(deviceNr) + util.leftStr(GalaxyMap.QUADRANT_ROW,
+                        util.print(printDeviceName(deviceNr) +
+                        util.leftStr(GalaxyMap.QUADRANT_ROW,
                         25 - util.strlen(printDeviceName(deviceNr))) +
                         " " +
                         util.toInt(deviceStatus[deviceNr] * 100) * .01 +
                         "\n");
             }
         }
+
         if (!docked) return;
 
         double deltaToRepair = 0;

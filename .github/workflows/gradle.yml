@@ -29,4 +29,4 @@ jobs:
         java-version: '18'
         distribution: 'temurin'
     - name: Build with Gradle
-      run: ./84_Super_Star_Trek/java/SuperStarTrek/gradlew build
+      run: cd ./84_Super_Star_Trek/java/SuperStarTrek; ./gradlew build
