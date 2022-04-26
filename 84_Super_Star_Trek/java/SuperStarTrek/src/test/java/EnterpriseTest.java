@@ -166,10 +166,46 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void sufferHitPoints() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void damageControl() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void randomRepairCost() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void repairDamagedDevices() {
         // ARRANGE
 
         // ACT
@@ -414,47 +450,12 @@ class EnterpriseTest {
         // ASSERT
     }
 
-    /**
-     * OWNER:
-     */
-    @Test
-    void randomRepairCost() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void repairDamagedDevices() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
 
     /**
      * OWNER:
      */
     @Test
     void maneuverEnergySR() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void damageControl() {
         // ARRANGE
 
         // ACT
