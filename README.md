@@ -14,11 +14,11 @@ The project has subfolders corresponding to the languages the games are ported t
 
 ### Project goals
 
-Implement full testing environment for the game in Java, including, but not limited to 
+Implement full testing environment for the game in `Java`, including, but not limited to 
 
-1. Regression and Unit Testing
-2. Mutant
-3. Code Flow Graphs
-4. Truth Tables
-5. Test Plans
-6. Lessons Learned
+1. `Regression and Unit Testing`
+2. `Mutant`
+3. `Code Flow Graphs`
+4. `Truth Tables`
+5. `Test Plans`
+6. `Lessons Learned`
