@@ -299,7 +299,7 @@ class EnterpriseTest {
      * As the shield value is 0 the total energy returned is 300
      */
     @Test
-    void getTotalEnergy() {
+    void getTotalEnergy_must_return_3000_energy() {
         // ARRANGE
         int energy = 3000;
         Enterprise enterprise = new Enterprise(util);
@@ -314,7 +314,7 @@ class EnterpriseTest {
      * validate that the initial energy is set to 3000
      */
     @Test
-    void getInitialEnergy() {
+    void getInitialEnergy_must_return_3000_energy() {
         // ARRANGE
         int energy = 3000;
         Enterprise enterprise = new Enterprise(util);
