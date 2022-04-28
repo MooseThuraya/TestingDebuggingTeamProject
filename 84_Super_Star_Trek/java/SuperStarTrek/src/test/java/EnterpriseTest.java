@@ -476,7 +476,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_one() {
+    void printDeviceName_for_device_warp_engines_and_input_is_one() {
         // ARRANGE
         String deviceName = "WARP ENGINES";
         Enterprise enterprise = new Enterprise(util);
@@ -490,7 +490,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_two() {
+    void printDeviceName_for_device_short_range_sensors_and_input_is_two() {
         // ARRANGE
         String deviceName = "SHORT RANGE SENSORS";
         Enterprise enterprise = new Enterprise(util);
@@ -504,7 +504,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_three() {
+    void printDeviceName_for_device_long_range_sensors_and_input_is_three() {
         // ARRANGE
         String deviceName = "LONG RANGE SENSORS";
         Enterprise enterprise = new Enterprise(util);
@@ -518,7 +518,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_four() {
+    void printDeviceName_for_device_phaser_control_and_input_is_four() {
         // ARRANGE
         String deviceName = "PHASER CONTROL";
         Enterprise enterprise = new Enterprise(util);
@@ -532,7 +532,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_five() {
+    void printDeviceName_for_device_photon_tubes_and_input_is_five() {
         // ARRANGE
         String deviceName = "PHOTON TUBES";
         Enterprise enterprise = new Enterprise(util);
@@ -546,7 +546,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_six() {
+    void printDeviceName_for_device_damage_control_and_input_is_six() {
         // ARRANGE
         String deviceName = "DAMAGE CONTROL";
         Enterprise enterprise = new Enterprise(util);
@@ -560,7 +560,7 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_when_the_input_is_invalid() {
+    void printDeviceName_for_invalid_input() {
         // ARRANGE
         String deviceName = "";
         Enterprise enterprise = new Enterprise(util);
