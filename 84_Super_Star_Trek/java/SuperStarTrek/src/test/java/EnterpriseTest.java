@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -236,7 +235,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(3000, enterprise.getEnergy());
+        assertEquals(3000, enterprise.getEnergy());
     }
 
     /**
@@ -265,8 +264,8 @@ class EnterpriseTest {
         enterprise.replenishSupplies();
 
         //ASSERT
-        Assertions.assertEquals(3000, enterprise.energy);
-        Assertions.assertEquals(10, enterprise.torpedoes);
+        assertEquals(3000, enterprise.energy);
+        assertEquals(10, enterprise.torpedoes);
     }
 
     /**
@@ -306,7 +305,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(energy, enterprise.getTotalEnergy());
+        assertEquals(energy, enterprise.getTotalEnergy());
     }
 
     /**
@@ -321,7 +320,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(energy, enterprise.getInitialEnergy());
+        assertEquals(energy, enterprise.getInitialEnergy());
     }
 
     /**
@@ -335,7 +334,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(10, enterprise.getTorpedoes());
+        assertEquals(10, enterprise.getTorpedoes());
     }
 
     /**
@@ -483,7 +482,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(1));
+        assertEquals(deviceName, enterprise.printDeviceName(1));
     }
     /**
      * OWNER: Sanchita
@@ -497,7 +496,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(2));
+        assertEquals(deviceName, enterprise.printDeviceName(2));
     }
     /**
      * OWNER: Sanchita
@@ -511,7 +510,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(3));
+        assertEquals(deviceName, enterprise.printDeviceName(3));
     }
     /**
      * OWNER: Sanchita
@@ -525,7 +524,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(4));
+        assertEquals(deviceName, enterprise.printDeviceName(4));
     }
     /**
      * OWNER: Sanchita
@@ -539,7 +538,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(5));
+        assertEquals(deviceName, enterprise.printDeviceName(5));
     }
     /**
      * OWNER: Sanchita
@@ -553,7 +552,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(6));
+        assertEquals(deviceName, enterprise.printDeviceName(6));
     }
     /**
      * OWNER: Sanchita
@@ -567,7 +566,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        Assertions.assertEquals(deviceName, enterprise.printDeviceName(0));
+        assertEquals(deviceName, enterprise.printDeviceName(0));
     }
 
 }
