@@ -295,27 +295,33 @@ class EnterpriseTest {
 
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
+     * As the shield value is 0 the total energy returned is 300
      */
     @Test
     void getTotalEnergy() {
         // ARRANGE
+        int energy = 3000;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
 
-        // ACT
-
-        // ASSERT
+        //ASSERT
+        Assertions.assertEquals(energy, enterprise.getTotalEnergy());
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
+     * validate that the initial energy is set to 3000
      */
     @Test
     void getInitialEnergy() {
         // ARRANGE
+        int energy = 3000;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
 
-        // ACT
-
-        // ASSERT
+        //ASSERT
+        Assertions.assertEquals(energy, enterprise.getInitialEnergy());
     }
 
     /**
@@ -466,14 +472,102 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName() {
+    void printDeviceName_when_the_input_is_one() {
         // ARRANGE
+        String deviceName = "WARP ENGINES";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
 
-        // ACT
-
-        // ASSERT
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(1));
     }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_two() {
+        // ARRANGE
+        String deviceName = "SHORT RANGE SENSORS";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(2));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_three() {
+        // ARRANGE
+        String deviceName = "LONG RANGE SENSORS";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(3));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_four() {
+        // ARRANGE
+        String deviceName = "PHASER CONTROL";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(4));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_five() {
+        // ARRANGE
+        String deviceName = "PHOTON TUBES";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(5));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_six() {
+        // ARRANGE
+        String deviceName = "DAMAGE CONTROL";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(6));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_when_the_input_is_invalid() {
+        // ARRANGE
+        String deviceName = "";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        Assertions.assertEquals(deviceName, enterprise.printDeviceName(0));
+    }
+
 }
