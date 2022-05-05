@@ -225,12 +225,12 @@ class EnterpriseTest {
 
     /**
      * OWNER: MUSTAFA
+     * Verify that getEnergy returns the initial energy equal to 3000
      */
     @Test
     public void getEnergy_must_return_3000_energy() {
         //ARRANGE
         Enterprise enterprise = new Enterprise(util);
-        int energy;
 
         //ACT
 
@@ -240,6 +240,7 @@ class EnterpriseTest {
 
     /**
      * OWNER: MUSTAFA
+     * Verify that replenishSupplies will replenish energy and torpedoes to 3000 and 10
      */
     @Test
     void replenishSupplies_must_return_3000_energy_and_10_torpedoes() {
@@ -269,27 +270,35 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
+     * Verify that decreaseEnergy will reduce energy from 3000 to 2500
      */
     @Test
-    void decreaseEnergy() {
+    void decreaseEnergy_will_reduce_energy_from_initialEnergy_to_2500() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
 
         // ACT
+        enterprise.decreaseEnergy(500.0);
 
         // ASSERT
+        assertEquals(2500, enterprise.getEnergy());
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
+     * Verify that decreaseTorpedoes will reduce torpedoes from 10 to 7
      */
     @Test
-    void decreaseTorpedoes() {
+    void decreaseTorpedoes_will_reduce_energy_from_initialTorpedoes_to_7() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
 
         // ACT
+        enterprise.decreaseTorpedoes(3);
 
         // ASSERT
+        assertEquals(7, enterprise.getTorpedoes());
     }
 
 
