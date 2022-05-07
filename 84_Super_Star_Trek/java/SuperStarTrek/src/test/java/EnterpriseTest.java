@@ -569,7 +569,7 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
     void moveShip() {
