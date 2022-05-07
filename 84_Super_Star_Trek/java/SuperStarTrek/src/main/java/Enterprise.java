@@ -34,7 +34,7 @@ public class Enterprise {
     int shields = 0;
     double repairCost;
 
-        final int initialEnergy = energy;
+    final int initialEnergy = energy;
     final int initialTorpedoes = torpedoes;
 
     public Enterprise(Util util) {
@@ -291,33 +291,45 @@ public class Enterprise {
         if (deviceStatus[DEVICE_DAMAGE_CONTROL] <= 0) {
             util.println("ALL SYSTEMS OPERABLE! NO DAMAGE TO REPORT!");
         } else {
-            util.println("\nDEVICE             STATE OF REPAIR");
+            util.println("\nDEVICE STATE OF REPAIR");
             for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
-                        util.print(printDeviceName(deviceNr) +
+                util.print(printDeviceName(deviceNr) +
                         util.leftStr(GalaxyMap.QUADRANT_ROW,
-                        25 - util.strlen(printDeviceName(deviceNr))) +
+                                25 - util.strlen(printDeviceName(deviceNr))) +
                         " " +
                         util.toInt(deviceStatus[deviceNr] * 100) * .01 +
                         "\n");
             }
         }
 
-        if (!docked) return;
+        if (!docked) {
+            util.println("DEVICE NOT DOCKED!");
+            return;
+        }
 
         double deltaToRepair = 0;
 
         for (int i = 1; i <= 8; i++) {
-            if (deviceStatus[i] < 0) deltaToRepair += .1;
+            if (deviceStatus[i] < 0){
+                deltaToRepair += .1;
+                util.println("DELTA REPAIR INCREASED FOR " + deviceStatus[i]);
+            }
         }
 
         if (deltaToRepair > 0) {
             deltaToRepair += repairCost;
-            if (deltaToRepair >= 1) deltaToRepair = .9;
+
+            if (deltaToRepair >= 1) {
+                deltaToRepair = .9;
+            }
+
             util.println("TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;");
             util.println("ESTIMATED TIME TO REPAIR:'" +
                     .01 * util.toInt(100 * deltaToRepair) +
                     " STARDATES");
+
             final String reply = util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
+
             if ("Y".equals(reply.toUpperCase(Locale.ROOT))) {
                 for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
                     if (deviceStatus[deviceNr] < 0) deviceStatus[deviceNr] = 0;

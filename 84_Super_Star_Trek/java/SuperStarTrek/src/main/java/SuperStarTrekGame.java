@@ -96,11 +96,6 @@ public class SuperStarTrekGame implements GameCallback {
                 "  " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() == 1) ? "" : "S") + " IN THE GALAXY FOR RESUPPLYING YOUR SHIP");
     }
 
-    public void enterNewQuadrant() {
-        galaxyMap.newQuadrant(stardate, initialStardate);
-        shortRangeSensorScan();
-    }
-
     void commandLoop() {
         while (!this.restart) {
             checkShipEnergy();
@@ -334,10 +329,18 @@ public class SuperStarTrekGame implements GameCallback {
         galaxyMap.getEnterprise().damageControl(this);
     }
 
+    @Override
+    public void enterNewQuadrant() {
+        galaxyMap.newQuadrant(stardate, initialStardate);
+        shortRangeSensorScan();
+    }
+
+    @Override
     public void incrementStardate(double increment) {
         this.stardate += increment;
     }
 
+    @Override
     public void endGameFail(final boolean enterpriseDestroyed) {    // 6220
         if (enterpriseDestroyed) {
             util.println("\nTHE ENTERPRISE HAS BEEN DESTROYED.  THEN FEDERATION ");
@@ -349,6 +352,7 @@ public class SuperStarTrekGame implements GameCallback {
         repeatGame();
     }
 
+    @Override
     public void endGameSuccess() {
         util.println("CONGRATULATION, CAPTAIN!  THE LAST KLINGON BATTLE CRUISER");
         util.println("MENACING THE FEDERATION HAS BEEN DESTROYED.\n");

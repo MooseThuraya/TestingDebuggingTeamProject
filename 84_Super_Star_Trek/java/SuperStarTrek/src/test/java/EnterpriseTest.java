@@ -1,3 +1,4 @@
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -191,12 +192,75 @@ class EnterpriseTest {
      * OWNER: ALICIA
      */
     @Test
-    void damageControl() {
+    void damageControl_all_system_operable_message_displayed_when_deviceDamage_equals_zero() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 0;
 
         // ACT
+        enterprise.damageControl(mock(GameCallback.class));
 
         // ASSERT
+        verify(util).println("ALL SYSTEMS OPERABLE! NO DAMAGE TO REPORT!");
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void damageControl_verify_damage_report_messagePrinted_deviceDamage_greater_than_zero() {
+        // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 6;
+
+        // ACT
+        enterprise.damageControl(mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("\nDEVICE STATE OF REPAIR");
+        verify(util, atLeast(8)).print(any()); //When hit, we know we've gone through the for loop
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     * Validate we a exited from the damageControl method with a return statement when we aren't docked
+     */
+    @Test
+    void damageControl_not_docked_error_message_displayed() {
+        // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 6;
+        enterprise.docked = false;
+
+
+        // ACT
+        enterprise.damageControl(mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("DEVICE NOT DOCKED!");
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     */
+    @Test
+    void damageControl_docked_deltaToRepair_increments_by_at_ten_percent() {
+        // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 6;
+        enterprise.docked = true;
+
+        // ACT
+        enterprise.damageControl(mock(GameCallback.class));
+
+        // ASSERT
+        verify(util, atMost(8)).println("DELTA REPAIR INCREASED FOR " + any());
     }
 
     /**
