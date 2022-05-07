@@ -236,7 +236,6 @@ class EnterpriseTest {
         enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 6;
         enterprise.docked = false;
 
-
         // ACT
         enterprise.damageControl(mock(GameCallback.class));
 
@@ -249,30 +248,70 @@ class EnterpriseTest {
      *
      */
     @Test
-    void damageControl_docked_deltaToRepair_increments_by_at_ten_percent() {
+    void damageControl_docked_deltaToRepair_increments_by_ten_percent() {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
 
-        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = 6;
+        enterprise.deviceStatus[Enterprise.DEVICE_DAMAGE_CONTROL] = -6;
         enterprise.docked = true;
+        when(util.inputStr(any())).thenReturn("Y");
+
 
         // ACT
         enterprise.damageControl(mock(GameCallback.class));
 
+        // ASSERT - deltaToRepair can't be accessed, so if we hit the print message, we know there was an increment
+        // of .1
+        verify(util, atLeastOnce()).println("DELTA REPAIR INCREASED FOR " + any());
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     * This tests that when the deltaToRepair is greater than one, we reset it to 0.9 and the incrementStartDate is
+     * only incremented by 1.0.
+     */
+    @Test
+    void damageControl_deltaToRepair_greater_than_one_verify_startDate_incremented_by_one() {
+        // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        // set 5 devices to negative so we increment deltaToRepair to 0.5
+        enterprise.deviceStatus[1] = -5;
+        enterprise.deviceStatus[2] = -5;
+        enterprise.deviceStatus[3] = -5;
+        enterprise.deviceStatus[4] = -5;
+        enterprise.deviceStatus[5] = -5;
+
+        GameCallback callbackTest = mock(GameCallback.class);
+        enterprise.docked = true;
+
+        when(util.inputStr(any())).thenReturn("Y");
+        when(util.random()).thenReturn(1f); // set our random number to 1
+
+        // ACT
+        enterprise.randomRepairCost();
+        enterprise.damageControl(callbackTest);
+
         // ASSERT
-        verify(util, atMost(8)).println("DELTA REPAIR INCREASED FOR " + any());
+        verify(callbackTest).incrementStardate(1.0);
     }
 
     /**
      * OWNER: ALICIA
      */
     @Test
-    void randomRepairCost() {
+    void randomRepairCost_returns_half_of_the_random_value() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+        when(util.random()).thenReturn(6f); // set our random number to 1
+        float expectedRepairCost = 3;
 
         // ACT
+        enterprise.randomRepairCost();
 
         // ASSERT
+        assertEquals(expectedRepairCost, enterprise.repairCost);
     }
 
     /**
@@ -281,6 +320,17 @@ class EnterpriseTest {
     @Test
     void repairDamagedDevices() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        // set 5 devices to negative so we increment deltaToRepair to 0.5
+        enterprise.deviceStatus[1] = -5;
+        enterprise.deviceStatus[2] = -5;
+        enterprise.deviceStatus[3] = -5;
+        enterprise.deviceStatus[4] = -5;
+        enterprise.deviceStatus[5] = -5;
+
+        GameCallback callbackTest = mock(GameCallback.class);
+        enterprise.docked = true;
 
         // ACT
 

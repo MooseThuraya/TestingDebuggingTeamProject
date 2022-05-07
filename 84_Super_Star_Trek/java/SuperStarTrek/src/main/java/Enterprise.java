@@ -62,8 +62,11 @@ public class Enterprise {
         cardinalDirections[8][1] = 1;
         cardinalDirections[8][2] = 1;
         cardinalDirections[9][2] = 1;
+
         // init devices
-        IntStream.range(1, 8).forEach(i -> deviceStatus[i] = 0);
+        for (int i = 1; i < 8; i++) {
+            deviceStatus[i] = 0;
+        }
     }
 
     public int getShields() {
