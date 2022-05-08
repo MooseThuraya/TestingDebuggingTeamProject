@@ -304,7 +304,7 @@ class EnterpriseTest {
     void randomRepairCost_returns_half_of_the_random_value() {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
-        when(util.random()).thenReturn(6f); // set our random number to 1
+        when(util.random()).thenReturn(6f); // set our random number
         float expectedRepairCost = 3;
 
         // ACT
@@ -318,23 +318,38 @@ class EnterpriseTest {
      * OWNER: ALICIA
      */
     @Test
-    void repairDamagedDevices() {
+    void repairDamagedDevices_verify_device_status_greater_than_zero_damage_repaired() {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
 
-        // set 5 devices to negative so we increment deltaToRepair to 0.5
-        enterprise.deviceStatus[1] = -5;
-        enterprise.deviceStatus[2] = -5;
-        enterprise.deviceStatus[3] = -5;
-        enterprise.deviceStatus[4] = -5;
-        enterprise.deviceStatus[5] = -5;
-
-        GameCallback callbackTest = mock(GameCallback.class);
-        enterprise.docked = true;
+        enterprise.deviceStatus[1] = -1;
+        float warp = 2;
 
         // ACT
+        enterprise.repairDamagedDevices(warp);
 
-        // ASSERT
+        // ASSERT - if we hit the first print statement for repair, we know the repairs were completed
+        verify(util).println("DAMAGE CONTROL REPORT:  ");
+        assertNotEquals(-.1, enterprise.deviceStatus[1]); // device status is >= 0, should not be reset
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void repairDamagedDevices_verify_device_status_negative_value_reset() {
+        // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+
+        enterprise.deviceStatus[1] = -1.05;
+        float warp = 1;
+
+        // ACT
+        enterprise.repairDamagedDevices(warp);
+
+        // ASSERT - if we hit the first print statement for repair, we know the repairs were completed
+        assertEquals(-.1, enterprise.deviceStatus[1]);
+
     }
 
     /**
