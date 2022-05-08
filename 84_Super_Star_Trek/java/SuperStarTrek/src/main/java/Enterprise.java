@@ -270,11 +270,18 @@ public class Enterprise {
 
     public void maneuverEnergySR(final int N) {
         energy = energy - N - 10;
-        if (energy >= 0) return;
+
+        if (energy >= 0) {
+            return;
+        }
+
         util.println("SHIELD CONTROL SUPPLIES ENERGY TO COMPLETE THE MANEUVER.");
         shields = shields + energy;
         energy = 0;
-        if (shields <= 0) shields = 0;
+
+        if (shields <= 0) {
+            shields = 0;
+        }
     }
 
     /**

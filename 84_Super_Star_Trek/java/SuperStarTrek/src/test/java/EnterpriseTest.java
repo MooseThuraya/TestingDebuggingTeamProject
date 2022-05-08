@@ -544,14 +544,22 @@ class EnterpriseTest {
      * OWNER: ALICIA
      */
     @Test
-    void setQuadrant() {
+    void setQuadrant_updates_quadrant_values() {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
+        int x = 5;
+        int y = 3;
+        int[] testCoords = new int[2];
 
         // ACT
+        testCoords[0] = x;
+        testCoords[1] = y;
 
+        enterprise.setQuadrant(x, y);
 
         // ASSERT
+        assertEquals(testCoords[0], enterprise.getQuadrant()[0]);
+        assertEquals(testCoords[1], enterprise.getQuadrant()[1]);
     }
 
 
@@ -561,10 +569,20 @@ class EnterpriseTest {
     @Test
     void setSector() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+        int x = 1;
+        int y = 7;
+        int[] testCoords = new int[2];
 
         // ACT
+        testCoords[0] = x;
+        testCoords[1] = y;
+
+        enterprise.setSector(x, y);
 
         // ASSERT
+        assertEquals(testCoords[0], enterprise.getSector()[0]);
+        assertEquals(testCoords[1], enterprise.getSector()[1]);
     }
 
     /**
@@ -581,7 +599,7 @@ class EnterpriseTest {
 
 
     /**
-     * OWNER: ALICIA
+     * OWNER:
      */
     @Test
     void maneuverEnergySR() {
