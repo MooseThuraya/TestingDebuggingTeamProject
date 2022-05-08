@@ -524,12 +524,14 @@ class EnterpriseTest {
         assertEquals(testStatus, enterprise.deviceStatus[1]);
     }
 
+
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
-    void isDocked() {
+    void setDocked_to_true_validate_changed_from_intial_bool() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
 
         // ACT
 
@@ -537,31 +539,7 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
-     */
-    @Test
-    void setDocked() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getQuadrant() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void setQuadrant() {
@@ -572,20 +550,9 @@ class EnterpriseTest {
         // ASSERT
     }
 
-    /**
-     * OWNER:
-     */
-    @Test
-    void getSector() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void setSector() {
@@ -610,7 +577,7 @@ class EnterpriseTest {
 
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void maneuverEnergySR() {
