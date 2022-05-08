@@ -10,15 +10,15 @@ public class Enterprise {
     public static final int COORD_Y = 1;
 
     // devices
-    static final int DEVICE_WARP_ENGINES = 1;
-    static final int DEVICE_SHORT_RANGE_SENSORS = 2;
-    static final int DEVICE_LONG_RANGE_SENSORS = 3;
-    static final int DEVICE_PHASER_CONTROL = 4;
-    static final int DEVICE_PHOTON_TUBES = 5;
-    static final int DEVICE_DAMAGE_CONTROL = 6;
-    static final int DEVICE_SHIELD_CONTROL = 7;
-    static final int DEVICE_LIBRARY_COMPUTER = 8;
-    final double[] deviceStatus = new double[9];   // 8  device damage stats
+    static final int DEVICE_WARP_ENGINES = 0;
+    static final int DEVICE_SHORT_RANGE_SENSORS = 1;
+    static final int DEVICE_LONG_RANGE_SENSORS = 2;
+    static final int DEVICE_PHASER_CONTROL = 3;
+    static final int DEVICE_PHOTON_TUBES = 4;
+    static final int DEVICE_DAMAGE_CONTROL = 5;
+    static final int DEVICE_SHIELD_CONTROL = 6;
+    static final int DEVICE_LIBRARY_COMPUTER = 7;
+    final double[] deviceStatus = new double[8];   // 8  device damage stats
 
     // position
     final int[][] cardinalDirections = new int[10][3];   // 9x2 vectors in cardinal directions
@@ -238,7 +238,7 @@ public class Enterprise {
 
     public void repairDamagedDevices(final float warp) {
         // repair damaged devices and print damage report
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 0; i < deviceStatus.length; i++) {
             if (deviceStatus[i] < 0) {
                 deviceStatus[i] += Math.min(warp, 1);
                 if ((deviceStatus[i] > -.1) && (deviceStatus[i] < 0)) {
@@ -295,7 +295,7 @@ public class Enterprise {
             util.println("ALL SYSTEMS OPERABLE! NO DAMAGE TO REPORT!");
         } else {
             util.println("\nDEVICE STATE OF REPAIR");
-            for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
+            for (int deviceNr = 0; deviceNr < deviceStatus.length; deviceNr++) {
                 util.print(printDeviceName(deviceNr) +
                         util.leftStr(GalaxyMap.QUADRANT_ROW,
                                 25 - util.strlen(printDeviceName(deviceNr))) +
@@ -312,7 +312,7 @@ public class Enterprise {
 
         double deltaToRepair = 0;
 
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 0; i < deviceStatus.length; i++) {
             if (deviceStatus[i] < 0){
                 deltaToRepair += .1;
                 util.println("DELTA REPAIR INCREASED FOR " + deviceStatus[i]);
@@ -334,7 +334,7 @@ public class Enterprise {
             final String reply = util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
 
             if ("Y".equals(reply.toUpperCase(Locale.ROOT))) {
-                for (int deviceNr = 1; deviceNr <= 8; deviceNr++) {
+                for (int deviceNr = 0; deviceNr < deviceStatus.length; deviceNr++) {
                     if (deviceStatus[deviceNr] < 0) deviceStatus[deviceNr] = 0;
                 }
                 callback.incrementStardate(deltaToRepair + .1);

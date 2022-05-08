@@ -479,36 +479,49 @@ class EnterpriseTest {
      * OWNER: ALICIA
      */
     @Test
-    void getDeviceStatus() {
+    void getDeviceStatus_returns_the_correct_array() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+        enterprise.deviceStatus[3] = 100;
 
         // ACT
+        double[] test = enterprise.getDeviceStatus();
 
         // ASSERT
+        assertEquals(enterprise.deviceStatus, test);
     }
 
     /**
      * OWNER: ALICIA
      */
     @Test
-    void getCardinalDirections() {
+    void getCardinalDirections_returns_initial_value_negative_one() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+        int expectedValue = -1;
 
         // ACT
+        int[][] testDirections = enterprise.getCardinalDirections();
 
-        // ASSERT
+        // ASSERT - directs at 5,2 are set to -1, verify we return that
+        assertEquals(expectedValue, testDirections[5][2]);
     }
 
     /**
      * OWNER: ALICIA
      */
     @Test
-    void setDeviceStatus() {
+    void setDeviceStatus_verify_device_set_to_ten() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
+        int testDevice = 1;
+        double testStatus = 10;
 
         // ACT
+        enterprise.setDeviceStatus(testDevice, testStatus);
 
         // ASSERT
+        assertEquals(testStatus, enterprise.deviceStatus[1]);
     }
 
     /**
@@ -613,9 +626,23 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_for_device_warp_engines_and_input_is_one() {
+    void printDeviceName_for_device_warp_engines_and_input_is_zero() {
         // ARRANGE
         String deviceName = "WARP ENGINES";
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+
+        //ASSERT
+        assertEquals(deviceName, enterprise.printDeviceName(0));
+    }
+    /**
+     * OWNER: Sanchita
+     * to ensure the print device name method is printing the device name according to device number
+     */
+    @Test
+    void printDeviceName_for_device_short_range_sensors_and_input_is_one() {
+        // ARRANGE
+        String deviceName = "SHORT RANGE SENSORS";
         Enterprise enterprise = new Enterprise(util);
         //ACT
 
@@ -627,9 +654,9 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_for_device_short_range_sensors_and_input_is_two() {
+    void printDeviceName_for_device_long_range_sensors_and_input_is_two() {
         // ARRANGE
-        String deviceName = "SHORT RANGE SENSORS";
+        String deviceName = "LONG RANGE SENSORS";
         Enterprise enterprise = new Enterprise(util);
         //ACT
 
@@ -641,9 +668,9 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_for_device_long_range_sensors_and_input_is_three() {
+    void printDeviceName_for_device_phaser_control_and_input_is_three() {
         // ARRANGE
-        String deviceName = "LONG RANGE SENSORS";
+        String deviceName = "PHASER CONTROL";
         Enterprise enterprise = new Enterprise(util);
         //ACT
 
@@ -655,9 +682,9 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_for_device_phaser_control_and_input_is_four() {
+    void printDeviceName_for_device_photon_tubes_and_input_is_four() {
         // ARRANGE
-        String deviceName = "PHASER CONTROL";
+        String deviceName = "PHOTON TUBES";
         Enterprise enterprise = new Enterprise(util);
         //ACT
 
@@ -669,28 +696,14 @@ class EnterpriseTest {
      * to ensure the print device name method is printing the device name according to device number
      */
     @Test
-    void printDeviceName_for_device_photon_tubes_and_input_is_five() {
-        // ARRANGE
-        String deviceName = "PHOTON TUBES";
-        Enterprise enterprise = new Enterprise(util);
-        //ACT
-
-        //ASSERT
-        assertEquals(deviceName, enterprise.printDeviceName(5));
-    }
-    /**
-     * OWNER: Sanchita
-     * to ensure the print device name method is printing the device name according to device number
-     */
-    @Test
-    void printDeviceName_for_device_damage_control_and_input_is_six() {
+    void printDeviceName_for_device_damage_control_and_input_is_five() {
         // ARRANGE
         String deviceName = "DAMAGE CONTROL";
         Enterprise enterprise = new Enterprise(util);
         //ACT
 
         //ASSERT
-        assertEquals(deviceName, enterprise.printDeviceName(6));
+        assertEquals(deviceName, enterprise.printDeviceName(5));
     }
     /**
      * OWNER: Sanchita
@@ -704,7 +717,7 @@ class EnterpriseTest {
         //ACT
 
         //ASSERT
-        assertEquals(deviceName, enterprise.printDeviceName(0));
+        assertEquals(deviceName, enterprise.printDeviceName(9));
     }
 
 }
