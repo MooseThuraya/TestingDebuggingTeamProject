@@ -57,8 +57,8 @@ class EnterpriseTest {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
@@ -78,8 +78,8 @@ class EnterpriseTest {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
@@ -102,15 +102,15 @@ class EnterpriseTest {
         Enterprise enterprise = new Enterprise(util);
 
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
 
         //repeat the user input of the same value
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
@@ -119,6 +119,7 @@ class EnterpriseTest {
         verify(util).println("<SHIELDS UNCHANGED>");
         assertEquals(userInput, enterprise.getShields());
     }
+
     /**
      * OWNER: ALICIA
      * Verify the shields do not change when control command is greater than available energy (always 3000)
@@ -131,8 +132,8 @@ class EnterpriseTest {
         Enterprise enterprise = new Enterprise(util);
 
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
@@ -154,8 +155,8 @@ class EnterpriseTest {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
-        when(util.toInt((float)userInput)).thenReturn(userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
         // ACT
         enterprise.shieldControl();
@@ -178,8 +179,8 @@ class EnterpriseTest {
         // ACT
         Enterprise enterprise = new Enterprise(util);
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userShieldInput);
-        when(util.toInt((float)userShieldInput)).thenReturn(userShieldInput);
+        when(util.inputFloat(any())).thenReturn((float) userShieldInput);
+        when(util.toInt((float) userShieldInput)).thenReturn(userShieldInput);
 
         enterprise.shieldControl();
         enterprise.sufferHitPoints(shipHitDamage);
@@ -225,7 +226,7 @@ class EnterpriseTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * Validate we a exited from the damageControl method with a return statement when we aren't docked
      */
     @Test
@@ -245,7 +246,6 @@ class EnterpriseTest {
 
     /**
      * OWNER: ALICIA
-     *
      */
     @Test
     void damageControl_docked_deltaToRepair_increments_by_ten_percent() {
@@ -267,7 +267,7 @@ class EnterpriseTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * This tests that when the deltaToRepair is greater than one, we reset it to 0.9 and the incrementStartDate is
      * only incremented by 1.0.
      */
@@ -524,18 +524,20 @@ class EnterpriseTest {
         assertEquals(testStatus, enterprise.deviceStatus[1]);
     }
 
-
     /**
      * OWNER: ALICIA
      */
     @Test
-    void setDocked_to_true_validate_changed_from_intial_bool() {
+    void setDocked_to_true_validate_changed_from_initial_bool() {
         // ARRANGE
         Enterprise enterprise = new Enterprise(util);
 
         // ACT
+        enterprise.setDocked(true);
+        boolean enterpriseDocked = enterprise.isDocked();
 
         // ASSERT
+        assertTrue(enterpriseDocked);
     }
 
     /**
@@ -544,8 +546,10 @@ class EnterpriseTest {
     @Test
     void setQuadrant() {
         // ARRANGE
+        Enterprise enterprise = new Enterprise(util);
 
         // ACT
+
 
         // ASSERT
     }
@@ -602,6 +606,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(0));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number
@@ -616,6 +621,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(1));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number
@@ -630,6 +636,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(2));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number
@@ -644,6 +651,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(3));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number
@@ -658,6 +666,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(4));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number
@@ -672,6 +681,7 @@ class EnterpriseTest {
         //ASSERT
         assertEquals(deviceName, enterprise.printDeviceName(5));
     }
+
     /**
      * OWNER: Sanchita
      * to ensure the print device name method is printing the device name according to device number

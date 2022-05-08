@@ -71,8 +71,8 @@ public class GalaxyMap {
                            QUADRANT_ROW +
                            util.leftStr(QUADRANT_ROW, 17);
 
-        int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
-        int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
+        int quadrantX = enterprise.getQuadrant()[0];
+        int quadrantY = enterprise.getQuadrant()[1];
 
         // populate Klingons, Starbases, Stars
         IntStream.range(1, 8).forEach(x -> {
@@ -105,7 +105,7 @@ public class GalaxyMap {
             }
             basesInGalaxy = 1;
             galaxy[quadrantX][quadrantY] = +10;
-            enterprise.setQuadrant(new int[]{util.fnr(), util.fnr()});
+            enterprise.setQuadrant(util.fnr(), util.fnr());
         }
         remainingKlingons = klingonsInGalaxy;
     }

@@ -41,8 +41,8 @@ public class Enterprise {
         this.util = util;
 
         // random initial position
-        this.setQuadrant(new int[]{util.fnr(), util.fnr()});
-        this.setSector(new int[]{util.fnr(), util.fnr()});
+        this.setQuadrant(util.fnr(), util.fnr());
+        this.setSector(util.fnr(), util.fnr());
 
         // init cardinal directions
         IntStream.range(1, 9).forEach(i -> {
@@ -139,18 +139,18 @@ public class Enterprise {
         return new int[]{quadrantX, quadrantY};
     }
 
-    public void setQuadrant(final int[] quadrant) {
-        this.quadrantX = quadrant[COORD_X];
-        this.quadrantY = quadrant[COORD_Y];
+    public void setQuadrant(int x, int y) {
+        this.quadrantX = x;
+        this.quadrantY = y;
     }
 
     public int[] getSector() {
         return new int[]{sectorX, sectorY};
     }
 
-    public void setSector(final int[] sector) {
-        this.sectorX = sector[COORD_X];
-        this.sectorY = sector[COORD_Y];
+    public void setSector(int x, int y) {
+        this.sectorX = x;
+        this.sectorY = y;
     }
 
     public int[] moveShip(final float course, final int n, final String quadrantMap, final double stardate, final double initialStardate, final int missionDuration, final GameCallback callback) {
@@ -161,6 +161,7 @@ public class Enterprise {
         float x2 = cardinalDirections[ic1][2] + (cardinalDirections[ic1 + 1][2] - cardinalDirections[ic1][2]) * (course - ic1);
         final int initialQuadrantX = quadrantX;
         final int initialQuadrantY = quadrantY;
+
         for (int i = 1; i <= n; i++) {
             sectorX += x1;
             sectorY += x2;
@@ -172,30 +173,37 @@ public class Enterprise {
                 quadrantY = util.toInt(y / 8);
                 sectorX = util.toInt(x - quadrantX * 8);
                 sectorY = util.toInt(y - quadrantY * 8);
+
                 if (sectorX == 0) {
                     quadrantX = quadrantX - 1;
                     sectorX = 8;
                 }
+
                 if (sectorY == 0) {
                     quadrantY = quadrantY - 1;
                     sectorY = 8;
                 }
+
                 boolean hitEdge = false;
+
                 if (quadrantX < 1) {
                     hitEdge = true;
                     quadrantX = 1;
                     sectorX = 1;
                 }
+
                 if (quadrantX > 8) {
                     hitEdge = true;
                     quadrantX = 8;
                     sectorX = 8;
                 }
+
                 if (quadrantY < 1) {
                     hitEdge = true;
                     quadrantY = 8;
                     sectorY = 8;
                 }
+
                 if (quadrantY > 8) {
                     hitEdge = true;
                     quadrantY = 8;
@@ -207,14 +215,21 @@ public class Enterprise {
                     util.println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
                     util.println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
                     util.println("  AT SECTOR " + sectorX + "," + sectorY + " OF QUADRANT " + quadrantX + "," + quadrantY + ".'");
-                    if (stardate > initialStardate + missionDuration) callback.endGameFail(false);
+
+                    if (stardate > initialStardate + missionDuration) {
+                        callback.endGameFail(false);
+                    }
                 }
+                // check both sides if the addition should happen first or the multiplication.
+                // Parenthesis needed if addition should happen first.
                 if (8 * quadrantX + quadrantY == 8 * initialQuadrantX + initialQuadrantY) {
                     break;
                 }
+
                 callback.incrementStardate(1);
                 maneuverEnergySR(n);
                 callback.enterNewQuadrant();
+
                 return this.getSector();
             } else {
                 int S8 = util.toInt(sectorX) * 24 + util.toInt(sectorY) * 3 - 26; // S8 = pos
@@ -229,6 +244,7 @@ public class Enterprise {
         }
         sectorX = util.toInt(sectorX);
         sectorY = util.toInt(sectorY);
+
         return this.getSector();
     }
 
@@ -262,7 +278,7 @@ public class Enterprise {
     }
 
     /**
-     * TODO: refactor method to allow for increase of same number
+     * TODO: Consider refactoring method to allow for increase of same number
      */
     void shieldControl() {
         if (deviceStatus[DEVICE_SHIELD_CONTROL] < 0) {
@@ -313,7 +329,7 @@ public class Enterprise {
         double deltaToRepair = 0;
 
         for (int i = 0; i < deviceStatus.length; i++) {
-            if (deviceStatus[i] < 0){
+            if (deviceStatus[i] < 0) {
                 deltaToRepair += .1;
                 util.println("DELTA REPAIR INCREASED FOR " + deviceStatus[i]);
             }
@@ -342,7 +358,7 @@ public class Enterprise {
         }
     }
 
-    public static String printDeviceName(final int deviceNumber) {  // 8790
+    public static String printDeviceName(final int deviceNumber) {
         // PRINTS DEVICE NAME
         switch (deviceNumber) {
             case DEVICE_WARP_ENGINES:
