@@ -24,54 +24,6 @@ class GalaxyMapTest {
      * OWNER:
      */
     @Test
-    void getEnterprise() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getBasesInGalaxy() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getRemainingKlingons() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getKlingonsInGalaxy() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
     void fnd() {
         // ARRANGE
 
@@ -241,30 +193,6 @@ class GalaxyMapTest {
      */
     @Test
     void printNoEnemyShipsMessage() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getRegionName() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void getQuadrantName() {
         // ARRANGE
 
         // ACT
