@@ -635,7 +635,7 @@ class EnterpriseTest {
 
         enterprise.quadrantX = 6;
         enterprise.quadrantY = 4;
-        when(util.fnr()).thenReturn(5);//random number returned = 6
+        when(util.fnr()).thenReturn(6);//random number returned = 6
         when(util.fnr()).thenReturn(4);//random number returned = 4
 
         // ACT
@@ -697,7 +697,7 @@ class EnterpriseTest {
 
         enterprise.quadrantX = 6;
         enterprise.quadrantY = 4;
-        when(util.fnr()).thenReturn(5);//random number returned = 6
+        when(util.fnr()).thenReturn(6);//random number returned = 6
         when(util.fnr()).thenReturn(4);//random number returned = 4
 
         // ACT
