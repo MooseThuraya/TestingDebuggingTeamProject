@@ -476,7 +476,7 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void getDeviceStatus() {
@@ -488,7 +488,7 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void getCardinalDirections() {
@@ -500,7 +500,7 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void setDeviceStatus() {
