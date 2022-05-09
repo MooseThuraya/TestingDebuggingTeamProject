@@ -713,15 +713,91 @@ class EnterpriseTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
+     * to ensure the value of shields is 0 when energy goes below 0 and shields goes below 0
      */
     @Test
-    void maneuverEnergySR() {
+    void maneuverEnergySR_shield_value_decreased_when_energy_becomes_less_than_zero() {
         // ARRANGE
+        int expectedShield = 490;
+        int energy = 0;
+        int N = 2500;
+        int userInput = 1000;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+        // create the mock environment for user input commands
+        when(util.inputFloat(any())).thenReturn((float)userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
 
-        // ACT
+        enterprise.shieldControl();
+        assertEquals(userInput, enterprise.getShields());
 
-        // ASSERT
+        enterprise.maneuverEnergySR(N);
+
+        //ASSERT
+        verify(util).println("SHIELD CONTROL SUPPLIES ENERGY TO COMPLETE THE MANEUVER.");
+        assertEquals(energy, enterprise.getEnergy());
+        assertEquals(expectedShield, enterprise.getShields());
+    }
+
+    /**
+     * OWNER: Sanchita
+     * to ensure energy becomes 0 when energy is below zero and shield is appropriately reduced
+     */
+    @Test
+    void maneuverEnergySR_shield_value_zero_when_energy_becomes_less_than_zero_and_shield_zero() {
+        // ARRANGE
+        int expectedShield = 0;
+        int energy = 0;
+        int N = 4500;
+        int userInput = 1000;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+        // create the mock environment for user input commands
+        when(util.inputFloat(any())).thenReturn((float)userInput);
+        when(util.toInt((float) userInput)).thenReturn(userInput);
+
+        enterprise.shieldControl();
+        assertEquals(userInput, enterprise.getShields());
+
+        enterprise.maneuverEnergySR(N);
+
+        //ASSERT
+        verify(util).println("SHIELD CONTROL SUPPLIES ENERGY TO COMPLETE THE MANEUVER.");
+        assertEquals(energy, enterprise.getEnergy());
+        assertEquals(expectedShield, enterprise.getShields());
+    }
+
+    /**
+     * OWNER: Sanchita
+     * to ensure energy is getting reduced when maneuverEnergySR method is called
+     */
+    @Test
+    void maneuverEnergySR_calculate_energy_when_value_of_n_is_500() {
+        // ARRANGE
+        int energy = 2490;
+        int N = 500;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+        enterprise.maneuverEnergySR(N);
+        //ASSERT
+        assertEquals(energy, enterprise.getEnergy());
+    }
+
+    /**
+     * OWNER: Sanchita
+     * to ensure energy becomes 0 when energy is below zero
+     */
+    @Test
+    void maneuverEnergySR_zero_energy_when_value_of_energy_goes_below_0() {
+        // ARRANGE
+        int energy = 0;
+        int N = 3500;
+        Enterprise enterprise = new Enterprise(util);
+        //ACT
+        enterprise.maneuverEnergySR(N);
+        //ASSERT
+        assertEquals(energy, enterprise.getEnergy());
     }
 
     /**

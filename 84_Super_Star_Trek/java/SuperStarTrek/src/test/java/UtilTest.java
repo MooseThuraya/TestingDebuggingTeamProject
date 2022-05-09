@@ -45,7 +45,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
      */
     @Test
     void toInt() {
@@ -57,7 +57,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
      */
     @Test
     void println() {
@@ -105,7 +105,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
      */
     @Test
     void inputStr() {
@@ -117,7 +117,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
      */
     @Test
     void inputCoords() {
@@ -129,7 +129,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
      */
     @Test
     void inputFloat() {
