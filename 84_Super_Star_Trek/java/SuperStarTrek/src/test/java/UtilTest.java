@@ -21,30 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilTest {
 
     /**
-     * OWNER:
-     */
-    @Test
-    void random() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void fnr() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
      * OWNER: Sanchita
      */
     @Test
@@ -61,42 +37,6 @@ class UtilTest {
      */
     @Test
     void println() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void print() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void tab() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void strlen() {
         // ARRANGE
 
         // ACT
@@ -141,7 +81,19 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
+     */
+    @Test
+    void print() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
      */
     @Test
     void leftStr() {
@@ -153,7 +105,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void midStr() {
@@ -169,6 +121,54 @@ class UtilTest {
      */
     @Test
     void rightStr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void random() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
+    void fnr() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
+    void tab() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
+    void strlen() {
         // ARRANGE
 
         // ACT
