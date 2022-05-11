@@ -78,29 +78,46 @@ public class SuperStarTrekGame implements GameCallback {
         });
         util.println(
                 "                ,------*------,\n" +
-                        "-------------   '---  ------'\n" +
-                        " '-------- --'      / /\n" +
-                        "     ,---' '-------/ /--,\n" +
-                        "     '----------------'\n" +
-                        "\n" +
-                        "THE USS ENTERPRISE --- NCC-1701\n" +
-                        "\n"
+                "-------------   '---  ------'\n" +
+                " '-------- --'      / /\n" +
+                "     ,---' '-------/ /--,\n" +
+                "     '----------------'\n" +
+                "\n" +
+                "THE USS ENTERPRISE --- NCC-1701\n" +
+                "\n"
         );
     }
 
     void orders() {
         util.println("YOUR ORDERS ARE AS FOLLOWS:\n" +
-                "     DESTROY THE " + galaxyMap.getKlingonsInGalaxy() + " KLINGON WARSHIP" + ((galaxyMap.getKlingonsInGalaxy() == 1) ? "" : "S") + " WHICH HAVE INVADED\n" +
-                "   THE GALAXY BEFORE THEY CAN ATTACK FEDERATION HEADQUARTERS\n" +
-                "   ON STARDATE " + initialStardate + missionDuration + "  THIS GIVES YOU " + missionDuration + " DAYS.  THERE " + ((galaxyMap.getBasesInGalaxy() == 1) ? "IS" : "ARE") + "\n" +
-                "  " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() == 1) ? "" : "S") + " IN THE GALAXY FOR RESUPPLYING YOUR SHIP");
+                     "     DESTROY THE " +
+                     galaxyMap.getKlingonsInGalaxy() +
+                     " KLINGON WARSHIP" +
+                     ((galaxyMap.getKlingonsInGalaxy() == 1) ? "" : "S") +
+                     " WHICH HAVE INVADED\n" +
+                     "   THE GALAXY BEFORE THEY CAN ATTACK FEDERATION HEADQUARTERS\n" +
+                     "   ON STARDATE " +
+                     initialStardate +
+                     missionDuration +
+                     "  THIS GIVES YOU " +
+                     missionDuration +
+                     " DAYS.  THERE " +
+                     ((galaxyMap.getBasesInGalaxy() == 1) ? "IS" : "ARE") +
+                     "\n" +
+                     "  " +
+                     galaxyMap.getBasesInGalaxy() +
+                     " STARBASE" +
+                     ((galaxyMap.getBasesInGalaxy() == 1) ? "" : "S") +
+                     " IN THE GALAXY FOR RESUPPLYING YOUR SHIP");
     }
 
     void commandLoop() {
         while (!this.restart) {
             checkShipEnergy();
             String cmdStr = "";
-            while ("".equals(cmdStr)) cmdStr = util.inputStr("COMMAND");
+            while ("".equals(cmdStr)) {
+                cmdStr = util.inputStr("COMMAND");
+            }
             boolean foundCommand = false;
             for (int i = 1; i <= 9; i++) {
                 if (util.leftStr(cmdStr.toUpperCase(Locale.ROOT), 3).equals(util.midStr(COMMANDS, 3 * i - 2, 3))) {
@@ -148,13 +165,16 @@ public class SuperStarTrekGame implements GameCallback {
                     }
                 }
             }
-            if (!foundCommand) printCommandOptions();
+            if (!foundCommand) {
+                printCommandOptions();
+            }
         }
     }
 
     void checkShipEnergy() {
         final Enterprise enterprise = galaxyMap.getEnterprise();
-        if (enterprise.getTotalEnergy() < 10 && (enterprise.getEnergy() <= 10 || enterprise.getDeviceStatus()[Enterprise.DEVICE_SHIELD_CONTROL] != 0)) {
+        if (enterprise.getTotalEnergy() < 10 &&
+            (enterprise.getEnergy() <= 10 || enterprise.getDeviceStatus()[Enterprise.DEVICE_SHIELD_CONTROL] != 0)) {
             util.println("\n** FATAL ERROR **   YOU'VE JUST STRANDED YOUR SHIP IN ");
             util.println("SPACE");
             util.println("YOU HAVE INSUFFICIENT MANEUVERING ENERGY,");
@@ -181,8 +201,9 @@ public class SuperStarTrekGame implements GameCallback {
     void navigation() {
         float course = util.toInt(util.inputFloat("COURSE (0-9)"));
 
-        if (course == 9)
+        if (course == 9) {
             course = 1;
+        }
 
         if (course < 1 || course >= 9) {
             util.println("   LT. SULU REPORTS, 'INCORRECT COURSE DATA, SIR!'");
@@ -199,7 +220,9 @@ public class SuperStarTrekGame implements GameCallback {
             return;
         }
 
-        if (warp == 0) return;
+        if (warp == 0) {
+            return;
+        }
 
         if (warp > 0 && warp <= 8) {
             int n = util.toInt(warp * 8);
@@ -210,8 +233,10 @@ public class SuperStarTrekGame implements GameCallback {
             } else {
                 util.println("ENGINEERING REPORTS   'INSUFFICIENT ENERGY AVAILABLE");
                 util.println("                       FOR MANEUVERING AT WARP " + warp + "!'");
-                if (enterprise.getShields() < n - enterprise.getEnergy() || deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0)
+                if (enterprise.getShields() < n - enterprise.getEnergy() ||
+                    deviceStatus[Enterprise.DEVICE_SHIELD_CONTROL] < 0) {
                     return;
+                }
                 util.println("DEFLECTOR CONTROL ROOM ACKNOWLEDGES " + enterprise.getShields() + " UNITS OF ENERGY");
                 util.println("                         PRESENTLY DEPLOYED TO SHIELDS.");
             }
@@ -227,15 +252,18 @@ public class SuperStarTrekGame implements GameCallback {
         // repair damaged devices and print damage report
         enterprise.repairDamagedDevices(warp);
 
-        if (util.random() > .2)
+        if (util.random() > .2) {
             return;  // 80% chance no damage nor repair
+        }
 
         int randomDevice = util.fnr();    // random device
         final double[] deviceStatus = enterprise.getDeviceStatus();
 
         if (util.random() >= .6) {   // 40% chance of repair of random device
             enterprise.setDeviceStatus(randomDevice, deviceStatus[randomDevice] + util.random() * 3 + 1);
-            util.println("DAMAGE CONTROL REPORT:  " + Enterprise.printDeviceName(randomDevice) + " STATE OF REPAIR IMPROVED\n");
+            util.println("DAMAGE CONTROL REPORT:  " +
+                         Enterprise.printDeviceName(randomDevice) +
+                         " STATE OF REPAIR IMPROVED\n");
         } else {            // 60% chance of damage of random device
             enterprise.setDeviceStatus(randomDevice, deviceStatus[randomDevice] - (util.random() * 5 + 1));
             util.println("DAMAGE CONTROL REPORT:  " + Enterprise.printDeviceName(randomDevice) + " DAMAGED");
@@ -272,7 +300,9 @@ public class SuperStarTrekGame implements GameCallback {
         }
         while (true) {
             final float commandInput = util.inputFloat("COMPUTER ACTIVE AND AWAITING COMMAND");
-            if (commandInput < 0) return;
+            if (commandInput < 0) {
+                return;
+            }
             util.println("");
             int command = util.toInt(commandInput) + 1;
             if (command >= COMPUTER_COMMAND_CUMULATIVE_GALACTIC_RECORD && command <= COMPUTER_COMMAND_GALAXY_MAP) {
@@ -313,14 +343,18 @@ public class SuperStarTrekGame implements GameCallback {
     void statusReport() {
         util.println("   STATUS REPORT:");
         util.println("KLINGON" + ((galaxyMap.getKlingonsInGalaxy() > 1) ? "S" : "") +
-                " LEFT: " +
-                galaxyMap.getKlingonsInGalaxy());
+                     " LEFT: " +
+                     galaxyMap.getKlingonsInGalaxy());
         util.println("MISSION MUST BE COMPLETED IN " +
-                .1 * util.toInt((initialStardate + missionDuration - stardate) * 10) +
-                " STARDATES");
+                     .1 * util.toInt((initialStardate + missionDuration - stardate) * 10) +
+                     " STARDATES");
 
         if (galaxyMap.getBasesInGalaxy() >= 1) {
-            util.println("THE FEDERATION IS MAINTAINING " + galaxyMap.getBasesInGalaxy() + " STARBASE" + ((galaxyMap.getBasesInGalaxy() > 1) ? "S" : "") + " IN THE GALAXY");
+            util.println("THE FEDERATION IS MAINTAINING " +
+                         galaxyMap.getBasesInGalaxy() +
+                         " STARBASE" +
+                         ((galaxyMap.getBasesInGalaxy() > 1) ? "S" : "") +
+                         " IN THE GALAXY");
         } else {
             util.println("YOUR STUPIDITY HAS LEFT YOU ON YOUR OWN IN");
             util.println("  THE GALAXY -- YOU HAVE NO STARBASES LEFT!");
@@ -356,7 +390,8 @@ public class SuperStarTrekGame implements GameCallback {
     public void endGameSuccess() {
         util.println("CONGRATULATION, CAPTAIN!  THE LAST KLINGON BATTLE CRUISER");
         util.println("MENACING THE FEDERATION HAS BEEN DESTROYED.\n");
-        util.println("YOUR EFFICIENCY RATING IS " + (Math.sqrt(1000 * (galaxyMap.getRemainingKlingons() / (stardate - initialStardate)))));
+        util.println("YOUR EFFICIENCY RATING IS " +
+                     (Math.sqrt(1000 * (galaxyMap.getRemainingKlingons() / (stardate - initialStardate)))));
         repeatGame();
     }
 

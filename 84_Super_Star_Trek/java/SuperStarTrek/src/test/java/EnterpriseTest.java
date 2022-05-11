@@ -591,55 +591,27 @@ class EnterpriseTest {
 
     @Test
     void moveShip_verify_when_sectorX_and_sectorY_are_within_quadrantLimits_that_prints_warp_engine_shutDown_due_to_bad_navigation() {
-        Enterprise enterprise = new Enterprise(util);
-
-        // ARRANGE
 
         //ARRANGE PARAMETERS
-        // user inputs course = 1
+        Enterprise enterprise = new Enterprise(util);
+
         int course = 1;
-        // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float) course);
-        when(util.toInt((float) course)).thenReturn(course);
-
-        // user inputs warp = 3
-        int warp = 3;
-        //we multiply user's warp input * 8
-        int n = warp * 8;
-        //create the mock environment for the "n" value
-        when(util.inputFloat(any())).thenReturn((float) warp * 8);
-        when(util.toInt((float) warp * 8)).thenReturn(warp * 8);
-
-        //stardate arrange
+        int n = 24; // n = warp * 8, passed through mulitple classes
         double stardate = 28;
-        when(util.toInt(28f)).thenReturn(28);
+        int missionDuration = 25;
+        String quadrantMap = "                                                                                                                             >!<                                                               ";
 
-        //initialStardate arrange
-        double initialStardate = stardate;
+        int sectorX = 5;
+        int sectorY = 3;
 
-        //arrange missionDuration = 25
-        GalaxyMap galaxyMap = new GalaxyMap(util);
-        int missionDuration = Math.max(25, 17);
-        when(galaxyMap.getKlingonsInGalaxy()).thenReturn(17);
-        when(util.toInt((float)25)).thenReturn(25);
-
-        //arrange quadrantMap
-        String quadrantMap = "                                                                                                                              >!<                                                               ";
-
-        //ARRANGE moveShip() content
-
-        enterprise.sectorX = 5;
-        enterprise.sectorY = 3;
-        when(util.fnr()).thenReturn(5);//random number returned = 5
-        when(util.fnr()).thenReturn(3);//random number returned = 3
-
-        enterprise.quadrantX = 6;
-        enterprise.quadrantY = 4;
-        when(util.fnr()).thenReturn(6);//random number returned = 6
-        when(util.fnr()).thenReturn(4);//random number returned = 4
+        int quadrantX = 6;
+        int quadrantY = 4;
 
         // ACT
-        int [] sector = enterprise.moveShip(course, n, quadrantMap,stardate, initialStardate, missionDuration, mock(GameCallback.class));
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                                           mock(GameCallback.class));
 
         // ASSERT
         verify(util).println("WARP ENGINES SHUT DOWN AT ");
@@ -657,58 +629,39 @@ class EnterpriseTest {
 
         // ARRANGE
 
-        //ARRANGE PARAMETERS
-        // user inputs course = 1
         int course = 1;
-        // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float) course);
-        when(util.toInt((float) course)).thenReturn(course);
-
-        // user inputs warp = 3
-        int warp = 3;
-        //we multiply user's warp input * 8
-        int n = warp * 8;
-        //create the mock environment for the "n" value
-        when(util.inputFloat(any())).thenReturn((float) warp * 8);
-        when(util.toInt((float) warp * 8)).thenReturn(warp * 8);
-
-        //stardate arrange
+        int n = 24;
         double stardate = 28;
-        when(util.toInt(28f)).thenReturn(28);
-
-        //initialStardate arrange
-        double initialStardate = stardate;
-
-        //arrange missionDuration = 25
-        GalaxyMap galaxyMap = new GalaxyMap(util);
-        int missionDuration = Math.max(25, 17);
-        when(galaxyMap.getKlingonsInGalaxy()).thenReturn(17);
-        when(util.toInt((float)25)).thenReturn(25);
-
-        //arrange quadrantMap
+        int missionDuration = 25;
         String quadrantMap = "                                                                                                                              >!<                                                               ";
 
-        //ARRANGE moveShip() content
 
-        enterprise.sectorX = -1;
-        enterprise.sectorY = 3;
-        when(util.fnr()).thenReturn(-1);//random number returned = -1
-        when(util.fnr()).thenReturn(3);//random number returned = 3
+        int sectorX = -1;
+        int sectorY = 3;
 
-        enterprise.quadrantX = 6;
-        enterprise.quadrantY = 4;
-        when(util.fnr()).thenReturn(6);//random number returned = 6
-        when(util.fnr()).thenReturn(4);//random number returned = 4
+        int quadrantX = 6;
+        int quadrantY = 4;
 
         // ACT
-        int [] sector = enterprise.moveShip(course, n, quadrantMap,stardate, initialStardate, missionDuration, mock(GameCallback.class));
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                                           mock(GameCallback.class));
 
         // ASSERT
         verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
         verify(util).println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
         verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
         verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
-        verify(util).println("  AT SECTOR " + enterprise.sectorX + "," + enterprise.sectorY + " OF QUADRANT " + enterprise.quadrantX + "," + enterprise.quadrantY + ".'");
+        verify(util).println("  AT SECTOR " +
+                             enterprise.sectorX +
+                             "," +
+                             enterprise.sectorY +
+                             " OF QUADRANT " +
+                             enterprise.quadrantX +
+                             "," +
+                             enterprise.quadrantY +
+                             ".'");
         assertArrayEquals(enterprise.getSector(), sector);
     }
 
@@ -726,7 +679,7 @@ class EnterpriseTest {
         Enterprise enterprise = new Enterprise(util);
         //ACT
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
         when(util.toInt((float) userInput)).thenReturn(userInput);
 
         enterprise.shieldControl();
@@ -754,7 +707,7 @@ class EnterpriseTest {
         Enterprise enterprise = new Enterprise(util);
         //ACT
         // create the mock environment for user input commands
-        when(util.inputFloat(any())).thenReturn((float)userInput);
+        when(util.inputFloat(any())).thenReturn((float) userInput);
         when(util.toInt((float) userInput)).thenReturn(userInput);
 
         enterprise.shieldControl();
@@ -778,8 +731,10 @@ class EnterpriseTest {
         int energy = 2490;
         int N = 500;
         Enterprise enterprise = new Enterprise(util);
+
         //ACT
         enterprise.maneuverEnergySR(N);
+
         //ASSERT
         assertEquals(energy, enterprise.getEnergy());
     }
@@ -794,8 +749,10 @@ class EnterpriseTest {
         int energy = 0;
         int N = 3500;
         Enterprise enterprise = new Enterprise(util);
+
         //ACT
         enterprise.maneuverEnergySR(N);
+
         //ASSERT
         assertEquals(energy, enterprise.getEnergy());
     }
@@ -824,6 +781,7 @@ class EnterpriseTest {
         // ARRANGE
         String deviceName = "SHORT RANGE SENSORS";
         Enterprise enterprise = new Enterprise(util);
+
         //ACT
 
         //ASSERT

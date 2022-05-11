@@ -153,12 +153,16 @@ public class Enterprise {
         this.sectorY = y;
     }
 
-    public int[] moveShip(final float course, final int n, final String quadrantMap, final double stardate, final double initialStardate, final int missionDuration, final GameCallback callback) {
+    public int[] moveShip(final float course, final int n, final String quadrantMap,
+                          final double stardate, final double initialStardate,
+                          final int missionDuration, final GameCallback callback) {
         int ic1 = util.toInt(course);
-        float x1 = cardinalDirections[ic1][1] + (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (course - ic1);
+        float x1 = cardinalDirections[ic1][1] +
+                   (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (course - ic1);
         float x = sectorX;
         float y = sectorY;
-        float x2 = cardinalDirections[ic1][2] + (cardinalDirections[ic1 + 1][2] - cardinalDirections[ic1][2]) * (course - ic1);
+        float x2 = cardinalDirections[ic1][2] +
+                   (cardinalDirections[ic1 + 1][2] - cardinalDirections[ic1][2]) * (course - ic1);
         final int initialQuadrantX = quadrantX;
         final int initialQuadrantY = quadrantY;
 
@@ -214,7 +218,15 @@ public class Enterprise {
                     util.println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
                     util.println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
                     util.println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
-                    util.println("  AT SECTOR " + sectorX + "," + sectorY + " OF QUADRANT " + quadrantX + "," + quadrantY + ".'");
+                    util.println("  AT SECTOR " +
+                                 sectorX +
+                                 "," +
+                                 sectorY +
+                                 " OF QUADRANT " +
+                                 quadrantX +
+                                 "," +
+                                 quadrantY +
+                                 ".'");
 
                     if (stardate > initialStardate + missionDuration) {
                         callback.endGameFail(false);
@@ -320,11 +332,11 @@ public class Enterprise {
             util.println("\nDEVICE STATE OF REPAIR");
             for (int deviceNr = 0; deviceNr < deviceStatus.length; deviceNr++) {
                 util.print(printDeviceName(deviceNr) +
-                        util.leftStr(GalaxyMap.QUADRANT_ROW,
-                                25 - util.strlen(printDeviceName(deviceNr))) +
-                        " " +
-                        util.toInt(deviceStatus[deviceNr] * 100) * .01 +
-                        "\n");
+                           util.leftStr(GalaxyMap.QUADRANT_ROW,
+                                        25 - util.strlen(printDeviceName(deviceNr))) +
+                           " " +
+                           util.toInt(deviceStatus[deviceNr] * 100) * .01 +
+                           "\n");
             }
         }
 
@@ -351,14 +363,16 @@ public class Enterprise {
 
             util.println("TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;");
             util.println("ESTIMATED TIME TO REPAIR:'" +
-                    .01 * util.toInt(100 * deltaToRepair) +
-                    " STARDATES");
+                         .01 * util.toInt(100 * deltaToRepair) +
+                         " STARDATES");
 
             final String reply = util.inputStr("WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)");
 
             if ("Y".equals(reply.toUpperCase(Locale.ROOT))) {
                 for (int deviceNr = 0; deviceNr < deviceStatus.length; deviceNr++) {
-                    if (deviceStatus[deviceNr] < 0) deviceStatus[deviceNr] = 0;
+                    if (deviceStatus[deviceNr] < 0) {
+                        deviceStatus[deviceNr] = 0;
+                    }
                 }
                 callback.incrementStardate(deltaToRepair + .1);
             }
