@@ -603,13 +603,29 @@ class EnterpriseTest {
 
         int sectorX = 5;
         int sectorY = 3;
+        int x = sectorX / 8;
+        int y = sectorY / 8;
 
         int quadrantX = 6;
         int quadrantY = 4;
+        int qX = quadrantX * 8;
+        int qY = quadrantY * 8;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(x)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(y)).thenCallRealMethod(); // line 178 in Enterprise class
+
+        when(util.toInt(x - qX)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(y - qY)).thenCallRealMethod(); // line 180 in Enterprise class
+
+        when(util.toInt(sectorX)).thenCallRealMethod(); // line 247 in Enterprise class
+        when(util.toInt(sectorY)).thenCallRealMethod(); // line 247 in Enterprise class
+
 
         // ACT
         enterprise.setSector(sectorX, sectorY);
         enterprise.setQuadrant(quadrantX, quadrantY);
+
         int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
                                            mock(GameCallback.class));
 

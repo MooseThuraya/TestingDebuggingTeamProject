@@ -1,6 +1,9 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -19,6 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class UtilTest {
+
+    Util util;
+
+    @BeforeEach
+    void setup_testing_environment() {
+        this.util = mock(Util.class);
+    }
 
     /**
      * OWNER: Sanchita
@@ -84,12 +94,15 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void print() {
+    void print_verified_prints_expected_string() {
         // ARRANGE
+        String str = "this is a test";
 
         // ACT
+        util.print(str);
 
         // ASSERT
+        verify(util).print(str);
     }
 
     /**
@@ -98,6 +111,9 @@ class UtilTest {
     @Test
     void leftStr() {
         // ARRANGE
+        String str = "this is a test";
+        int len = str.length();
+
 
         // ACT
 

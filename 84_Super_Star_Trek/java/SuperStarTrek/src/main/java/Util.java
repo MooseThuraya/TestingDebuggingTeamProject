@@ -93,6 +93,7 @@ public class Util {
         if (input == null || input.length() < len) {
             return input;
         }
+
         return input.substring(0, len);
     }
 
