@@ -25,7 +25,9 @@ public class Util {
 
     public int toInt(final double num) {
         int x = (int) Math.floor(num);
-        if (x < 0) x *= -1;
+        if (x < 0) {
+            x *= -1;
+        }
         return x;
     }
 
@@ -88,29 +90,37 @@ public class Util {
     }
 
     public String leftStr(final String input, final int len) {
-        if (input == null || input.length() < len) return input;
+        if (input == null || input.length() < len) {
+            return input;
+        }
         return input.substring(0, len);
     }
 
     public String midStr(final String input, final int start, final int len) {
-        if (input == null || input.length() < ((start - 1) + len)) return input;
+        if (input == null || input.length() < ((start - 1) + len)) {
+            return input;
+        }
         return input.substring(start - 1, (start - 1) + len);
     }
 
     /**
      * TODO: Index out of bounds hit randomly, test to solve this
+     *
      * @param input
      * @param len
      * @return
      */
     public String rightStr(final String input, final int len) {
-        if (input == null || input.length() < len)
+        if (input == null || input.length() < len) {
             return "";
+        }
         return input.substring(input.length() - len);
     }
 
     public double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();

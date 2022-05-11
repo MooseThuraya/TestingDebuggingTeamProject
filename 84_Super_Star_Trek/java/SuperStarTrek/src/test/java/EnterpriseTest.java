@@ -705,6 +705,7 @@ class EnterpriseTest {
         int N = 4500;
         int userInput = 1000;
         Enterprise enterprise = new Enterprise(util);
+
         //ACT
         // create the mock environment for user input commands
         when(util.inputFloat(any())).thenReturn((float) userInput);
