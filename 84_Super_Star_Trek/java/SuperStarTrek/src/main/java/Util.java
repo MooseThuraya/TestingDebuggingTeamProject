@@ -89,6 +89,12 @@ public class Util {
         }
     }
 
+    /**
+     * Returns the first three characters of the input string
+     * @param input
+     * @param len
+     * @return
+     */
     public String leftStr(final String input, final int len) {
         if (input == null || input.length() < len) {
             return input;

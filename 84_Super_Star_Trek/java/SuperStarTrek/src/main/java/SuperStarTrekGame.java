@@ -119,6 +119,7 @@ public class SuperStarTrekGame implements GameCallback {
                 cmdStr = util.inputStr("COMMAND");
             }
             boolean foundCommand = false;
+
             for (int i = 1; i <= 9; i++) {
                 if (util.leftStr(cmdStr.toUpperCase(Locale.ROOT), 3).equals(util.midStr(COMMANDS, 3 * i - 2, 3))) {
                     switch (i) {

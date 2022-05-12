@@ -2,8 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -22,13 +21,6 @@ import static org.mockito.Mockito.verify;
  */
 
 class UtilTest {
-
-    Util util;
-
-    @BeforeEach
-    void setup_testing_environment() {
-        this.util = mock(Util.class);
-    }
 
     /**
      * OWNER: Sanchita
@@ -96,6 +88,7 @@ class UtilTest {
     @Test
     void print_verified_prints_expected_string() {
         // ARRANGE
+        Util util = new Util();
         String str = "this is a test";
 
         // ACT
@@ -109,15 +102,19 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void leftStr() {
+    void leftStr_returns_first_three_letters_of_input_string() {
         // ARRANGE
-        String str = "this is a test";
-        int len = str.length();
+        Util util = new Util();
 
+        String str = "test";
+        String expectedStr = "tes";
+        int len = 3;
 
         // ACT
+        String result = util.leftStr(str, len);
 
         // ASSERT
+        assertEquals(expectedStr, result);
     }
 
     /**
