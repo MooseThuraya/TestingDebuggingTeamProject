@@ -105,8 +105,46 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void midStr() {
+    void leftStr_returns_null_when_input_is_null() {
         // ARRANGE
+        Util util = new Util();
+        int len = 3;
+
+        // ACT
+        String result = util.leftStr(null, len);
+
+        // ASSERT
+        assertNull(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void leftStr_returns_input_when_input_is_less_than_three_char() {
+        // ARRANGE
+        Util util = new Util();
+        String str = "Hi";
+        int len = 3;
+
+        // ACT
+        String result = util.leftStr(str, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "";
+        int start = 1;
+        int len = 3;
 
         // ACT
 
