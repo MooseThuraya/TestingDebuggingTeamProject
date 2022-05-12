@@ -10,14 +10,16 @@ import java.util.stream.IntStream;
 /**
  * Convenience utility methods for the Super Star Trek game.
  */
-public class Util {
+public class Util implements IUtil {
 
     final Random random = new Random();
 
+    @Override
     public float random() {
         return random.nextFloat();
     }
 
+    @Override
     public int fnr() {    // 475
         // Generate a random integer from 1 to 8 inclusive.
         return toInt(random() * 7 + 1);
@@ -25,16 +27,29 @@ public class Util {
 
     public int toInt(final double num) {
         int x = (int) Math.floor(num);
+
         if (x < 0) {
             x *= -1;
         }
         return x;
     }
 
+    /**
+     * This is being used as an override for System.out.println
+     *
+     * We have confirmed this is functioning in our tests through mockito
+     * @param s
+     */
     public void println(final String s) {
         System.out.print(s);
     }
 
+    /**
+     * This is being used as an override for System.out.print
+     *
+     * We have confirmed this is functioning in our tests through mockito
+     * @param s
+     */
     public void print(final String s) {
         System.out.print(s);
     }
@@ -50,6 +65,7 @@ public class Util {
     public String inputStr(final String message) {
         System.out.print(message + "? ");
         final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         try {
             return reader.readLine();
         } catch (IOException ioe) {

@@ -1,0 +1,4 @@
+str, len, result
+"", 3, ""
+"Hi", 3, "Hi"
+"Len is negative bro", -3, "Len is negative bro"

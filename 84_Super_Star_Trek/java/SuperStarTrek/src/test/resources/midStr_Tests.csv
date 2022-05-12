@@ -1,0 +1,3 @@
+input, start, len, result
+"Negative start value dude", -6, 3, "Negative start value dude"
+"Negative len value is unacceptable!", 6, -3, "Negative len value is unacceptable!"

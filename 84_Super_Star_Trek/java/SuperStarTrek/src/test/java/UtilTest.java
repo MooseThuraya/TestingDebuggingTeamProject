@@ -1,8 +1,11 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -103,16 +106,19 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
+     * @param input - input string
      */
-    @Test
-    void leftStr_returns_null_when_input_is_null() {
+    @ParameterizedTest
+    @NullSource
+    void leftStr_returns_null_when_input_is_null(String input) {
         // ARRANGE
         Util util = new Util();
 
         int len = 3;
 
         // ACT
-        String result = util.leftStr(null, len);
+        String result = util.leftStr(input, len);
 
         // ASSERT
         assertNull(result);
@@ -120,57 +126,27 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
+     * This tests for all conditions where the input string is returned
+     * Conditions: empty string,
+     *             input.length() < len,
+     *             len < 0
+     * @param input - input string
+     * @param len - lenght of substring returned
      */
-    @Test
-    void leftStr_returns_empty_string_when_input_is_empty() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/leftStr_Tests.csv", numLinesToSkip = 1)
+    void leftStr_returns_input_string(String input, int len) {
         // ARRANGE
         Util util = new Util();
 
-        String str = "";
-        int len = 3;
-
         // ACT
-        String result = util.leftStr(str, len);
+        String result = util.leftStr(input, len);
 
         // ASSERT
-        assertEquals(str, result);
+        assertEquals(input, result);
     }
 
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void leftStr_returns_input_when_input_is_less_than_three_char() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "Hi";
-        int len = 3;
-
-        // ACT
-        String result = util.leftStr(str, len);
-
-        // ASSERT
-        assertEquals(str, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void leftStr_returns_input_when_len_is_negative() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "Len is negative bro";
-        int len = -3;
-
-        // ACT
-        String result = util.leftStr(str, len);
-
-        // ASSERT
-        assertEquals(str, result);
-    }
 
     /**
      * OWNER: ALICIA
@@ -193,9 +169,12 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
+     * @param input - input string
      */
-    @Test
-    void midStr_input_null_returns_null() {
+    @ParameterizedTest
+    @NullSource
+    void midStr_input_null_returns_null(String input) {
         // ARRANGE
         Util util = new Util();
 
@@ -203,7 +182,7 @@ class UtilTest {
         int len = 3;
 
         // ACT
-        String result = util.midStr(null, start, len);
+        String result = util.midStr(input, start, len);
 
         // ASSERT
         assertNull(result);
@@ -211,28 +190,29 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     * @param input - input string
      */
-    @Test
-    void midStr_input_empty_returns_empty_string() {
+    @ParameterizedTest
+    @EmptySource
+    void midStr_input_empty_returns_empty_string(String input) {
         // ARRANGE
         Util util = new Util();
 
-        String str = "";
         int start = 5;
         int len = 3;
 
         // ACT
-        String result = util.midStr(str, start, len);
+        String result = util.midStr(input, start, len);
 
         // ASSERT
-        assertEquals(str, result);
+        assertEquals(input, result);
     }
 
     /**
      * OWNER: ALICIA
      */
     @Test
-    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_5() {
+    void midStr_returns_substring_of_input_string_based_on_start_at_5() {
         // ARRANGE
         Util util = new Util();
 
@@ -252,7 +232,7 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_8_includes_spaces() {
+    void midStr_returns_substring_with_spaces_of_input_string_based_on_start_at_8() {
         // ARRANGE
         Util util = new Util();
 
@@ -272,7 +252,7 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_6_includes_special_chars() {
+    void midStr_returns_substring_including_special_chars_of_input_string_based_on_start_at_6() {
         // ARRANGE
         Util util = new Util();
 
@@ -290,96 +270,56 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
+     * Tests when [start] or [len] is negative, input string is returned
+     * Conditions: start < 0,
+     *             len < 0
+     *
+     * @param input - input string
+     * @param start - start point value
+     * @param len - length of substring value
      */
-    @Test
-    void midStr_returns_input_string_when_start_is_negative() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/midStr_Tests.csv", numLinesToSkip = 1)
+    void midStr_returns_input_string(String input, int start, int len) {
         // ARRANGE
         Util util = new Util();
 
-        String str = "Negative start value dude";
-        int start = -6;
-        int len = 3;
-
         // ACT
-        String result = util.midStr(str, start, len);
+        String result = util.midStr(input, start, len);
 
         // ASSERT
-        assertEquals(str, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void midStr_returns_input_string_when_len_is_negative() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "Negative len value is unacceptable!";
-        int start = 6;
-        int len = -3;
-
-        // ACT
-        String result = util.midStr(str, start, len);
-
-        // ASSERT
-        assertEquals(str, result);
+        assertEquals(input, result);
     }
 
 
     /**
      * OWNER: ALICIA
+     * Tests all conditions that return an empty string
+     *
+     * Conditions: Null input,
+     *             input.length() < len,
+     *             Empty input,
+     *             len = 0,
+     *             len > input.length(),
+     *             len < 0
+     *
+     * @param input - input string
+     * @param len - substring length
      */
-    @Test
-    void rightStr_returns_empty_space_with_null_input() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/rightStr_Tests.csv", numLinesToSkip = 1)
+    void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len) {
         // ARRANGE
         Util util = new Util();
 
         String expectedStr = "";
-        int len = 3;
 
         // ACT
-        String result = util.rightStr(null, len);
+        String result = util.rightStr(input, len);
 
         // ASSERT
         assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void rightStr_returns_empty_space_with_input_length_less_than_len() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "Test";
-        String expectedStr = "";
-        int len = 6;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void rightStr_returns_empty_space_with_input_empty() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "";
-        int len = 1;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals(str, result);
     }
 
     /**
@@ -405,61 +345,6 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void rightStr_returns_empty_string_when_len_equals_0() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "This for testers";
-        String expectedStr = "";
-        int len = 0;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void rightStr_returns_empty_string_when_len_is_greater_than_input_length() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "This for testers";
-        int len = 50;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals("", result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void rightStr_returns_empty_string_when_len_is_negative() {
-        // ARRANGE
-        Util util = new Util();
-
-        String str = "This for testers";
-        int len = -5;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals("", result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
     void random() {
         // ARRANGE
 
@@ -469,7 +354,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void fnr() {

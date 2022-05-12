@@ -1,0 +1,7 @@
+input, len, result
+,3,""
+"Test", 6, ""
+"", 1, ""
+"This for testers", 0, ""
+"This for testers", 50, ""
+"This for testers", -5, ""
