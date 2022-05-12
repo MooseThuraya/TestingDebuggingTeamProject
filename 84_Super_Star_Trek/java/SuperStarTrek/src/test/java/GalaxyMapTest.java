@@ -1,6 +1,8 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -19,6 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class GalaxyMapTest {
+    Util util;
+
+    @BeforeEach
+    void galaxyMapSetUp() {
+        this.util = mock(Util.class);
+    }
 
     /**
      * OWNER:

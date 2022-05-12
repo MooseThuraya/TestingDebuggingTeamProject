@@ -26,7 +26,7 @@ class EnterpriseTest {
     Util util;
 
     @BeforeEach
-    void setup_testing_environment() {
+    void enterpriseSetUp() {
         this.util = mock(Util.class);
     }
 

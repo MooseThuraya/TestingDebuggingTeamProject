@@ -31,7 +31,6 @@ import static org.mockito.Mockito.*;
 
 class UtilTest {
     Random rand;
-    BigDecimal bidDec;
 
     @BeforeEach
     public void utilSetUp() {

@@ -36,28 +36,6 @@ public class GalaxyMap {
     int starbaseX = 0; // X coordinate of starbase
     int starbaseY = 0; // Y coord of starbase
 
-    public Enterprise getEnterprise() {
-        return enterprise;
-    }
-
-    public int getBasesInGalaxy() {
-        return basesInGalaxy;
-    }
-
-    public int getRemainingKlingons() {
-        return remainingKlingons;
-    }
-
-    public int getKlingonsInGalaxy() {
-        return klingonsInGalaxy;
-    }
-
-    double fnd(int i) {
-        return Math.sqrt((klingonQuadrants[i][1] - enterprise.getSector()[Enterprise.COORD_X]) ^
-                         2 + (klingonQuadrants[i][2] - enterprise.getSector()[Enterprise.COORD_Y]) ^
-                         2);
-    }
-
     public GalaxyMap(Util util) {
         this.util = util;
         this.enterprise = new Enterprise(util);
@@ -107,6 +85,28 @@ public class GalaxyMap {
             enterprise.setQuadrant(util.fnr(), util.fnr());
         }
         remainingKlingons = klingonsInGalaxy;
+    }
+
+    public Enterprise getEnterprise() {
+        return enterprise;
+    }
+
+    public int getBasesInGalaxy() {
+        return basesInGalaxy;
+    }
+
+    public int getRemainingKlingons() {
+        return remainingKlingons;
+    }
+
+    public int getKlingonsInGalaxy() {
+        return klingonsInGalaxy;
+    }
+
+    double fnd(int i) {
+        return Math.sqrt((klingonQuadrants[i][1] - enterprise.getSector()[Enterprise.COORD_X]) ^
+                         2 + (klingonQuadrants[i][2] - enterprise.getSector()[Enterprise.COORD_Y]) ^
+                         2);
     }
 
     void newQuadrant(final double stardate, final double initialStardate) {   // 1320
