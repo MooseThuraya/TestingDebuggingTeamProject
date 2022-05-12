@@ -1,4 +1,5 @@
 import java.util.Locale;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
@@ -52,7 +53,7 @@ public class SuperStarTrekGame implements GameCallback {
     final double initialStardate;
 
     public static void main(String[] args) {
-        Util util = new Util();
+        Util util = new Util(new Random());
 
         final SuperStarTrekGame game = new SuperStarTrekGame(util);
         printBanner(util);

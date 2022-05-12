@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -5,7 +6,10 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Author: Alicia Garcia, Mustafa Abuthuraya, Sanchita Jain
@@ -24,6 +28,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class UtilTest {
+    Random rand;
+
+    @BeforeEach
+    public void utilSetUp() {
+
+        this.rand = mock(Random.class, withSettings().withoutAnnotations());
+    }
 
     /**
      * OWNER: Sanchita
@@ -91,7 +102,7 @@ class UtilTest {
     @Test
     void leftStr_returns_first_three_letters_of_input_string() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "test";
         String expectedStr = "tes";
@@ -113,7 +124,7 @@ class UtilTest {
     @NullSource
     void leftStr_returns_null_when_input_is_null(String input) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         int len = 3;
 
@@ -138,7 +149,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
     void leftStr_returns_input_string(String input, int len) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         // ACT
         String result = util.leftStr(input, len);
@@ -154,7 +165,7 @@ class UtilTest {
     @Test
     void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "Hi";
         int start = 1;
@@ -176,7 +187,7 @@ class UtilTest {
     @NullSource
     void midStr_input_null_returns_null(String input) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         int start = 5;
         int len = 3;
@@ -196,7 +207,7 @@ class UtilTest {
     @EmptySource
     void midStr_input_empty_returns_empty_string(String input) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         int start = 5;
         int len = 3;
@@ -214,7 +225,7 @@ class UtilTest {
     @Test
     void midStr_returns_substring_of_input_string_based_on_start_at_5() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "Whathappened?";
         String expectedStr = "hap";
@@ -234,7 +245,7 @@ class UtilTest {
     @Test
     void midStr_returns_substring_with_spaces_of_input_string_based_on_start_at_8() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "This is not a test";
         String expectedStr = " no";
@@ -254,7 +265,7 @@ class UtilTest {
     @Test
     void midStr_returns_substring_including_special_chars_of_input_string_based_on_start_at_6() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "Hie#'@!?*$)";
         String expectedStr = "@!?";
@@ -283,7 +294,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
     void midStr_returns_input_string(String input, int start, int len) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         // ACT
         String result = util.midStr(input, start, len);
@@ -311,7 +322,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
     void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len) {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String expectedStr = "";
 
@@ -328,7 +339,7 @@ class UtilTest {
     @Test
     void rightStr_returns_last_5_chars_when_len_equals_5() {
         // ARRANGE
-        Util util = new Util();
+        Util util = new Util(rand);
 
         String str = "This for testers";
         String expectedStr = "sters";
@@ -347,10 +358,16 @@ class UtilTest {
     @Test
     void random() {
         // ARRANGE
+        Util util = new Util(rand);
+        float expectedValue = 0.123f;
+
+        when(rand.nextFloat()).thenReturn(expectedValue);
 
         // ACT
+        float result = util.random();
 
         // ASSERT
+        assertEquals(expectedValue, result);
     }
 
     /**

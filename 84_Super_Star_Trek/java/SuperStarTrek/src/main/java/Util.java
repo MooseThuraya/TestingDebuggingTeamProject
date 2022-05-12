@@ -10,16 +10,17 @@ import java.util.stream.IntStream;
 /**
  * Convenience utility methods for the Super Star Trek game.
  */
-public class Util implements IUtil {
+public class Util {
+    final Random random;
 
-    final Random random = new Random();
+    public Util(Random random) {
+        this.random = random;
+    }
 
-    @Override
     public float random() {
         return random.nextFloat();
     }
 
-    @Override
     public int fnr() {    // 475
         // Generate a random integer from 1 to 8 inclusive.
         return toInt(random() * 7 + 1);
