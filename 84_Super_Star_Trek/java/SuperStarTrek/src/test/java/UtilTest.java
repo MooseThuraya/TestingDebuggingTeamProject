@@ -135,7 +135,7 @@ class UtilTest {
      * @param len - lenght of substring returned
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "/leftStr_Tests.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
     void leftStr_returns_input_string(String input, int len) {
         // ARRANGE
         Util util = new Util();
@@ -280,7 +280,7 @@ class UtilTest {
      * @param len - length of substring value
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "/midStr_Tests.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
     void midStr_returns_input_string(String input, int start, int len) {
         // ARRANGE
         Util util = new Util();
@@ -308,7 +308,7 @@ class UtilTest {
      * @param len - substring length
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "/rightStr_Tests.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
     void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len) {
         // ARRANGE
         Util util = new Util();
