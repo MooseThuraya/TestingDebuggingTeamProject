@@ -29,7 +29,7 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void fnd() {
@@ -41,7 +41,7 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
     void newQuadrant() {
