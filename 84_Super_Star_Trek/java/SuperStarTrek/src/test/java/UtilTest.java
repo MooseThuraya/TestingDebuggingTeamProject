@@ -108,6 +108,7 @@ class UtilTest {
     void leftStr_returns_null_when_input_is_null() {
         // ARRANGE
         Util util = new Util();
+
         int len = 3;
 
         // ACT
@@ -121,9 +122,28 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
+    void leftStr_returns_empty_string_when_input_is_empty() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "";
+        int len = 3;
+
+        // ACT
+        String result = util.leftStr(str, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
     void leftStr_returns_input_when_input_is_less_than_three_char() {
         // ARRANGE
         Util util = new Util();
+
         String str = "Hi";
         int len = 3;
 
@@ -141,6 +161,7 @@ class UtilTest {
     void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
         // ARRANGE
         Util util = new Util();
+
         String str = "Hi";
         int start = 1;
         int len = 3;
@@ -159,6 +180,7 @@ class UtilTest {
     void midStr_input_null_returns_null() {
         // ARRANGE
         Util util = new Util();
+
         int start = 5;
         int len = 3;
 
@@ -173,9 +195,29 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
+    void midStr_input_empty_returns_empty_string() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "";
+        int start = 5;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
     void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_5() {
         // ARRANGE
         Util util = new Util();
+
         String str = "Whathappened?";
         String expectedStr = "hap";
         int start = 5;
@@ -195,6 +237,7 @@ class UtilTest {
     void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_8_includes_spaces() {
         // ARRANGE
         Util util = new Util();
+
         String str = "This is not a test";
         String expectedStr = " no";
         int start = 8;
@@ -214,6 +257,7 @@ class UtilTest {
     void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_6_includes_special_chars() {
         // ARRANGE
         Util util = new Util();
+
         String str = "Hie#'@!?*$)";
         String expectedStr = "@!?";
         int start = 6;
@@ -226,16 +270,60 @@ class UtilTest {
         assertEquals(expectedStr, result);
     }
 
+
     /**
      * OWNER: ALICIA
      */
     @Test
-    void rightStr() {
+    void rightStr_returns_empty_space_with_null_input() {
         // ARRANGE
+        Util util = new Util();
+
+        String expectedStr = "";
+        int len = 3;
 
         // ACT
+        String result = util.rightStr(null, len);
 
         // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_empty_space_with_input_length_less_than_len() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "Test";
+        String expectedStr = "";
+        int len = 6;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_empty_space_with_input_empty() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "";
+        int len = 1;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals(str, result);
     }
 
     /**

@@ -32,7 +32,7 @@ public class Util {
     }
 
     public void println(final String s) {
-        System.out.println(s);
+        System.out.print(s);
     }
 
     public void print(final String s) {
@@ -91,6 +91,7 @@ public class Util {
 
     /**
      * Returns the first three characters of the input string
+     *
      * @param input
      * @param len
      * @return
@@ -132,6 +133,4 @@ public class Util {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
-
 }
