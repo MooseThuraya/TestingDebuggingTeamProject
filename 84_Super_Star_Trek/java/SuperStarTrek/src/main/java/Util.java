@@ -90,13 +90,17 @@ public class Util {
     }
 
     /**
-     * Returns the first three characters of the input string
+     * Returns the first len characters of the input string.
      *
-     * @param input
-     * @param len
-     * @return
+     * @param input - input string to parse from
+     * @param len - how many chars we want to remove from input
+     * @return - the substring
      */
     public String leftStr(final String input, final int len) {
+        if (len < 0) {
+            return input;
+        }
+
         if (input == null || input.length() < len) {
             return input;
         }
@@ -104,24 +108,42 @@ public class Util {
         return input.substring(0, len);
     }
 
+    /**
+     * Returns the mid section of the string based on the start position minus the len.
+     *
+     * @param input - input string to parse from
+     * @param start - where to begin the parse of substring
+     * @param len - the end of the parse of substring
+     * @return - the substring
+     */
     public String midStr(final String input, final int start, final int len) {
+        if (start < 0 || len < 0) {
+            return input;
+        }
+
         if (input == null || input.length() < ((start - 1) + len)) {
             return input;
         }
+
         return input.substring(start - 1, (start - 1) + len);
     }
 
     /**
-     * TODO: Index out of bounds hit randomly, test to solve this
+     * Returns the right side of the string minus len
      *
-     * @param input
-     * @param len
-     * @return
+     * @param input - string input by player
+     * @param len - number of chars to return in substring
+     * @return - the substring
      */
     public String rightStr(final String input, final int len) {
+        if (len < 0) {
+            return "";
+        }
+
         if (input == null || input.length() < len) {
             return "";
         }
+
         return input.substring(input.length() - len);
     }
 

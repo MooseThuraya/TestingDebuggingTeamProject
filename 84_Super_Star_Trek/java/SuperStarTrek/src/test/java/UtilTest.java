@@ -158,6 +158,24 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
+    void leftStr_returns_input_when_len_is_negative() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "Len is negative bro";
+        int len = -3;
+
+        // ACT
+        String result = util.leftStr(str, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
     void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
         // ARRANGE
         Util util = new Util();
@@ -270,6 +288,44 @@ class UtilTest {
         assertEquals(expectedStr, result);
     }
 
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_returns_input_string_when_start_is_negative() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "Negative start value dude";
+        int start = -6;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_returns_input_string_when_len_is_negative() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "Negative len value is unacceptable!";
+        int start = 6;
+        int len = -3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(str, result);
+    }
+
 
     /**
      * OWNER: ALICIA
@@ -324,6 +380,80 @@ class UtilTest {
 
         // ASSERT
         assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_last_5_chars_when_len_equals_5() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "This for testers";
+        String expectedStr = "sters";
+        int len = 5;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_empty_string_when_len_equals_0() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "This for testers";
+        String expectedStr = "";
+        int len = 0;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_empty_string_when_len_is_greater_than_input_length() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "This for testers";
+        int len = 50;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals("", result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void rightStr_returns_empty_string_when_len_is_negative() {
+        // ARRANGE
+        Util util = new Util();
+
+        String str = "This for testers";
+        int len = -5;
+
+        // ACT
+        String result = util.rightStr(str, len);
+
+        // ASSERT
+        assertEquals("", result);
     }
 
     /**
