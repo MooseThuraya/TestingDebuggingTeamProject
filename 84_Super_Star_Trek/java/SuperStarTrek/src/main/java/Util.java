@@ -59,7 +59,16 @@ public class Util {
         return IntStream.range(1, n).mapToObj(num -> " ").collect(Collectors.joining());
     }
 
-    public int strlen(final String s) {
+    /**
+     * Returns the number of chars in a string. If null or empty, will always return 0.
+     *
+     * @param s - input string
+     * @return - number of letters in the string
+     */
+    public int strLen(final String s) {
+        if (s == null || s.length() <= 0) {
+            return 0;
+        }
         return s.length();
     }
 
@@ -168,8 +177,10 @@ public class Util {
         if (places < 0) {
             throw new IllegalArgumentException();
         }
+
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
+
         return bd.doubleValue();
     }
 }

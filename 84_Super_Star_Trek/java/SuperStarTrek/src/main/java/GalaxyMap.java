@@ -532,11 +532,11 @@ public class GalaxyMap {
             if (cumulativeReport) {
                 int y = 1;
                 String quadrantName = getQuadrantName(false, i, y);
-                int tabLen = util.toInt(15 - .5 * util.strlen(quadrantName));
+                int tabLen = util.toInt(15 - .5 * util.strLen(quadrantName));
                 util.println(util.tab(tabLen) + quadrantName);
                 y = 5;
                 quadrantName = getQuadrantName(false, i, y);
-                tabLen = util.toInt(39 - .5 * util.strlen(quadrantName));
+                tabLen = util.toInt(39 - .5 * util.strLen(quadrantName));
                 util.println(util.tab(tabLen) + quadrantName);
             } else {
                 for (int j = 1; j <= 8; j++) {

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -6,6 +7,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,10 +31,10 @@ import static org.mockito.Mockito.*;
 
 class UtilTest {
     Random rand;
+    BigDecimal bidDec;
 
     @BeforeEach
     public void utilSetUp() {
-
         this.rand = mock(Random.class, withSettings().withoutAnnotations());
     }
 
@@ -137,13 +139,14 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * This tests for all conditions where the input string is returned
      * Conditions: empty string,
-     *             input.length() < len,
-     *             len < 0
+     * input.length() < len,
+     * len < 0
+     *
      * @param input - input string
-     * @param len - lenght of substring returned
+     * @param len   - lenght of substring returned
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
@@ -201,6 +204,7 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
      * @param input - input string
      */
     @ParameterizedTest
@@ -281,14 +285,14 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * Tests when [start] or [len] is negative, input string is returned
      * Conditions: start < 0,
-     *             len < 0
+     * len < 0
      *
      * @param input - input string
      * @param start - start point value
-     * @param len - length of substring value
+     * @param len   - length of substring value
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
@@ -303,20 +307,19 @@ class UtilTest {
         assertEquals(input, result);
     }
 
-
     /**
      * OWNER: ALICIA
      * Tests all conditions that return an empty string
-     *
+     * <p>
      * Conditions: Null input,
-     *             input.length() < len,
-     *             Empty input,
-     *             len = 0,
-     *             len > input.length(),
-     *             len < 0
+     * input.length() < len,
+     * Empty input,
+     * len = 0,
+     * len > input.length(),
+     * len < 0
      *
      * @param input - input string
-     * @param len - substring length
+     * @param len   - substring length
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
@@ -374,47 +377,159 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void fnr() {
+    void fnr_returns_integer_value_between_1_and_8() {
         // ARRANGE
+        Util util = new Util(rand);
+        float randomValue = 0.251f;
+        int expectedResult = 2;
+        when((rand.nextFloat())).thenReturn(randomValue);
 
         // ACT
+        int result = util.fnr();
 
         // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
-    void tab() {
+    void strlen_return_6_for_string_with_6_letters() {
         // ARRANGE
+        Util util = new Util(rand);
+
+        String str = "System";
+        int expectedResult = 6;
 
         // ACT
+        int result = util.strLen(str);
 
         // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
+     * <p>
+     * Tests all conditions for invalid string to return a zero value
+     * Conditions: NULL input,
+     * Empty string input
+     *
+     * @param input
      */
-    @Test
-    void strlen() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/util_strlen_Tests.csv", numLinesToSkip = 1)
+    void strLen_returns_zero(String input) {
         // ARRANGE
+        Util util = new Util(rand);
 
         // ACT
+        int result = util.strLen(input);
 
         // ASSERT
+        assertEquals(0, result);
     }
 
     /**
-     * OWNER:
+     * OWNER: ALICIA
      */
     @Test
-    void round() {
+    void tab_returns_n_minus_one_spaces() {
         // ARRANGE
+        Util util = new Util(rand);
+
+        int n = 6;
+        String expectedResult = "     ";
 
         // ACT
+        String result = util.tab(n);
 
         // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     * Tests values of n less than or equal to 0, and 1.
+     * Conditions: n =0,
+     *             n = 1,
+     *             n = -1,
+     *             n = 100
+     *
+     * @param n - value of spaces
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/util_Tab_Tests.csv", numLinesToSkip = 1)
+    void tab_returns_no_spaces(int n) {
+        // ARRANGE
+        Util util = new Util(rand);
+
+        String expectedResult = "";
+
+        // ACT
+        String result = util.tab(n);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void round_throws_illegalArgumentException_message_null_when_places_lessThan_0() {
+        // ARRANGE
+        Util util = new Util(rand);
+
+        double value = 20.0;
+        int places = -12;
+
+        // ACT
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            util.round(value, places);
+        });
+
+        // ASSERT
+        assertNull(exception.getMessage());
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void round_returns_double_value_rounded_up_to_6_decimal_places() {
+        // ARRANGE
+        Util util = new Util(rand);
+
+        double value = 20.66325854;
+        int places = 6;
+        double expectedResult = 20.663259;
+
+        // ACT
+       double result = util.round(value, places);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void round_returns_value_rounded_up_when_places_is_zero() {
+        // ARRANGE
+        Util util = new Util(rand);
+
+        double value = 20.6;
+        int places = 0;
+        double expectedResult = 21;
+
+        // ACT
+        double result = util.round(value, places);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
     }
 }

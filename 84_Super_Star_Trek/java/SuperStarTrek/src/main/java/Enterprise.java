@@ -333,7 +333,7 @@ public class Enterprise {
             for (int deviceNr = 0; deviceNr < deviceStatus.length; deviceNr++) {
                 util.print(printDeviceName(deviceNr) +
                            util.leftStr(GalaxyMap.QUADRANT_ROW,
-                                        25 - util.strlen(printDeviceName(deviceNr))) +
+                                        25 - util.strLen(printDeviceName(deviceNr))) +
                            " " +
                            util.toInt(deviceStatus[deviceNr] * 100) * .01 +
                            "\n");
