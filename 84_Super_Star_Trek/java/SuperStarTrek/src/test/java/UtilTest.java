@@ -211,6 +211,25 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
+    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_6_includes_special_chars() {
+        // ARRANGE
+        Util util = new Util();
+        String str = "Hie#'@!?*$)";
+        String expectedStr = "@!?";
+        int start = 6;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
     void rightStr() {
         // ARRANGE
 
