@@ -35,7 +35,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER: Sanchita
+     * OWNER: Sanchita - no point in testing since we have verified this in other tests
      */
     @Test
     void println() {
@@ -80,22 +80,6 @@ class UtilTest {
         // ACT
 
         // ASSERT
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void print_verified_prints_expected_string() {
-        // ARRANGE
-        Util util = new Util();
-        String str = "this is a test";
-
-        // ACT
-        util.print(str);
-
-        // ASSERT
-        verify(util).print(str);
     }
 
     /**
