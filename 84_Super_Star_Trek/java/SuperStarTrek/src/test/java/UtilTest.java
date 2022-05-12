@@ -141,14 +141,70 @@ class UtilTest {
     void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
         // ARRANGE
         Util util = new Util();
-
-        String str = "";
+        String str = "Hi";
         int start = 1;
         int len = 3;
 
         // ACT
+        String result = util.midStr(str, start, len);
 
         // ASSERT
+        assertEquals(str, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_input_null_returns_null() {
+        // ARRANGE
+        Util util = new Util();
+        int start = 5;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(null, start, len);
+
+        // ASSERT
+        assertNull(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_5() {
+        // ARRANGE
+        Util util = new Util();
+        String str = "Whathappened?";
+        String expectedStr = "hap";
+        int start = 5;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void midStr_returns_middle_three_chars_of_input_string_based_on_start_at_8_includes_spaces() {
+        // ARRANGE
+        Util util = new Util();
+        String str = "This is not a test";
+        String expectedStr = " no";
+        int start = 8;
+        int len = 3;
+
+        // ACT
+        String result = util.midStr(str, start, len);
+
+        // ASSERT
+        assertEquals(expectedStr, result);
     }
 
     /**
