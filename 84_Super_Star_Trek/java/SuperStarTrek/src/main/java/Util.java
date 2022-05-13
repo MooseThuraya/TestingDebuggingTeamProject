@@ -37,8 +37,9 @@ public class Util {
 
     /**
      * This is being used as an override for System.out.println
-     *
+     * <p>
      * We have confirmed this is functioning in our tests through mockito
+     *
      * @param s
      */
     public void println(final String s) {
@@ -47,8 +48,9 @@ public class Util {
 
     /**
      * This is being used as an override for System.out.print
-     *
+     * <p>
      * We have confirmed this is functioning in our tests through mockito
+     *
      * @param s
      */
     public void print(final String s) {
@@ -119,7 +121,7 @@ public class Util {
      * Returns the first len characters of the input string.
      *
      * @param input - input string to parse from
-     * @param len - how many chars we want to remove from input
+     * @param len   - how many chars we want to remove from input
      * @return - the substring
      */
     public String leftStr(final String input, final int len) {
@@ -139,7 +141,7 @@ public class Util {
      *
      * @param input - input string to parse from
      * @param start - where to begin the parse of substring
-     * @param len - the end of the parse of substring
+     * @param len   - the end of the parse of substring
      * @return - the substring
      */
     public String midStr(final String input, final int start, final int len) {
@@ -158,7 +160,7 @@ public class Util {
      * Returns the right side of the string minus len
      *
      * @param input - string input by player
-     * @param len - number of chars to return in substring
+     * @param len   - number of chars to return in substring
      * @return - the substring
      */
     public String rightStr(final String input, final int len) {

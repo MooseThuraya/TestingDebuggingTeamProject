@@ -108,7 +108,6 @@ class UtilTest {
      * 4. null string
      * 5. Substring is first 3 chars of input str
      *
-     *
      * @param input - input string
      * @param len   - lenght of substring returned
      */
@@ -169,7 +168,6 @@ class UtilTest {
      * 6. len < 0 returns empty string,
      * 7. len = 5 returns substring of last 5 chars
      *
-     *
      * @param input - input string
      * @param len   - substring length
      */
@@ -226,13 +224,13 @@ class UtilTest {
      * OWNER: ALICIA
      * <p>
      * Tests all conditions for strLen inputs
-     *
+     * <p>
      * Conditions:
      * 1. NULL input,
      * 2. Empty string input
      * 3. string with 6 letters returns 6
      *
-     * @param input - input string
+     * @param input          - input string
      * @param expectedResult - expected str length
      */
     @ParameterizedTest
@@ -252,15 +250,13 @@ class UtilTest {
      * OWNER: ALICIA
      * <p>
      * Tests values of n
-     *
+     * <p>
      * Conditions:
      * 1. n =0,
      * 2. n = 1,
      * 3. n = -1,
      * 4. n = -100,
      * 5. n = 6 returns string with 5 spaces
-     *
-     *
      *
      * @param n - value of spaces
      */
@@ -299,13 +295,13 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * Tests rounds with various values
-     *
+     * <p>
      * Conditions:
      * 1. n = 20.66325854 and places = 6 returns 20.663259
      * 2. n = 20.6 and places = 0 return 21 (rounds up)
-     * 
+     *
      * @param value
      * @param places
      * @param expectedResult
