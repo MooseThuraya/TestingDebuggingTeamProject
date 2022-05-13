@@ -43,7 +43,7 @@ public class Util {
      * @param s
      */
     public void println(final String s) {
-        System.out.print(s);
+        System.out.println(s);
     }
 
     /**

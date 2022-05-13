@@ -75,6 +75,7 @@ public class GalaxyMap {
                 galaxy[x][y] = klingons * 100 + starbases * 10 + util.fnr();
             });
         });
+
         if (basesInGalaxy == 0) {
             if (galaxy[quadrantX][quadrantY] < 200) {
                 galaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY] + 120;

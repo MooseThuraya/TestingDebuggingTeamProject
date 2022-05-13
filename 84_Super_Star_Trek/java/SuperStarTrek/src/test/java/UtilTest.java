@@ -113,7 +113,7 @@ class UtilTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
-    void leftStr_parameterized_test(String input, int len, String expectedResult) {
+    void leftStr_parameterized_tests(String input, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -144,7 +144,7 @@ class UtilTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
-    void midStr_returns_input_string(String input, int start, int len, String expectedResult) {
+    void midStr_parameterized_tests(String input, int start, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -173,7 +173,7 @@ class UtilTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
-    void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len, String expectedResult) {
+    void rightStr_parameterized_tests(String input, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -252,7 +252,7 @@ class UtilTest {
      * Tests values of n
      * <p>
      * Conditions:
-     * 1. n =0,
+     * 1. n = 0,
      * 2. n = 1,
      * 3. n = -1,
      * 4. n = -100,
