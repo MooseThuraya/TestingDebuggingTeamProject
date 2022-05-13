@@ -99,57 +99,22 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     */
-    @Test
-    void leftStr_returns_first_three_letters_of_input_string() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "test";
-        String expectedStr = "tes";
-        int len = 3;
-
-        // ACT
-        String result = util.leftStr(str, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     *
-     * @param input - input string
-     */
-    @ParameterizedTest
-    @NullSource
-    void leftStr_returns_null_when_input_is_null(String input) {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        int len = 3;
-
-        // ACT
-        String result = util.leftStr(input, len);
-
-        // ASSERT
-        assertNull(result);
-    }
-
-    /**
-     * OWNER: ALICIA
      * <p>
      * This tests for all conditions where the input string is returned
-     * Conditions: empty string,
-     * input.length() < len,
-     * len < 0
+     * Conditions:
+     * 1. empty string,
+     * 2. input.length() < len,
+     * 3. len < 0,
+     * 4. null string
+     * 5. Substring is first 3 chars of input str
+     *
      *
      * @param input - input string
      * @param len   - lenght of substring returned
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
-    void leftStr_returns_input_string(String input, int len) {
+    void leftStr_parameterized_test(String input, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -157,7 +122,7 @@ class UtilTest {
         String result = util.leftStr(input, len);
 
         // ASSERT
-        assertEquals(input, result);
+        assertEquals(expectedResult, result);
     }
 
 
@@ -287,7 +252,7 @@ class UtilTest {
      * <p>
      * Tests when [start] or [len] is negative, input string is returned
      * Conditions: start < 0,
-     * len < 0
+     *             len < 0
      *
      * @param input - input string
      * @param start - start point value
@@ -295,7 +260,7 @@ class UtilTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
-    void midStr_returns_input_string(String input, int start, int len) {
+    void midStr_returns_input_string(String input, int start, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -303,7 +268,7 @@ class UtilTest {
         String result = util.midStr(input, start, len);
 
         // ASSERT
-        assertEquals(input, result);
+        assertEquals(expectedResult, result);
     }
 
     /**
@@ -311,28 +276,26 @@ class UtilTest {
      * Tests all conditions that return an empty string
      * <p>
      * Conditions: Null input,
-     * input.length() < len,
-     * Empty input,
-     * len = 0,
-     * len > input.length(),
-     * len < 0
+     *             input.length() < len,
+     *             Empty input,
+     *             len = 0,
+     *             len > input.length(),
+     *             len < 0
      *
      * @param input - input string
      * @param len   - substring length
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
-    void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len) {
+    void rightStr_returns_empty_space_with_input_length_less_than_len(String input, int len, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
-
-        String expectedStr = "";
 
         // ACT
         String result = util.rightStr(input, len);
 
         // ASSERT
-        assertEquals(expectedStr, result);
+        assertEquals(expectedResult, result);
     }
 
     /**
@@ -450,12 +413,12 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * Tests values of n less than or equal to 0, and 1.
      * Conditions: n =0,
-     *             n = 1,
-     *             n = -1,
-     *             n = 100
+     * n = 1,
+     * n = -1,
+     * n = 100
      *
      * @param n - value of spaces
      */
@@ -507,7 +470,7 @@ class UtilTest {
         double expectedResult = 20.663259;
 
         // ACT
-       double result = util.round(value, places);
+        double result = util.round(value, places);
 
         // ASSERT
         assertEquals(expectedResult, result);
