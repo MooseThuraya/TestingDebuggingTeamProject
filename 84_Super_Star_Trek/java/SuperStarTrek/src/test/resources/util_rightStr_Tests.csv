@@ -5,3 +5,4 @@ input, len, expectedResult
 "This for testers", 0, ""
 "This for testers", 50, ""
 "This for testers", -5, ""
+"This for testers", 5, "sters"

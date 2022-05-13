@@ -157,14 +157,16 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     * Tests all conditions that return an empty string
+     * Tests all conditions for rightStr()
      * <p>
-     * Conditions: Null input,
-     *             input.length() < len,
-     *             Empty input,
-     *             len = 0,
-     *             len > input.length(),
-     *             len < 0
+     * Conditions: 1. Null input returns empty string,
+     *             2. input.length() < len returns empty string,
+     *             3. Empty input returns empty string,
+     *             4. len = 0 returns empty string,
+     *             5. len > input.length() returns empty string,
+     *             6. len < 0 returns empty string,
+     *             7. len = 5 returns substring of last 5 chars
+     *
      *
      * @param input - input string
      * @param len   - substring length
@@ -180,25 +182,6 @@ class UtilTest {
 
         // ASSERT
         assertEquals(expectedResult, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void rightStr_returns_last_5_chars_when_len_equals_5() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "This for testers";
-        String expectedStr = "sters";
-        int len = 5;
-
-        // ACT
-        String result = util.rightStr(str, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
     }
 
     /**
@@ -239,34 +222,18 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
-     */
-    @Test
-    void strlen_return_6_for_string_with_6_letters() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "System";
-        int expectedResult = 6;
-
-        // ACT
-        int result = util.strLen(str);
-
-        // ASSERT
-        assertEquals(expectedResult, result);
-    }
-
-    /**
-     * OWNER: ALICIA
      * <p>
-     * Tests all conditions for invalid string to return a zero value
-     * Conditions: NULL input,
-     * Empty string input
+     * Tests all conditions for strLen inputs
+     * Conditions: 1. NULL input,
+     *             2. Empty string input
+     *             3. string with 6 letters returns 6
      *
-     * @param input
+     * @param input - input string
+     * @param expectedResult - expected str length
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_strlen_Tests.csv", numLinesToSkip = 1)
-    void strLen_returns_zero(String input) {
+    void strLen_returns_zero(String input, int expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
 
@@ -274,45 +241,28 @@ class UtilTest {
         int result = util.strLen(input);
 
         // ASSERT
-        assertEquals(0, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void tab_returns_n_minus_one_spaces() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        int n = 6;
-        String expectedResult = "     ";
-
-        // ACT
-        String result = util.tab(n);
-
-        // ASSERT
         assertEquals(expectedResult, result);
     }
 
     /**
      * OWNER: ALICIA
      * <p>
-     * Tests values of n less than or equal to 0, and 1.
-     * Conditions: n =0,
-     * n = 1,
-     * n = -1,
-     * n = 100
+     * Tests values of n .
+     * Conditions: 1. n =0,
+     *             2. n = 1,
+     *             3. n = -1,
+     *             4. n = -100,
+     *             5. n = 6 returns string with 5 spaces
+     *
+     *
      *
      * @param n - value of spaces
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/util_Tab_Tests.csv", numLinesToSkip = 1)
-    void tab_returns_no_spaces(int n) {
+    void tab_returns_no_spaces(int n, String expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
-
-        String expectedResult = "";
 
         // ACT
         String result = util.tab(n);
@@ -343,34 +293,20 @@ class UtilTest {
 
     /**
      * OWNER: ALICIA
+     *
+     * Tests rounds with various values
+     *
+     * Conditions: 1. n = 20.66325854 and places = 6 returns 20.663259
+     *             2. n = 20.6 and places = 0 return 21 (rounds up)
+     * @param value
+     * @param places
+     * @param expectedResult
      */
-    @Test
-    void round_returns_double_value_rounded_up_to_6_decimal_places() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/util_round_tests.csv", numLinesToSkip = 1)
+    void round_returns_double_value_rounded_up_to_6_decimal_places(double value, int places, double expectedResult) {
         // ARRANGE
         Util util = new Util(rand);
-
-        double value = 20.66325854;
-        int places = 6;
-        double expectedResult = 20.663259;
-
-        // ACT
-        double result = util.round(value, places);
-
-        // ASSERT
-        assertEquals(expectedResult, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void round_returns_value_rounded_up_when_places_is_zero() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        double value = 20.6;
-        int places = 0;
-        double expectedResult = 21;
 
         // ACT
         double result = util.round(value, places);
