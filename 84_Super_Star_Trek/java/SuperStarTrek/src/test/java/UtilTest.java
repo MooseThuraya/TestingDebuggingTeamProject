@@ -125,134 +125,18 @@ class UtilTest {
         assertEquals(expectedResult, result);
     }
 
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void midStr_input_length_less_than_startMinusOne_plusLen_returns_input_string() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "Hi";
-        int start = 1;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(str, start, len);
-
-        // ASSERT
-        assertEquals(str, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     *
-     * @param input - input string
-     */
-    @ParameterizedTest
-    @NullSource
-    void midStr_input_null_returns_null(String input) {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        int start = 5;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(input, start, len);
-
-        // ASSERT
-        assertNull(result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     *
-     * @param input - input string
-     */
-    @ParameterizedTest
-    @EmptySource
-    void midStr_input_empty_returns_empty_string(String input) {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        int start = 5;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(input, start, len);
-
-        // ASSERT
-        assertEquals(input, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void midStr_returns_substring_of_input_string_based_on_start_at_5() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "Whathappened?";
-        String expectedStr = "hap";
-        int start = 5;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(str, start, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void midStr_returns_substring_with_spaces_of_input_string_based_on_start_at_8() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "This is not a test";
-        String expectedStr = " no";
-        int start = 8;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(str, start, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void midStr_returns_substring_including_special_chars_of_input_string_based_on_start_at_6() {
-        // ARRANGE
-        Util util = new Util(rand);
-
-        String str = "Hie#'@!?*$)";
-        String expectedStr = "@!?";
-        int start = 6;
-        int len = 3;
-
-        // ACT
-        String result = util.midStr(str, start, len);
-
-        // ASSERT
-        assertEquals(expectedStr, result);
-    }
-
     /**
      * OWNER: ALICIA
      * <p>
-     * Tests when [start] or [len] is negative, input string is returned
-     * Conditions: start < 0,
-     *             len < 0
+     * Tests all conditions for midStr
+     * Conditions: 1. start < 0,
+     *             2. len < 0,
+     *             3. empty string returns empty string,
+     *             4. returns substring starting at 5 and is 3 chars long,
+     *             5. return substring with space starting at 8 and is 3 chars long,
+     *             6. returns substring with special chars starting at 6 and is 3 chars long,
+     *             7. null string returns null,
+     *             8. input less than (start -1) + len returns input string
      *
      * @param input - input string
      * @param start - start point value
