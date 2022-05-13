@@ -129,14 +129,15 @@ class UtilTest {
      * OWNER: ALICIA
      * <p>
      * Tests all conditions for midStr
-     * Conditions: 1. start < 0,
-     *             2. len < 0,
-     *             3. empty string returns empty string,
-     *             4. returns substring starting at 5 and is 3 chars long,
-     *             5. return substring with space starting at 8 and is 3 chars long,
-     *             6. returns substring with special chars starting at 6 and is 3 chars long,
-     *             7. null string returns null,
-     *             8. input less than (start -1) + len returns input string
+     * Conditions:
+     * 1. start < 0,
+     * 2. len < 0,
+     * 3. empty string returns empty string,
+     * 4. returns substring starting at 5 and is 3 chars long,
+     * 5. return substring with space starting at 8 and is 3 chars long,
+     * 6. returns substring with special chars starting at 6 and is 3 chars long,
+     * 7. null string returns null,
+     * 8. input less than (start -1) + len returns input string
      *
      * @param input - input string
      * @param start - start point value
@@ -159,13 +160,14 @@ class UtilTest {
      * OWNER: ALICIA
      * Tests all conditions for rightStr()
      * <p>
-     * Conditions: 1. Null input returns empty string,
-     *             2. input.length() < len returns empty string,
-     *             3. Empty input returns empty string,
-     *             4. len = 0 returns empty string,
-     *             5. len > input.length() returns empty string,
-     *             6. len < 0 returns empty string,
-     *             7. len = 5 returns substring of last 5 chars
+     * Conditions:
+     * 1. Null input returns empty string,
+     * 2. input.length() < len returns empty string,
+     * 3. Empty input returns empty string,
+     * 4. len = 0 returns empty string,
+     * 5. len > input.length() returns empty string,
+     * 6. len < 0 returns empty string,
+     * 7. len = 5 returns substring of last 5 chars
      *
      *
      * @param input - input string
@@ -188,7 +190,7 @@ class UtilTest {
      * OWNER: ALICIA
      */
     @Test
-    void random() {
+    void random_returns_value_when_called() {
         // ARRANGE
         Util util = new Util(rand);
         float expectedValue = 0.123f;
@@ -224,9 +226,11 @@ class UtilTest {
      * OWNER: ALICIA
      * <p>
      * Tests all conditions for strLen inputs
-     * Conditions: 1. NULL input,
-     *             2. Empty string input
-     *             3. string with 6 letters returns 6
+     *
+     * Conditions:
+     * 1. NULL input,
+     * 2. Empty string input
+     * 3. string with 6 letters returns 6
      *
      * @param input - input string
      * @param expectedResult - expected str length
@@ -247,12 +251,14 @@ class UtilTest {
     /**
      * OWNER: ALICIA
      * <p>
-     * Tests values of n .
-     * Conditions: 1. n =0,
-     *             2. n = 1,
-     *             3. n = -1,
-     *             4. n = -100,
-     *             5. n = 6 returns string with 5 spaces
+     * Tests values of n
+     *
+     * Conditions:
+     * 1. n =0,
+     * 2. n = 1,
+     * 3. n = -1,
+     * 4. n = -100,
+     * 5. n = 6 returns string with 5 spaces
      *
      *
      *
@@ -296,8 +302,10 @@ class UtilTest {
      *
      * Tests rounds with various values
      *
-     * Conditions: 1. n = 20.66325854 and places = 6 returns 20.663259
-     *             2. n = 20.6 and places = 0 return 21 (rounds up)
+     * Conditions:
+     * 1. n = 20.66325854 and places = 6 returns 20.663259
+     * 2. n = 20.6 and places = 0 return 21 (rounds up)
+     * 
      * @param value
      * @param places
      * @param expectedResult
