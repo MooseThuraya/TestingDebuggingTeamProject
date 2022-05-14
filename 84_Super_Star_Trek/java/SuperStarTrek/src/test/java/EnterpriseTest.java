@@ -587,10 +587,14 @@ class EnterpriseTest {
 
     /**
      * OWNER: MUSTAFA
+     * Verify that we print
+     * "WARP ENGINES SHUT DOWN AT "
+     * and "SECTOR " + sectorX + "," + sectorY + " DUE TO BAD NAVIGATION"
+     * when sectorX = 5 and sectorY = 3
      */
 
     @Test
-    void moveShip_verify_when_sectorX_and_sectorY_are_within_quadrantLimits_that_prints_warp_engine_shutDown_due_to_bad_navigation() {
+    void moveShip_verify_that_warp_engine_shutsDown_due_to_bad_navigation_when_sectorX_is_equalTo_5_and_sectorY_is_equalTo_3() {
 
         //ARRANGE PARAMETERS
         Enterprise enterprise = new Enterprise(util);
@@ -603,44 +607,50 @@ class EnterpriseTest {
 
         int sectorX = 5;
         int sectorY = 3;
-        int x = sectorX / 8;
-        int y = sectorY / 8;
 
         int quadrantX = 6;
         int quadrantY = 4;
-        int qX = quadrantX * 8;
-        int qY = quadrantY * 8;
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int x1 = 0;
+        int x2 = 1;
 
         when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
-        when(util.toInt(x)).thenCallRealMethod(); // line 177 in Enterprise class
-        when(util.toInt(y)).thenCallRealMethod(); // line 178 in Enterprise class
 
-        when(util.toInt(x - qX)).thenCallRealMethod(); // line 179 in Enterprise class
-        when(util.toInt(y - qY)).thenCallRealMethod(); // line 180 in Enterprise class
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
 
         when(util.toInt(sectorX)).thenCallRealMethod(); // line 247 in Enterprise class
         when(util.toInt(sectorY)).thenCallRealMethod(); // line 247 in Enterprise class
 
+        when(util.toInt(sectorX - x1)).thenCallRealMethod(); // line 249 in Enterprise class
+        when(util.toInt(sectorY - x2)).thenCallRealMethod(); // line 250 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialQuadrantX;
+        sectorY = initialQuadrantY;
 
         // ACT
         enterprise.setSector(sectorX, sectorY);
         enterprise.setQuadrant(quadrantX, quadrantY);
 
         int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
-                                           mock(GameCallback.class));
+                mock(GameCallback.class));
 
         // ASSERT
         verify(util).println("WARP ENGINES SHUT DOWN AT ");
-        verify(util).println("SECTOR " + enterprise.sectorX + "," + enterprise.sectorY + " DUE TO BAD NAVIGATION");
+        verify(util).println("SECTOR " + enterprise.getSector()[0] + "," + enterprise.getSector()[1] + " DUE TO BAD NAVIGATION");
         assertArrayEquals(enterprise.getSector(), sector);
+
     }
 
     /**
      * OWNER: MUSTAFA
+     * Verify that we hit an edge when sectorX = -1 and quadrantY = -20
      */
 
     @Test
-    void moveShip_verify_when_sectorX_is_equalTo_negativeOne_and_exceeding_quadrant_limits() {
+    void moveShip_verify_that_ships_hitsEdge_when_sectorX_is_equalTo_negative1_and_quadrantY_is_equalTo_negative20() {
         Enterprise enterprise = new Enterprise(util);
 
         // ARRANGE
@@ -651,18 +661,52 @@ class EnterpriseTest {
         int missionDuration = 25;
         String quadrantMap = "                                                                                                                              >!<                                                               ";
 
-
         int sectorX = -1;
         int sectorY = 3;
 
         int quadrantX = 6;
-        int quadrantY = 4;
+        int quadrantY = -20;
+
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int initialSectorX = sectorX;
+        int initialSectorY = sectorY;
+        int x1 = 0;
+        int x2 = 1;
+        float x = sectorX;
+        float y = sectorY;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
+
+        //prepare x and y for line 176 and 177
+        x = 8 * quadrantX + x + n * x1;
+        y = 8 * quadrantY + y + n * x2;
+
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+
+        quadrantX = util.toInt(x/8);
+        quadrantY = util.toInt(y/8);
+
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialSectorX;
+        sectorY = initialSectorY;
+
+        //reset quadrantX and quadrantY for ACT so that the logic above is applied as intended
+        quadrantX = initialQuadrantX;
+        quadrantY = initialQuadrantY;
 
         // ACT
         enterprise.setSector(sectorX, sectorY);
         enterprise.setQuadrant(quadrantX, quadrantY);
         int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
-                                           mock(GameCallback.class));
+                mock(GameCallback.class));
 
         // ASSERT
         verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
@@ -670,14 +714,344 @@ class EnterpriseTest {
         verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
         verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
         verify(util).println("  AT SECTOR " +
-                             enterprise.sectorX +
-                             "," +
-                             enterprise.sectorY +
-                             " OF QUADRANT " +
-                             enterprise.quadrantX +
-                             "," +
-                             enterprise.quadrantY +
-                             ".'");
+                enterprise.getSector()[0]+
+                "," +
+                enterprise.getSector()[1] +
+                " OF QUADRANT " +
+                enterprise.getQuadrant()[0] +
+                "," +
+                enterprise.getQuadrant()[1] +
+                ".'");
+        assertArrayEquals(enterprise.getSector(), sector);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * Verify that we hit an edge when sectorX = -1 and quadrantX = -20
+     */
+
+    @Test
+    void moveShip_verify_that_ship_hitsEdge_when_sectorX_is_equalTo_negative1_and_quadrantX_is_equalTo_negative20() {
+        Enterprise enterprise = new Enterprise(util);
+
+        // ARRANGE
+
+        int course = 1;
+        int n = 24;
+        double stardate = 28;
+        int missionDuration = 25;
+        String quadrantMap = "                                                                                                                              >!<                                                               ";
+
+        int sectorX = -1;
+        int sectorY = 3;
+
+        int quadrantX = -20;
+        int quadrantY = 4;
+
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int initialSectorX = sectorX;
+        int initialSectorY = sectorY;
+        int x1 = 0;
+        int x2 = 1;
+        float x = sectorX;
+        float y = sectorY;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
+
+        //prepare x and y for line 176 and 177
+        x = 8 * quadrantX + x + n * x1;
+        y = 8 * quadrantY + y + n * x2;
+
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+
+        quadrantX = util.toInt(x/8);
+        quadrantY = util.toInt(y/8);
+
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialSectorX;
+        sectorY = initialSectorY;
+
+        //reset quadrantX and quadrantY for ACT so that the logic above is applied as intended
+        quadrantX = initialQuadrantX;
+        quadrantY = initialQuadrantY;
+
+        // ACT
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
+        verify(util).println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
+        verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
+        verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
+        verify(util).println("  AT SECTOR " +
+                enterprise.getSector()[0]+
+                "," +
+                enterprise.getSector()[1] +
+                " OF QUADRANT " +
+                enterprise.getQuadrant()[0] +
+                "," +
+                enterprise.getQuadrant()[1] +
+                ".'");
+        assertArrayEquals(enterprise.getSector(), sector);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * Verify that we hit an edge when quadrantX = 0, quadrantY = 0, quadrantX = 0, and sectorY = -10
+     */
+
+    @Test
+    void moveShip_verify_that_ship_hitsEdge_when_sectorX_and_quadrantX_and_quadrantY_are_equalTo_zero_sectorY_equalTo_negative10() {
+        Enterprise enterprise = new Enterprise(util);
+
+        // ARRANGE
+
+        int course = 1;
+        int n = 10;
+        double stardate = 28;
+        int missionDuration = 25;
+        String quadrantMap = "                                                                                                                              >!<                                                               ";
+
+        int sectorX = 0;
+        int sectorY = -10;
+
+        int quadrantX = 0;
+        int quadrantY = 0;
+
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int initialSectorX = sectorX;
+        int initialSectorY = sectorY;
+        int x1 = 0;
+        int x2 = 1;
+        float x = sectorX;
+        float y = sectorY;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
+
+        //prepare x and y for line 176 and 177
+        x = 8 * quadrantX + x + n * x1;
+        y = 8 * quadrantY + y + n * x2;
+
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+
+        quadrantX = util.toInt(x/8);
+        quadrantY = util.toInt(y/8);
+
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialSectorX;
+        sectorY = initialSectorY;
+
+        //reset quadrantX and quadrantY for ACT so that the logic above is applied as intended
+        quadrantX = initialQuadrantX;
+        quadrantY = initialQuadrantY;
+
+        // ACT
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
+        verify(util).println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
+        verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
+        verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
+        verify(util).println("  AT SECTOR " +
+                enterprise.getSector()[0]+
+                "," +
+                enterprise.getSector()[1] +
+                " OF QUADRANT " +
+                enterprise.getQuadrant()[0] +
+                "," +
+                enterprise.getQuadrant()[1] +
+                ".'");
+        assertArrayEquals(enterprise.getSector(), sector);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * Verify that the ship hits and edge to set endGameCall back to false when sectorY, quadrantX = -10 and missionDuration= 0
+     */
+
+    @Test
+    void moveShip_verify_that_ship_hitsEdge_when_sectorY_and_quadrantX_are_negative10_and_missionDuration_is_zero() {
+        Enterprise enterprise = new Enterprise(util);
+
+        // ARRANGE
+
+        int course = 1;
+        int n = 10;
+        double stardate = 28;
+        int missionDuration = -10;
+        String quadrantMap = "                                                                                                                              >!<                                                               ";
+
+        int sectorX = 4;
+        int sectorY = -1;
+
+        int quadrantX = -10;
+        int quadrantY = 4;
+
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int initialSectorX = sectorX;
+        int initialSectorY = sectorY;
+        int x1 = 0;
+        int x2 = 1;
+        float x = sectorX;
+        float y = sectorY;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
+
+        //prepare x and y for line 176 and 177
+        x = 8 * quadrantX + x + n * x1;
+        y = 8 * quadrantY + y + n * x2;
+
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+
+        quadrantX = util.toInt(x/8);
+        quadrantY = util.toInt(y/8);
+
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialSectorX;
+        sectorY = initialSectorY;
+
+        //reset quadrantX and quadrantY for ACT so that the logic above is applied as intended
+        quadrantX = initialQuadrantX;
+        quadrantY = initialQuadrantY;
+
+        // ACT
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
+        verify(util).println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
+        verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
+        verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
+        verify(util).println("  AT SECTOR " +
+                enterprise.getSector()[0]+
+                "," +
+                enterprise.getSector()[1] +
+                " OF QUADRANT " +
+                enterprise.getQuadrant()[0] +
+                "," +
+                enterprise.getQuadrant()[1] +
+                ".'");
+        assertArrayEquals(enterprise.getSector(), sector);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * Verify that the ship hits and edge when sectorX and sectorY = 9, and quadrantX and quadrantY = 8
+     */
+
+    @Test
+    void moveShip_verify_that_ship_hitsEdge_when_sectorX_and_sectorY_are_10_and_quadrantX_and_quadrantY_are_8() {
+        Enterprise enterprise = new Enterprise(util);
+
+        // ARRANGE
+
+        int course = 0;
+        int n = 1;
+        double stardate = 28;
+        int missionDuration = 20;
+        String quadrantMap = "                                                                                                                              >!<                                                               ";
+
+        int sectorX = 10;
+        int sectorY = 10;
+
+        int quadrantX = 8;
+        int quadrantY = 8;
+
+        int initialQuadrantX = quadrantX;
+        int initialQuadrantY = quadrantY;
+        int initialSectorX = sectorX;
+        int initialSectorY = sectorY;
+        int x1 = 0;
+        int x2 = 1;
+        float x = sectorX;
+        float y = sectorY;
+
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+
+        sectorX = sectorX + x1; // line 170 sectorX updates
+        sectorY = sectorY + x2;// line 171 sectorY updates
+
+        //prepare x and y for line 176 and 177
+        x = 8 * quadrantX + x + n * x1;
+        y = 8 * quadrantY + y + n * x2;
+
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+
+        quadrantX = util.toInt(x/8);
+        quadrantY = util.toInt(y/8);
+
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+
+        sectorX = 8;
+        sectorY = 8;
+
+        when(util.toInt(sectorX)).thenCallRealMethod(); // line 257 in Enterprise class
+        when(util.toInt(sectorY)).thenCallRealMethod(); // line 258 in Enterprise class
+
+        //reset sectorX and sectorY for ACT so that the logic above is applied as intended
+        sectorX = initialSectorX;
+        sectorY = initialSectorY;
+
+        //reset quadrantX and quadrantY for ACT so that the logic above is applied as intended
+        quadrantX = initialQuadrantX;
+        quadrantY = initialQuadrantY;
+
+        // ACT
+        enterprise.setSector(sectorX, sectorY);
+        enterprise.setQuadrant(quadrantX, quadrantY);
+        int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, stardate, missionDuration,
+                mock(GameCallback.class));
+
+        // ASSERT
+        verify(util).println("LT. UHURA REPORTS MESSAGE FROM STARFLEET COMMAND:");
+        verify(util).println("  'PERMISSION TO ATTEMPT CROSSING OF GALACTIC PERIMETER");
+        verify(util).println("  IS HEREBY *DENIED*.  SHUT DOWN YOUR ENGINES.'");
+        verify(util).println("CHIEF ENGINEER SCOTT REPORTS  'WARP ENGINES SHUT DOWN");
+        verify(util).println("  AT SECTOR " +
+                enterprise.getSector()[0]+
+                "," +
+                enterprise.getSector()[1] +
+                " OF QUADRANT " +
+                enterprise.getQuadrant()[0] +
+                "," +
+                enterprise.getQuadrant()[1] +
+                ".'");
         assertArrayEquals(enterprise.getSector(), sector);
     }
 
