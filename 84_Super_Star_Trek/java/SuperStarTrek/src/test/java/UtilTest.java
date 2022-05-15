@@ -74,7 +74,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER: Sanchita
+     * OWNER: MUSTAFA
      */
     @Test
     void inputCoords() {
@@ -86,7 +86,7 @@ class UtilTest {
     }
 
     /**
-     * OWNER: Sanchita
+     * OWNER: MUSTAFA
      */
     @Test
     void inputFloat() {
