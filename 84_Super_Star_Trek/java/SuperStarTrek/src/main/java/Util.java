@@ -95,11 +95,12 @@ public class Util {
                 final String[] splitInput = input.split(",");
                 if (splitInput.length == 2) {
                     int x = Integer.parseInt(splitInput[0]);
-                    int y = Integer.parseInt(splitInput[0]);
+                    int y = Integer.parseInt(splitInput[1]);
                     return new int[]{x, y};
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new IllegalArgumentException("Invalid Coords");
             }
         }
     }

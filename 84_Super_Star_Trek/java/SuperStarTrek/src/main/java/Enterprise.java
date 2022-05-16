@@ -157,8 +157,7 @@ public class Enterprise {
                           final double stardate, final double initialStardate,
                           final int missionDuration, final GameCallback callback) {
         int ic1 = util.toInt(course);
-        float x1 = cardinalDirections[ic1][1] +
-                   (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (course - ic1);
+        float x1 = cardinalDirections[ic1][1] + (cardinalDirections[ic1 + 1][1] - cardinalDirections[ic1][1]) * (course - ic1);
         float x = sectorX;
         float y = sectorY;
         float x2 = cardinalDirections[ic1][2] +

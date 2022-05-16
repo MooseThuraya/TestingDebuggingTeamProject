@@ -37,17 +37,71 @@ class UtilTest {
         this.inputReader = mock(BufferedReader.class);
 
     }
-
     /**
-     * OWNER: Sanchita
+     * OWNER: MUSTAFA
      */
     @Test
-    void toInt() {
+    void toInt_returns_int_equal_Negative1000_when_user_enters_1000() {
         // ARRANGE
+        Util util = new Util(rand, inputReader);
+        int expectedResult =  1000;
 
         // ACT
+        int result = util.toInt((float)-1000);
 
         // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * toInt returns 0 when user inputs 0 of type float
+     */
+    @Test
+    void toInt_returns_int_equal_zero_when_user_enters_float_zero() {
+        // ARRANGE
+        Util util = new Util(rand, inputReader);
+        int expectedResult =  0;
+
+        // ACT
+        int result = util.toInt((float)0);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * toInt returns 1 when user inputs -1.0
+     */
+    @Test
+    void toInt_returns_int_equal_1_when_user_enters_a_negative_double_equalTo_1() {
+        // ARRANGE
+        Util util = new Util(rand, inputReader);
+        int expectedResult =  1;
+
+        // ACT
+        int result = util.toInt((float)-1);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * toInt returns 100 when user inputs 100.5
+     */
+    @Test
+    void toInt_returns_int_equal_100_when_user_enters_a_double_equalTo_100Point5() {
+        // ARRANGE
+        Util util = new Util(rand, inputReader);
+        int expectedResult =  100;
+
+        // ACT
+        int result = util.toInt(100.5);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
@@ -76,25 +130,39 @@ class UtilTest {
 
     /**
      * OWNER: MUSTAFA
+     * When the user inputs 3,5 in the command line, inputCoords will return an array [3,5]
      */
     @Test
-    void inputCoords() throws IOException {
-        // ARRANGE
+    void inputCoords_returns_array_of_3_and_5_when_user_inputs_3_and_5_in_commandLine() throws IOException, Exception {
         Util util = new Util(rand, inputReader);
-        String message = "User input";
 
-        String input = "6, 3";
-        int[] expectedResult = new int[2];
-        expectedResult[0] = 6;
-        expectedResult[1] = 3;
+        //ARRANGE
+        when(inputReader.readLine()).thenReturn("3,5");
 
-        when(inputReader.readLine()).thenReturn(input);
+        int [] result;
+        int [] expectedResult = {3,5};
 
         // ACT
-        int[] result = util.inputCoords(message);
+        result = util.inputCoords("  FINAL COORDINATES (X,Y)");
 
         // ASSERT
-        assertEquals(expectedResult, result);
+        assertArrayEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * When the user inputs null, an exception is thrown
+     */
+    @Test
+    void inputCoords_throwException_when_user_inputs_invalid_input_null() throws IOException {
+        Util util = new Util(rand, inputReader);
+
+        //ARRANGE
+        when(inputReader.readLine()).thenReturn(null);
+
+        // ACT
+        // ASSERT
+        assertThrows(IllegalArgumentException.class, () -> util.inputCoords("  FINAL COORDINATES (X,Y)"));
     }
 
     /**
@@ -102,11 +170,7 @@ class UtilTest {
      */
     @Test
     void inputFloat() {
-        // ARRANGE
 
-        // ACT
-
-        // ASSERT
     }
 
     /**
