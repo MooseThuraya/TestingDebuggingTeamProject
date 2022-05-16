@@ -1,13 +1,11 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 
 
-import java.math.BigDecimal;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,10 +29,13 @@ import static org.mockito.Mockito.*;
 
 class UtilTest {
     Random rand;
+    BufferedReader inputReader;
 
     @BeforeEach
     public void utilSetUp() {
         this.rand = mock(Random.class, withSettings().withoutAnnotations());
+        this.inputReader = mock(BufferedReader.class);
+
     }
 
     /**
@@ -77,12 +78,23 @@ class UtilTest {
      * OWNER: MUSTAFA
      */
     @Test
-    void inputCoords() {
+    void inputCoords() throws IOException {
         // ARRANGE
+        Util util = new Util(rand, inputReader);
+        String message = "User input";
+
+        String input = "6, 3";
+        int[] expectedResult = new int[2];
+        expectedResult[0] = 6;
+        expectedResult[1] = 3;
+
+        when(inputReader.readLine()).thenReturn(input);
 
         // ACT
+        int[] result = util.inputCoords(message);
 
         // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
@@ -115,7 +127,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_leftStr_Tests.csv", numLinesToSkip = 1)
     void leftStr_parameterized_tests(String input, int len, String expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         String result = util.leftStr(input, len);
@@ -146,7 +158,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_midStr_Tests.csv", numLinesToSkip = 1)
     void midStr_parameterized_tests(String input, int start, int len, String expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         String result = util.midStr(input, start, len);
@@ -175,7 +187,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_rightStr_Tests.csv", numLinesToSkip = 1)
     void rightStr_parameterized_tests(String input, int len, String expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         String result = util.rightStr(input, len);
@@ -190,7 +202,7 @@ class UtilTest {
     @Test
     void random_returns_value_when_called() {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
         float expectedValue = 0.123f;
 
         when(rand.nextFloat()).thenReturn(expectedValue);
@@ -208,7 +220,7 @@ class UtilTest {
     @Test
     void fnr_returns_integer_value_between_1_and_8() {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
         float randomValue = 0.251f;
         int expectedResult = 2;
         when((rand.nextFloat())).thenReturn(randomValue);
@@ -237,7 +249,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_strlen_Tests.csv", numLinesToSkip = 1)
     void strLen_returns_zero(String input, int expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         int result = util.strLen(input);
@@ -264,7 +276,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_Tab_Tests.csv", numLinesToSkip = 1)
     void tab_returns_no_spaces(int n, String expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         String result = util.tab(n);
@@ -279,7 +291,7 @@ class UtilTest {
     @Test
     void round_throws_illegalArgumentException_message_null_when_places_lessThan_0() {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         double value = 20.0;
         int places = -12;
@@ -310,7 +322,7 @@ class UtilTest {
     @CsvFileSource(resources = "/util_round_tests.csv", numLinesToSkip = 1)
     void round_returns_double_value_rounded_up_to_6_decimal_places(double value, int places, double expectedResult) {
         // ARRANGE
-        Util util = new Util(rand);
+        Util util = new Util(rand, inputReader);
 
         // ACT
         double result = util.round(value, places);

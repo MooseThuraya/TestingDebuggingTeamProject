@@ -12,9 +12,12 @@ import java.util.stream.IntStream;
  */
 public class Util {
     final Random random;
+    final BufferedReader reader;
 
-    public Util(Random random) {
+    public Util(Random random, BufferedReader reader) {
         this.random = random;
+        this.reader = reader;
+
     }
 
     public float random() {
@@ -76,7 +79,6 @@ public class Util {
 
     public String inputStr(final String message) {
         System.out.print(message + "? ");
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             return reader.readLine();
@@ -105,7 +107,6 @@ public class Util {
     public float inputFloat(final String message) {
         while (true) {
             System.out.print(message + "? ");
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             try {
                 final String input = reader.readLine();
                 if (input.length() > 0) {
