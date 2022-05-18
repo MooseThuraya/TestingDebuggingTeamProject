@@ -29,15 +29,21 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER: ALICIA
+     * OWNER: ALICIA - need to rework since the coordinates and klingon locations are arrays filled with 0's
      */
     @Test
-    void fnd() {
+    void fnd_returns_zero_when_game_not_played() {
         // ARRANGE
+        GalaxyMap map = new GalaxyMap(util);
+
+        int i = 2;
+        double expectedResult = 0;
 
         // ACT
+        double result = map.fnd(i);
 
         // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
