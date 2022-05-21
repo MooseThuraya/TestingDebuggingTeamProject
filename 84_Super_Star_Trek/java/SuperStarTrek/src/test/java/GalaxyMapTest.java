@@ -83,7 +83,7 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
     void moveEnterprise() {
