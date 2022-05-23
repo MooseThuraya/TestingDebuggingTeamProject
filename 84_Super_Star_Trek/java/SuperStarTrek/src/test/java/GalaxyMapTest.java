@@ -32,7 +32,7 @@ class GalaxyMapTest {
         this.enterprise = mock(Enterprise.class);
 
         //Must mock before initializing GalaxyMap for line 52
-        int [] quadrantArr = new int [] {6,4}; //6,4 are random
+        int [] quadrantArr = new int [] {0,0};
         when(enterprise.getQuadrant()).thenReturn(quadrantArr);
 
         int [] sectorArr = new int [] {0,0};
