@@ -401,7 +401,7 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: MUSTAFA
      */
     @Test
     void insertMarker() {
