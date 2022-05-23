@@ -56,8 +56,9 @@ public class SuperStarTrekGame implements GameCallback {
 
     public static void main(String[] args) {
         Util util = new Util(new Random(), new BufferedReader(new InputStreamReader(System.in)));
+        Enterprise enterprise = new Enterprise(util);
 
-        final SuperStarTrekGame game = new SuperStarTrekGame(util);
+        final SuperStarTrekGame game = new SuperStarTrekGame(util, enterprise);
         printBanner(util);
         while (true) {
             game.orders();
@@ -67,9 +68,9 @@ public class SuperStarTrekGame implements GameCallback {
         }
     }
 
-    public SuperStarTrekGame(Util util) {
+    public SuperStarTrekGame(Util util, Enterprise enterprise) {
         this.util = util;
-        this.galaxyMap = new GalaxyMap(util);
+        this.galaxyMap = new GalaxyMap(util, enterprise);
         this.missionDuration = Math.max((25 + util.toInt(util.random() * 10)), galaxyMap.getKlingonsInGalaxy() + 1);
         this.stardate = util.toInt(util.random() * 20 + 20);
         this.initialStardate = stardate;
