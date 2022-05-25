@@ -1,6 +1,8 @@
 import net.bytebuddy.implementation.bind.annotation.Super;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +34,7 @@ class GalaxyMapTest {
         this.enterprise = mock(Enterprise.class);
 
         //Must mock before initializing GalaxyMap for line 52
-        int [] quadrantArr = new int [] {6,4}; //6,4 are random
+        int [] quadrantArr = new int [] {0,0};
         when(enterprise.getQuadrant()).thenReturn(quadrantArr);
 
         int [] sectorArr = new int [] {0,0};
@@ -41,7 +43,8 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER: ALICIA - need to rework since the coordinates and klingon locations are arrays filled with 0's
+     * OWNER: ALICIA - need to rework since the coordinates and klingon
+     * locations are arrays filled with 0's
      */
     @Test
     void fnd_returns_zero_when_game_not_played() {
@@ -60,15 +63,87 @@ class GalaxyMapTest {
 
     /**
      * OWNER: ALICIA
+     * Test all boundaries for invalid quadrant values
+     *
+     * Condition:
+     *  1. X = 0, -3, -100, 9, 15, 100
+     *  2. Y = -5, 0, -100, 9, 15, 100
      */
-    @Test
-    void newQuadrant() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_newQuadrant_invalidCoords.csv", numLinesToSkip = 1)
+    void newQuadrant_throwsException_withInvalid_quadrantCoordinates(int X, int Y, String expectedMessage) {
         // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        double initialStardate = 0.1 * 20 +20;
+        double stardate = 0.3 * 20 +20;
+        // quadrant we want to
+        int[] quadrantXY = new int[2];
+        quadrantXY[0] = X;
+        quadrantXY[1] = Y;
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
 
         // ACT
-
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            map.newQuadrant(stardate, initialStardate);
+        });
         // ASSERT
+        assertEquals(expectedMessage, exception.getMessage());
     }
+
+    /**
+     * OWNER: ALICIA
+     * Test for ensuring we reach the message for entering a new quandrant when star date and initial star date are
+     * not equal
+     */
+    @Test
+    void newQuadrant_printsNewLocationMessage_whenStarDate_AndInitialstardate_areNotEqual() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        double initialStardate = 0.1 * 20 +20;
+        double stardate = 0.3 * 20 +20;
+        // quadrant we want to
+        int[] quadrantXY = new int[2];
+        quadrantXY[0] = 1;
+        quadrantXY[1] = 2;
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+
+        // ACT
+        map.newQuadrant(stardate, initialStardate);
+
+        // ASSERT - we know the first println(any()) is in this section of code, so if we hit here, we have passed
+        verify(util, atLeastOnce()).println("NOW ENTERING " + any() + " QUADRANT . . .");
+    }
+
+    /**
+     * OWNER: ALICIA
+     * Test for ensuring we reach the message for starting location when star date and initial star date are
+     * equal
+     */
+    @Test
+    void newQuadrant_printsStartLocation_whenStarDate_andInitialstardate_areEqual() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        double initialStardate = 0.3 * 20 + 20;
+        double stardate = initialStardate;
+
+        // quadrant we want to
+        int[] quadrantXY = new int[2];
+        quadrantXY[0] = 1;
+        quadrantXY[1] = 2;
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        String message ="YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +  "IN THE GALACTIC QUADRANT, '";
+
+        // ACT
+        map.newQuadrant(stardate, initialStardate);
+
+        // ASSERT - we know the first println(any()) is in this section of code, so if we hit here, we have passed
+        verify(util, atLeastOnce()).println(message + any() + "'.");
+    }
+
+
 
     /**
      * OWNER:
