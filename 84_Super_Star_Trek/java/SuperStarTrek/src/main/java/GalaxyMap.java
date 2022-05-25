@@ -115,16 +115,18 @@ public class GalaxyMap {
     }
 
     void newQuadrant(final double stardate, final double initialStardate) {   // 1320
-        final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
-        final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
+        int[] quadrant = enterprise.getQuadrant();
+        final int quadrantX = quadrant[0];
+        final int quadrantY = quadrant[1];
         klingons = 0;
         starbases = 0;
         stars = 0;
         enterprise.randomRepairCost();
-        chartedGalaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY];
 
         if (!(quadrantX < 1 || quadrantX > 8 || quadrantY < 1 || quadrantY > 8)) {
+            chartedGalaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY];
             final String quadrantName = getQuadrantName(false, quadrantX, quadrantY);
+
             if (initialStardate == stardate) {
                 util.println("YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +
                              "IN THE GALACTIC QUADRANT, '" +
@@ -150,6 +152,9 @@ public class GalaxyMap {
                 klingonQuadrants[i][1] = 0;
                 klingonQuadrants[i][2] = 0;
             });
+        } else {
+            throw new IllegalArgumentException("Enterprise has navigated out of our known universe and can no longer " +
+                                               "be found. The fate of the Federation is doomed!");
         }
 
         IntStream.range(1, 3).forEach(i -> {
