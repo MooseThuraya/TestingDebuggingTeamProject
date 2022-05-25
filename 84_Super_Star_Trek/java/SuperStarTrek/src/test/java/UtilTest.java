@@ -1,12 +1,16 @@
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.mockito.stubbing.OngoingStubbing;
 
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Random;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -118,14 +122,44 @@ class UtilTest {
 
     /**
      * OWNER: Sanchita
+     * convert the system.out to a buffer stream then verify is the required string is present in the bytestream.
      */
     @Test
-    void inputStr() {
+    void inputStr_verify_if_system_println_prints_message_with_question_mark_appended() throws IOException {
         // ARRANGE
+        //Redirect System.out to buffer
+        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(bo));
+        Util util = new Util(rand, inputReader);
+        String expectedResult = "blah?";
+        // ACT
+        util.inputStr("blah");
+        bo.flush();
+        String allWrittenLines = new String(bo.toByteArray());
+
+        // ASSERT
+        assertTrue(allWrittenLines.contains(expectedResult));
+    }
+
+    /**
+     * OWNER: Sanchita
+     *  the exception is always raised when the readline() method is called.
+     *  It is not an option to refactor this as the readline() method needs to be enclosed in a try catch block
+     */
+    @Test
+    void inputStr_verify_if_IOexception_is_raised() throws IOException {
+        // ARRANGE
+        Util util = new Util(rand, inputReader);
+        String expectedResult = "";
+        String invalidinput = "input \n input1";
 
         // ACT
 
+        when(inputReader.readLine()).thenThrow(new IOException());
+        String result = util.inputStr(invalidinput);
+
         // ASSERT
+        assertEquals(expectedResult, result);
     }
 
     /**
@@ -166,12 +200,37 @@ class UtilTest {
     }
 
     /**
-     * OWNER: MUSTAFA
+     * OWNER: Sanchita
+     * validate if inputfloat converts the string passed to a float value
      */
     @Test
-    void inputFloat() {
+    void inputFloat_returns_the_corresponding_float_value() throws Exception {
+        Util util = new Util(rand, inputReader);
+        Float expectedResult =  0.100f;
 
+        // ACT
+        when(inputReader.readLine()).thenReturn("0.1");
+
+        // ASSERT
+        assertEquals(expectedResult, util.inputFloat("0.1"));
+}
+
+    /**
+     * OWNER: Sanchita
+     * validate when the readline() reads null it throws a null pointer exception
+     */
+    @Test
+    void inputFloat_throws_exception_when_readline_is_called() throws Exception {
+
+        Util util = new Util(rand, inputReader);
+
+        // ACT
+        when(inputReader.readLine()).thenThrow(new NullPointerException());
+
+        // ASSERT
+        assertThrows(NullPointerException.class, () -> util.inputFloat("0.1"));
     }
+
 
     /**
      * OWNER: ALICIA

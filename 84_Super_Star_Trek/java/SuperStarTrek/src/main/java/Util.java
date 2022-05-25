@@ -83,7 +83,7 @@ public class Util {
         try {
             return reader.readLine();
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            //ioe.printStackTrace();
             return "";
         }
     }
@@ -114,7 +114,8 @@ public class Util {
                     return Float.parseFloat(input);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                throw new NullPointerException("NUMBER IS NULL");
             }
         }
     }
