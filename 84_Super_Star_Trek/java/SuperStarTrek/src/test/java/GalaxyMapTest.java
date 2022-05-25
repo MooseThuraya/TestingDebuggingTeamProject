@@ -65,7 +65,7 @@ class GalaxyMapTest {
      * OWNER: ALICIA
      * Test all boundaries for invalid quadrant values
      *
-     * Conditiona:
+     * Condition:
      *  1. X = 0, -3, -100, 9, 15, 100
      *  2. Y = -5, 0, -100, 9, 15, 100
      */
@@ -112,7 +112,7 @@ class GalaxyMapTest {
         // ACT
         map.newQuadrant(stardate, initialStardate);
 
-        // ASSERT
+        // ASSERT - we know the first println(any()) is in this section of code, so if we hit here, we have passed
         verify(util, atLeastOnce()).println("NOW ENTERING " + any() + " QUADRANT . . .");
     }
 
@@ -139,9 +139,11 @@ class GalaxyMapTest {
         // ACT
         map.newQuadrant(stardate, initialStardate);
 
-        // ASSERT
+        // ASSERT - we know the first println(any()) is in this section of code, so if we hit here, we have passed
         verify(util, atLeastOnce()).println(message + any() + "'.");
     }
+
+
 
     /**
      * OWNER:

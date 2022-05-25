@@ -118,8 +118,6 @@ public class GalaxyMap {
         int[] quadrant = enterprise.getQuadrant();
         final int quadrantX = quadrant[0];
         final int quadrantY = quadrant[1];
-        klingons = 0;
-        starbases = 0;
         stars = 0;
         enterprise.randomRepairCost();
 
@@ -148,28 +146,27 @@ public class GalaxyMap {
                 }
             }
 
-            IntStream.range(1, 3).forEach(i -> {
+            for (int i = 1; i < 3; i++) {
                 klingonQuadrants[i][1] = 0;
                 klingonQuadrants[i][2] = 0;
-            });
+            }
         } else {
             throw new IllegalArgumentException("Enterprise has navigated out of our known universe and can no longer " +
                                                "be found. The fate of the Federation is doomed!");
         }
 
-        IntStream.range(1, 3).forEach(i -> {
+        for (int i = 1; i < 3; i++) {
             klingonQuadrants[i][3] = 0;
-        });
+        }
 
         // position enterprise in quadrant
-        insertMarker(MARKER_ENTERPRISE, enterprise.getSector()[Enterprise.COORD_X],
-                     enterprise.getSector()[Enterprise.COORD_Y]);
+        insertMarker(MARKER_ENTERPRISE, enterprise.getSector());
 
         // position klingons
         if (klingons >= 1) {
             for (int i = 1; i <= klingons; i++) {
                 final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
-                insertMarker(MARKER_KLINGON, emptyCoordinate[0], emptyCoordinate[1]);
+                insertMarker(MARKER_KLINGON, emptyCoordinate);
                 klingonQuadrants[i][1] = emptyCoordinate[0];
                 klingonQuadrants[i][2] = emptyCoordinate[1];
                 klingonQuadrants[i][3] = (int) Math.round(AVG_KLINGON_SHIELD_ENERGY * (0.5 + util.random()));
@@ -181,13 +178,13 @@ public class GalaxyMap {
             final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
             starbaseX = emptyCoordinate[0];
             starbaseY = emptyCoordinate[1];
-            insertMarker(MARKER_STARBASE, emptyCoordinate[0], emptyCoordinate[1]);
+            insertMarker(MARKER_STARBASE, emptyCoordinate);
         }
 
         // position stars
         for (int i = 1; i <= stars; i++) {
             final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
-            insertMarker(MARKER_STAR, emptyCoordinate[0], emptyCoordinate[1]);
+            insertMarker(MARKER_STAR, emptyCoordinate);
         }
     }
 
@@ -196,11 +193,18 @@ public class GalaxyMap {
             if (klingonQuadrants[i][3] == 0) {
                 continue;
             }
-            insertMarker(MARKER_EMPTY, klingonQuadrants[i][1], klingonQuadrants[i][2]);
+            int[] newKlingonQuadrants = new int[2];
+            newKlingonQuadrants[0] = klingonQuadrants[i][1];
+            newKlingonQuadrants[1] = klingonQuadrants[i][2];
+
+            insertMarker(MARKER_EMPTY, newKlingonQuadrants);
             final int[] newCoords = findEmptyPlaceInQuadrant(quadrantMap);
             klingonQuadrants[i][1] = newCoords[0];
             klingonQuadrants[i][2] = newCoords[1];
-            insertMarker(MARKER_KLINGON, klingonQuadrants[i][1], klingonQuadrants[i][2]);
+            newKlingonQuadrants[0] =  klingonQuadrants[i][1];
+            newKlingonQuadrants[1] =  klingonQuadrants[i][2];
+
+            insertMarker(MARKER_KLINGON, newKlingonQuadrants);
         }
 
         klingonsShoot(callback);
@@ -257,16 +261,12 @@ public class GalaxyMap {
     public void moveEnterprise(final float course, final float warp, final int n, final double stardate,
                                final double initialStardate, final int missionDuration, final GameCallback callback) {
         int [] sectorsXY = enterprise.getSector();
-        int x = util.toInt(sectorsXY[0]);
-        int y = util.toInt(sectorsXY[1]);
-        insertMarker(MARKER_EMPTY, x,y);
+        insertMarker(MARKER_EMPTY, sectorsXY);
 
         final int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, initialStardate, missionDuration,
                                                  callback);
-        int sectorX = sector[Enterprise.COORD_X];
-        int sectorY = sector[Enterprise.COORD_Y];
 
-        insertMarker(MARKER_ENTERPRISE, util.toInt(sectorX), util.toInt(sectorY));
+        insertMarker(MARKER_ENTERPRISE, sector);
         enterprise.maneuverEnergySR(n);
         double stardateDelta = 1;
 
@@ -458,7 +458,12 @@ public class GalaxyMap {
                 util.println("*** KLINGON DESTROYED ***");
                 klingons -= 1;
                 klingonsInGalaxy -= 1;
-                insertMarker(MARKER_EMPTY, klingonQuadrants[i][1], klingonQuadrants[i][2]);
+
+                int[] newKlingonQuadrants = new int[2];
+                newKlingonQuadrants[0] = klingonQuadrants[i][1];
+                newKlingonQuadrants[1] = klingonQuadrants[i][2];
+
+                insertMarker(MARKER_EMPTY, newKlingonQuadrants);
                 klingonQuadrants[i][3] = 0;
                 galaxy[quadrantX][quadrantY] -= 100;
                 chartedGalaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY];
@@ -561,9 +566,15 @@ public class GalaxyMap {
                 }
             }
 
-            insertMarker(MARKER_EMPTY, util.toInt(x), util.toInt(y));
-            final int quadrantX = enterprise.getQuadrant()[Enterprise.COORD_X];
-            final int quadrantY = enterprise.getQuadrant()[Enterprise.COORD_Y];
+            int[] XY = new int[2];
+            XY[0] = util.toInt(x);
+            XY[1] = util.toInt(y);
+
+            insertMarker(MARKER_EMPTY, XY);
+            int[] quadrantXY = new int[2];
+            quadrantXY = enterprise.getQuadrant();
+            final int quadrantX = quadrantXY[0]  ;
+            final int quadrantY = quadrantXY[1];
 
             galaxy[quadrantX][quadrantY] = klingons * 100 + starbases * 10 + stars;
             chartedGalaxy[quadrantX][quadrantY] = galaxy[quadrantX][quadrantY];
@@ -764,8 +775,10 @@ public class GalaxyMap {
         return "UNKNOWN - ERROR";
     }
 
-    void insertMarker(final String marker, final int x, final int y) {
-        final int pos = util.toInt(y) * 3 + util.toInt(x) * 24 + 1;
+    void insertMarker(final String marker, final int[] xy) {
+        int x = util.toInt(xy[0]);
+        int y = util.toInt(xy[1]);
+        final int pos = y * 3 + x * 24 + 1;
 
         if (marker.length() != 3) {
             System.err.println("ERROR");
