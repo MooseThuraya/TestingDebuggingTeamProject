@@ -97,7 +97,7 @@ class GalaxyMapTest {
      * not equal
      */
     @Test
-    void newQuadrant_printsStartLocation_when_starDataAndInitialstart_areNotEqual() {
+    void newQuadrant_printsNewLocationMessage_whenStarDate_AndInitialstardate_areNotEqual() {
         // ARRANGE
         GalaxyMap map = new GalaxyMap(util, enterprise);
         double initialStardate = 0.1 * 20 +20;
@@ -114,6 +114,33 @@ class GalaxyMapTest {
 
         // ASSERT
         verify(util, atLeastOnce()).println("NOW ENTERING " + any() + " QUADRANT . . .");
+    }
+
+    /**
+     * OWNER: ALICIA
+     * Test for ensuring we reach the message for starting location when star date and initial star date are
+     * equal
+     */
+    @Test
+    void newQuadrant_printsStartLocation_whenStarDate_andInitialstardate_areEqual() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        double initialStardate = 0.3 * 20 + 20;
+        double stardate = initialStardate;
+
+        // quadrant we want to
+        int[] quadrantXY = new int[2];
+        quadrantXY[0] = 1;
+        quadrantXY[1] = 2;
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        String message ="YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +  "IN THE GALACTIC QUADRANT, '";
+
+        // ACT
+        map.newQuadrant(stardate, initialStardate);
+
+        // ASSERT
+        verify(util, atLeastOnce()).println(message + any() + "'.");
     }
 
     /**
