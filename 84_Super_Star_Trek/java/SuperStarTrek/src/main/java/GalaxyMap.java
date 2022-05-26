@@ -781,8 +781,9 @@ public class GalaxyMap {
         final int pos = y * 3 + x * 24 + 1;
 
         if (marker.length() != 3) {
-            System.err.println("ERROR");
-            System.exit(-1);
+            util.println("ERROR");
+            //System.err.println("ERROR");
+            //System.exit(-1);
         }
 
         if (pos == 1) {

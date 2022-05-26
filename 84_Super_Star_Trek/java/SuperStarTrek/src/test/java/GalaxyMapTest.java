@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -477,14 +478,65 @@ class GalaxyMapTest {
 
     /**
      * OWNER: MUSTAFA
+     * Test all boundaries that are valid
+     * Condition:
+     * 1. x = 0, y = 4
+     * 2. x = 0, y = 0
+     * 3. x = 5, y = 23
      */
-    @Test
-    void insertMarker() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_insertMaker_Test.csv", numLinesToSkip = 1)
+    void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker,String currentQuadrantMap, String quadrantMapResult) {
         // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        int [] xy = new int [] {x, y};
+
+        //Set quadrantMap to later assert quadrantMapResult
+        map.quadrantMap = currentQuadrantMap;
+
+        //Mock: Case of pos == 1 on line 789
+        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
+
+        //Mock: Case of pos == 190 on line 793
+        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
+
+        //Mock on line 779
+        when(util.toInt(x)).thenCallRealMethod();
+        //Mock on line 780
+        when(util.toInt(y)).thenCallRealMethod();
+
+        int pos = y * 3 + x * 24 + 1;
+
+        //Mock on line 796
+        when(util.leftStr(currentQuadrantMap, (pos - 1))).thenCallRealMethod();
+        //Mock on line 796
+        when(util.rightStr(currentQuadrantMap, (190 - pos))).thenCallRealMethod();
 
         // ACT
+        map.insertMarker(marker, xy);
 
         // ASSERT
+        assertEquals(quadrantMapResult, map.quadrantMap);
+    }
+    /**
+     * OWNER: MUSTAFA
+     *
+     */
+    @Test
+    void insertMarker_update_quadrantMap_when_markerLengthIsEqualTo3_and_isInvalid() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        int [] xy = new int [] {5, 4};
+
+        String marker = " <*>";
+
+        // ACT
+        map.insertMarker(marker, xy);
+
+        // ASSERT
+        verify(util).println("ERROR");
     }
 
     /**
