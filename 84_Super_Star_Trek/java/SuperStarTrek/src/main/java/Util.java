@@ -56,6 +56,7 @@ public class Util {
      *
      * @param s
      */
+
     public void print(final String s) {
         System.out.print(s);
     }

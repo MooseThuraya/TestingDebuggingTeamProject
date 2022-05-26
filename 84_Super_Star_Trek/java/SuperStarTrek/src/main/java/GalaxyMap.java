@@ -13,11 +13,11 @@ public class GalaxyMap {
     static final String MARKER_KLINGON = "+K+";
     static final String MARKER_STARBASE = ">!<";
     static final String MARKER_STAR = " * ";
+    public static final String QUADRANT_ROW = "                         ";
 
     static final int AVG_KLINGON_SHIELD_ENERGY = 200;
 
     // galaxy map
-    public static final String QUADRANT_ROW = "                         ";
     String quadrantMap;       // current quadrant map
     final int[][] galaxy = new int[9][9];    // 8x8 galaxy map G
     final int[][] klingonQuadrants = new int[4][4];    // 3x3 position of klingons K
@@ -165,7 +165,7 @@ public class GalaxyMap {
         // position klingons
         if (klingons >= 1) {
             for (int i = 1; i <= klingons; i++) {
-                final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
+                final int[] emptyCoordinate = findEmptyPlaceInQuadrant(this.quadrantMap);
                 insertMarker(MARKER_KLINGON, emptyCoordinate);
                 klingonQuadrants[i][1] = emptyCoordinate[0];
                 klingonQuadrants[i][2] = emptyCoordinate[1];
@@ -800,24 +800,24 @@ public class GalaxyMap {
     /**
      * Finds random empty coordinates in a quadrant.
      *
-     * @param quadrantString
+     * @param quadrantMap
      * @return an array with a pair of coordinates x, y
      */
-    int[] findEmptyPlaceInQuadrant(final String quadrantString) {
+    int[] findEmptyPlaceInQuadrant(final String quadrantMap) {
         final int x = util.fnr();
         final int y = util.fnr();
 
-        if (!compareMarker(quadrantString, MARKER_EMPTY, x, y)) {
-            return findEmptyPlaceInQuadrant(quadrantString);
+        if (!compareMarker(quadrantMap, MARKER_EMPTY, x, y)) {
+            return findEmptyPlaceInQuadrant(quadrantMap);
         }
 
         return new int[]{x, y};
     }
 
-    boolean compareMarker(final String quadrantString, final String marker, final int x, final int y) {
+    boolean compareMarker(final String quadrantMap, final String marker, final int x, final int y) {
         final int markerRegion = (y - 1) * 3 + (x - 1) * 24 + 1;
 
-        if (util.midStr(quadrantString, markerRegion, 3).equals(marker)) {
+        if (util.midStr(quadrantMap, markerRegion, 3).equals(marker)) {
             return true;
         }
 

@@ -78,9 +78,7 @@ class GalaxyMapTest {
         double initialStardate = 0.1 * 20 +20;
         double stardate = 0.3 * 20 +20;
         // quadrant we want to
-        int[] quadrantXY = new int[2];
-        quadrantXY[0] = X;
-        quadrantXY[1] = Y;
+        int[] quadrantXY = new int[] {X, Y};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
 
@@ -104,9 +102,7 @@ class GalaxyMapTest {
         double initialStardate = 0.1 * 20 +20;
         double stardate = 0.3 * 20 +20;
         // quadrant we want to
-        int[] quadrantXY = new int[2];
-        quadrantXY[0] = 1;
-        quadrantXY[1] = 2;
+        int[] quadrantXY = new int[] {1, 2};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
 
@@ -130,9 +126,7 @@ class GalaxyMapTest {
         double stardate = initialStardate;
 
         // quadrant we want to
-        int[] quadrantXY = new int[2];
-        quadrantXY[0] = 1;
-        quadrantXY[1] = 2;
+        int[] quadrantXY = new int[] {1, 2};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
         String message ="YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +  "IN THE GALACTIC QUADRANT, '";
