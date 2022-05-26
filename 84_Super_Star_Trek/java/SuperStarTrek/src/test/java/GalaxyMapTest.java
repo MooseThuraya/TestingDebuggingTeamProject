@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -87,7 +89,7 @@ class GalaxyMapTest {
             map.newQuadrant(stardate, initialStardate);
         });
         // ASSERT
-        assertEquals(expectedMessage, exception.getMessage());
+        assertEquals(expectedMessage.toUpperCase(Locale.ROOT), exception.getMessage());
     }
 
     /**
