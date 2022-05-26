@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
  * **********************************************************************
  * **********************************************************************
  * ****************************** READ ME! ******************************
- * THE TESTS BELOW ARE PLACEHOLDER AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
+ * THE TESTS BELOW ARE PLACEHOLDERS AND SHOULD BE USED AS A GUIDE TO IMPLEMENT
  * YOUR TESTS AND DETERMINING WHAT TO TEST. PLEASE BE SURE TO CLAIM YOUR SECTION
  * OF CODE YOU'RE TESTING AND PUSH YOUR CHANGES IMMEDIATELY AND NOTIFY THE TEAM
  * **********************************************************************
@@ -117,6 +117,10 @@ class GalaxyMapTest {
      * OWNER: ALICIA
      * Test for ensuring we reach the message for starting location when star date and initial star date are
      * equal
+     *
+     * NOTE: THIS CLASS IS NOT TESTABLE IN ITS CURRENT FORM AFTER THIS POINT. THE AMOUNT OF WORK TO MOCK THE SCENARIO IS
+     * UNREALISTIC FOR OUR PROEJCT AND THE FUNCTION NEEDS TO BE REFACTORED AND OVERHAULED. HOWEVER, THAT LIFT IS BEYOND
+     * THIS PROJECTS SCOPE, SO THE COVERAGE WE HAVE HERE IS SUFFICIENT FOR OUR NEEDS.
      */
     @Test
     void newQuadrant_printsStartLocation_whenStarDate_andInitialstardate_areEqual() {
@@ -138,31 +142,6 @@ class GalaxyMapTest {
         verify(util, atLeastOnce()).println(message + any() + "'.");
     }
 
-
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void klingonsMoveAndFire() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void klingonsShoot() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
 
     /**
      * OWNER: MUSTAFA
@@ -351,6 +330,93 @@ class GalaxyMapTest {
     }
 
     /**
+     * OWNER: MUSTAFA
+     * Test all boundaries that are valid
+     * Condition:
+     * 1. x = 0, y = 4
+     * 2. x = 0, y = 0
+     * 3. x = 5, y = 23
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_insertMaker_Test.csv", numLinesToSkip = 1)
+    void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker,String currentQuadrantMap, String quadrantMapResult) {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        int [] xy = new int [] {x, y};
+
+        //Set quadrantMap to later assert quadrantMapResult
+        map.quadrantMap = currentQuadrantMap;
+
+        //Mock: Case of pos == 1 on line 789
+        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
+
+        //Mock: Case of pos == 190 on line 793
+        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
+
+        //Mock on line 779
+        when(util.toInt(x)).thenCallRealMethod();
+        //Mock on line 780
+        when(util.toInt(y)).thenCallRealMethod();
+
+        int pos = y * 3 + x * 24 + 1;
+
+        //Mock on line 796
+        when(util.leftStr(currentQuadrantMap, (pos - 1))).thenCallRealMethod();
+        //Mock on line 796
+        when(util.rightStr(currentQuadrantMap, (190 - pos))).thenCallRealMethod();
+
+        // ACT
+        map.insertMarker(marker, xy);
+
+        // ASSERT
+        assertEquals(quadrantMapResult, map.quadrantMap);
+    }
+    /**
+     * OWNER: MUSTAFA
+     *
+     */
+    @Test
+    void insertMarker_update_quadrantMap_when_markerLengthIsEqualTo3_and_isInvalid() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        int [] xy = new int [] {5, 4};
+
+        String marker = " <*>";
+
+        // ACT
+        map.insertMarker(marker, xy);
+
+        // ASSERT
+        verify(util).println("ERROR");
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
+    void klingonsMoveAndFire() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER:
+     */
+    @Test
+    void klingonsShoot() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
      * OWNER:
      */
     @Test
@@ -468,69 +534,6 @@ class GalaxyMapTest {
         // ACT
 
         // ASSERT
-    }
-
-    /**
-     * OWNER: MUSTAFA
-     * Test all boundaries that are valid
-     * Condition:
-     * 1. x = 0, y = 4
-     * 2. x = 0, y = 0
-     * 3. x = 5, y = 23
-     */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/galaxyMap_insertMaker_Test.csv", numLinesToSkip = 1)
-    void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker,String currentQuadrantMap, String quadrantMapResult) {
-        // ARRANGE
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        int [] xy = new int [] {x, y};
-
-        //Set quadrantMap to later assert quadrantMapResult
-        map.quadrantMap = currentQuadrantMap;
-
-        //Mock: Case of pos == 1 on line 789
-        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
-
-        //Mock: Case of pos == 190 on line 793
-        when(util.rightStr(currentQuadrantMap, 189)).thenCallRealMethod();
-
-        //Mock on line 779
-        when(util.toInt(x)).thenCallRealMethod();
-        //Mock on line 780
-        when(util.toInt(y)).thenCallRealMethod();
-
-        int pos = y * 3 + x * 24 + 1;
-
-        //Mock on line 796
-        when(util.leftStr(currentQuadrantMap, (pos - 1))).thenCallRealMethod();
-        //Mock on line 796
-        when(util.rightStr(currentQuadrantMap, (190 - pos))).thenCallRealMethod();
-
-        // ACT
-        map.insertMarker(marker, xy);
-
-        // ASSERT
-        assertEquals(quadrantMapResult, map.quadrantMap);
-    }
-    /**
-     * OWNER: MUSTAFA
-     *
-     */
-    @Test
-    void insertMarker_update_quadrantMap_when_markerLengthIsEqualTo3_and_isInvalid() {
-        // ARRANGE
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        int [] xy = new int [] {5, 4};
-
-        String marker = " <*>";
-
-        // ACT
-        map.insertMarker(marker, xy);
-
-        // ASSERT
-        verify(util).println("ERROR");
     }
 
     /**

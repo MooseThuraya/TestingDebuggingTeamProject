@@ -151,8 +151,8 @@ public class GalaxyMap {
                 klingonQuadrants[i][2] = 0;
             }
         } else {
-            throw new IllegalArgumentException("Enterprise has navigated out of our known universe and can no longer " +
-                                               "be found. The fate of the Federation is doomed!");
+            throw new IllegalArgumentException("ENTERPRISE HAS NAVIGATED OUT OF OUR KNOWN UNIVERSE AND CAN NO LONGER " +
+                                               "BE FOUND. THE FATE OF THE FEDERATION IS DOOMED!");
         }
 
         for (int i = 1; i < 3; i++) {
@@ -165,7 +165,7 @@ public class GalaxyMap {
         // position klingons
         if (klingons >= 1) {
             for (int i = 1; i <= klingons; i++) {
-                final int[] emptyCoordinate = findEmptyPlaceInQuadrant(this.quadrantMap);
+                final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
                 insertMarker(MARKER_KLINGON, emptyCoordinate);
                 klingonQuadrants[i][1] = emptyCoordinate[0];
                 klingonQuadrants[i][2] = emptyCoordinate[1];
