@@ -40,6 +40,7 @@ class UtilTest {
         this.inputReader = mock(BufferedReader.class);
 
     }
+
     /**
      * OWNER: MUSTAFA
      */
@@ -47,10 +48,10 @@ class UtilTest {
     void toInt_returns_int_equal_Negative1000_when_user_enters_1000() {
         // ARRANGE
         Util util = new Util(rand, inputReader);
-        int expectedResult =  1000;
+        int expectedResult = 1000;
 
         // ACT
-        int result = util.toInt((float)-1000);
+        int result = util.toInt((float) -1000);
 
         // ASSERT
         assertEquals(expectedResult, result);
@@ -64,10 +65,10 @@ class UtilTest {
     void toInt_returns_int_equal_zero_when_user_enters_float_zero() {
         // ARRANGE
         Util util = new Util(rand, inputReader);
-        int expectedResult =  0;
+        int expectedResult = 0;
 
         // ACT
-        int result = util.toInt((float)0);
+        int result = util.toInt((float) 0);
 
         // ASSERT
         assertEquals(expectedResult, result);
@@ -81,10 +82,10 @@ class UtilTest {
     void toInt_returns_int_equal_1_when_user_enters_a_negative_double_equalTo_1() {
         // ARRANGE
         Util util = new Util(rand, inputReader);
-        int expectedResult =  1;
+        int expectedResult = 1;
 
         // ACT
-        int result = util.toInt((float)-1);
+        int result = util.toInt((float) -1);
 
         // ASSERT
         assertEquals(expectedResult, result);
@@ -98,7 +99,7 @@ class UtilTest {
     void toInt_returns_int_equal_100_when_user_enters_a_double_equalTo_100Point5() {
         // ARRANGE
         Util util = new Util(rand, inputReader);
-        int expectedResult =  100;
+        int expectedResult = 100;
 
         // ACT
         int result = util.toInt(100.5);
@@ -142,8 +143,8 @@ class UtilTest {
 
     /**
      * OWNER: Sanchita
-     *  the exception is always raised when the readline() method is called.
-     *  It is not an option to refactor this as the readline() method needs to be enclosed in a try catch block
+     * the exception is always raised when the readline() method is called.
+     * It is not an option to refactor this as the readline() method needs to be enclosed in a try catch block
      */
     @Test
     void inputStr_verify_if_IOexception_is_raised() throws IOException {
@@ -172,8 +173,8 @@ class UtilTest {
         //ARRANGE
         when(inputReader.readLine()).thenReturn("3,5");
 
-        int [] result;
-        int [] expectedResult = {3,5};
+        int[] result;
+        int[] expectedResult = {3, 5};
 
         // ACT
         result = util.inputCoords("  FINAL COORDINATES (X,Y)");
@@ -205,14 +206,14 @@ class UtilTest {
     @Test
     void inputFloat_returns_the_corresponding_float_value() throws Exception {
         Util util = new Util(rand, inputReader);
-        Float expectedResult =  0.100f;
+        Float expectedResult = 0.100f;
 
         // ACT
         when(inputReader.readLine()).thenReturn("0.1");
 
         // ASSERT
         assertEquals(expectedResult, util.inputFloat("0.1"));
-}
+    }
 
     /**
      * OWNER: Sanchita

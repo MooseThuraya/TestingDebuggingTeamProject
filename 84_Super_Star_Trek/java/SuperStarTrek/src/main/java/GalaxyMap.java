@@ -49,7 +49,7 @@ public class GalaxyMap {
                            QUADRANT_ROW +
                            util.leftStr(QUADRANT_ROW, 17);
 
-        int [] quadrant = enterprise.getQuadrant();
+        int[] quadrant = enterprise.getQuadrant();
         int quadX = quadrant[0];
         int quadY = quadrant[1];
         int quadrantX = quadX;
@@ -201,8 +201,8 @@ public class GalaxyMap {
             final int[] newCoords = findEmptyPlaceInQuadrant(quadrantMap);
             klingonQuadrants[i][1] = newCoords[0];
             klingonQuadrants[i][2] = newCoords[1];
-            newKlingonQuadrants[0] =  klingonQuadrants[i][1];
-            newKlingonQuadrants[1] =  klingonQuadrants[i][2];
+            newKlingonQuadrants[0] = klingonQuadrants[i][1];
+            newKlingonQuadrants[1] = klingonQuadrants[i][2];
 
             insertMarker(MARKER_KLINGON, newKlingonQuadrants);
         }
@@ -260,7 +260,7 @@ public class GalaxyMap {
 
     public void moveEnterprise(final float course, final float warp, final int n, final double stardate,
                                final double initialStardate, final int missionDuration, final GameCallback callback) {
-        int [] sectorsXY = enterprise.getSector();
+        int[] sectorsXY = enterprise.getSector();
         insertMarker(MARKER_EMPTY, sectorsXY);
 
         final int[] sector = enterprise.moveShip(course, n, quadrantMap, stardate, initialStardate, missionDuration,
@@ -573,7 +573,7 @@ public class GalaxyMap {
             insertMarker(MARKER_EMPTY, XY);
             int[] quadrantXY = new int[2];
             quadrantXY = enterprise.getQuadrant();
-            final int quadrantX = quadrantXY[0]  ;
+            final int quadrantX = quadrantXY[0];
             final int quadrantY = quadrantXY[1];
 
             galaxy[quadrantX][quadrantY] = klingons * 100 + starbases * 10 + stars;
@@ -794,7 +794,7 @@ public class GalaxyMap {
             quadrantMap = util.leftStr(quadrantMap, 189) + marker;
         }
 
-        quadrantMap =  util.leftStr(quadrantMap, (pos - 1)) + marker + util.rightStr(quadrantMap, (190 - pos));
+        quadrantMap = util.leftStr(quadrantMap, (pos - 1)) + marker + util.rightStr(quadrantMap, (190 - pos));
     }
 
     /**

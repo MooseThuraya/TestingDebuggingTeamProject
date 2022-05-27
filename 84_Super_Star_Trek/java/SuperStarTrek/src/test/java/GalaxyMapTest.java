@@ -37,10 +37,10 @@ class GalaxyMapTest {
         this.enterprise = mock(Enterprise.class);
 
         //Must mock before initializing GalaxyMap for line 52
-        int [] quadrantArr = new int [] {0,0};
+        int[] quadrantArr = new int[]{0, 0};
         when(enterprise.getQuadrant()).thenReturn(quadrantArr);
 
-        int [] sectorArr = new int [] {0,0};
+        int[] sectorArr = new int[]{0, 0};
         when(enterprise.getSector()).thenReturn(sectorArr);
 
     }
@@ -67,20 +67,20 @@ class GalaxyMapTest {
     /**
      * OWNER: ALICIA
      * Test all boundaries for invalid quadrant values
-     *
+     * <p>
      * Condition:
-     *  1. X = 0, -3, -100, 9, 15, 100
-     *  2. Y = -5, 0, -100, 9, 15, 100
+     * 1. X = 0, -3, -100, 9, 15, 100
+     * 2. Y = -5, 0, -100, 9, 15, 100
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/galaxyMap_newQuadrant_invalidCoords.csv", numLinesToSkip = 1)
     void newQuadrant_throwsException_withInvalid_quadrantCoordinates(int X, int Y, String expectedMessage) {
         // ARRANGE
         GalaxyMap map = new GalaxyMap(util, enterprise);
-        double initialStardate = 0.1 * 20 +20;
-        double stardate = 0.3 * 20 +20;
+        double initialStardate = 0.1 * 20 + 20;
+        double stardate = 0.3 * 20 + 20;
         // quadrant we want to
-        int[] quadrantXY = new int[] {X, Y};
+        int[] quadrantXY = new int[]{X, Y};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
 
@@ -101,10 +101,10 @@ class GalaxyMapTest {
     void newQuadrant_printsNewLocationMessage_whenStarDate_AndInitialstardate_areNotEqual() {
         // ARRANGE
         GalaxyMap map = new GalaxyMap(util, enterprise);
-        double initialStardate = 0.1 * 20 +20;
-        double stardate = 0.3 * 20 +20;
+        double initialStardate = 0.1 * 20 + 20;
+        double stardate = 0.3 * 20 + 20;
         // quadrant we want to
-        int[] quadrantXY = new int[] {1, 2};
+        int[] quadrantXY = new int[]{1, 2};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
 
@@ -119,7 +119,7 @@ class GalaxyMapTest {
      * OWNER: ALICIA
      * Test for ensuring we reach the message for starting location when star date and initial star date are
      * equal
-     *
+     * <p>
      * NOTE: THIS CLASS IS NOT TESTABLE IN ITS CURRENT FORM AFTER THIS POINT. THE AMOUNT OF WORK TO MOCK THE SCENARIO IS
      * UNREALISTIC FOR OUR PROEJCT AND THE FUNCTION NEEDS TO BE REFACTORED AND OVERHAULED. HOWEVER, THAT LIFT IS BEYOND
      * THIS PROJECTS SCOPE, SO THE COVERAGE WE HAVE HERE IS SUFFICIENT FOR OUR NEEDS.
@@ -132,10 +132,10 @@ class GalaxyMapTest {
         double stardate = initialStardate;
 
         // quadrant we want to
-        int[] quadrantXY = new int[] {1, 2};
+        int[] quadrantXY = new int[]{1, 2};
 
         when(enterprise.getQuadrant()).thenReturn(quadrantXY);
-        String message ="YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" +  "IN THE GALACTIC QUADRANT, '";
+        String message = "YOUR MISSION BEGINS WITH YOUR STARSHIP LOCATED\n" + "IN THE GALACTIC QUADRANT, '";
 
         // ACT
         map.newQuadrant(stardate, initialStardate);
@@ -149,17 +149,17 @@ class GalaxyMapTest {
      * OWNER: MUSTAFA
      * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
      * Based on:
-     *  course = 1
-     *  warp = 3
-     *  n = 24
-     *  stardate = 28, initialStardate = 28
-     *  missionDuration = 25
-     *  quadrantMap = as seen below
+     * course = 1
+     * warp = 3
+     * n = 24
+     * stardate = 28, initialStardate = 28
+     * missionDuration = 25
+     * quadrantMap = as seen below
      */
     @Test
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo3_nEqualTo24() {
         // ARRANGE
-        int [] quadrant = new int [] {6,4};
+        int[] quadrant = new int[]{6, 4};
         //Must mock before initializing GalaxyMap for line 52
         when(enterprise.getQuadrant()).thenReturn(quadrant);
 
@@ -178,14 +178,16 @@ class GalaxyMapTest {
         double stardate = 28;
         double initialStardate = stardate;
         int missionDuration = 25;
-        String quadrantMap = "                                                                                                                             >!<                                                               ";
+        String quadrantMap =
+                "                                                                                                                             >!<                                                               ";
         String initialQuadrantMap = quadrantMap;
         int x = 5;
         int y = 3;
         int initialX = x;
         int initialY = y;
-        int [] sectorsXY = new int[] {x,y};
-        int [] sector = new int [] {0,4};//sector = [0,4] is what is it actually returned if the given arguments were passed, so we mock this
+        int[] sectorsXY = new int[]{x, y};
+        int[] sector = new int[]{0,
+                                 4};//sector = [0,4] is what is it actually returned if the given arguments were passed, so we mock this
 
         when(enterprise.getSector()).thenReturn(sectorsXY);
 
@@ -202,10 +204,12 @@ class GalaxyMapTest {
         when(util.rightStr(quadrantMap, (190 - pos))).thenCallRealMethod();
 
         //quadrant map is updated to newQuadrantMap in insertMarker on line 257
-        quadrantMap = "                                                                                                                             >!<                                                                ";
+        quadrantMap =
+                "                                                                                                                             >!<                                                                ";
 
         //Mock on line 259
-        when(enterprise.moveShip(course, n, quadrantMap,stardate, initialStardate, missionDuration, gameCallback)).thenReturn(sector);
+        when(enterprise.moveShip(course, n, quadrantMap, stardate, initialStardate, missionDuration,
+                                 gameCallback)).thenReturn(sector);
 
         //Mock on line 264
         when(util.toInt(sector[0])).thenCallRealMethod();
@@ -228,10 +232,11 @@ class GalaxyMapTest {
 
         // ACT
         //We pass initial versions of the variables because we update the variables in order to mock above
-        enterprise.setSector(initialX,initialY);
+        enterprise.setSector(initialX, initialY);
         map.quadrantMap = initialQuadrantMap;
         map.moveEnterprise(course, warp, n, stardate, initialStardate, missionDuration, gameCallback);
-        String resultQuadrantMap = "            <*>                                                                                                              >!<                                                                ";
+        String resultQuadrantMap =
+                "            <*>                                                                                                              >!<                                                                ";
 
         // ASSERT
         assertEquals(2966, enterprise.energy);
@@ -242,17 +247,17 @@ class GalaxyMapTest {
      * OWNER: MUSTAFA
      * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
      * Based on:
-     *  course = 1
-     *  warp = 0
-     *  n = 24
-     *  stardate = 29, initialStardate = 28
-     *  missionDuration = 0
-     *  quadrantMap = as seen below
+     * course = 1
+     * warp = 0
+     * n = 24
+     * stardate = 29, initialStardate = 28
+     * missionDuration = 0
+     * quadrantMap = as seen below
      */
     @Test
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo0_missionEqualTo0() {
         // ARRANGE
-        int [] quadrant = new int [] {6,4};
+        int[] quadrant = new int[]{6, 4};
         //Must mock before initializing GalaxyMap for line 52
         when(enterprise.getQuadrant()).thenReturn(quadrant);
 
@@ -271,14 +276,16 @@ class GalaxyMapTest {
         double stardate = 29;
         double initialStardate = 28;
         int missionDuration = 0;
-        String quadrantMap = "                                                                                                                             >!<                                                               ";
+        String quadrantMap =
+                "                                                                                                                             >!<                                                               ";
         String initialQuadrantMap = quadrantMap;
         int x = 5;
         int y = 3;
         int initialX = x;
         int initialY = y;
-        int [] sectorsXY = new int[] {x,y};
-        int [] sector = new int [] {0,4};//sector = [0,4] is what is it actually returned if the given arguments were passed, so we mock this
+        int[] sectorsXY = new int[]{x, y};
+        int[] sector = new int[]{0,
+                                 4};//sector = [0,4] is what is it actually returned if the given arguments were passed, so we mock this
 
         when(enterprise.getSector()).thenReturn(sectorsXY);
 
@@ -295,10 +302,12 @@ class GalaxyMapTest {
         when(util.rightStr(quadrantMap, (190 - pos))).thenCallRealMethod();
 
         //quadrant map is updated to newQuadrantMap in insertMarker on line 257
-        quadrantMap = "                                                                                                                             >!<                                                                ";
+        quadrantMap =
+                "                                                                                                                             >!<                                                                ";
 
         //Mock on line 259
-        when(enterprise.moveShip(course, n, quadrantMap,stardate, initialStardate, missionDuration, gameCallback)).thenReturn(sector);
+        when(enterprise.moveShip(course, n, quadrantMap, stardate, initialStardate, missionDuration,
+                                 gameCallback)).thenReturn(sector);
 
         //Mock on line 264
         when(util.toInt(sector[0])).thenCallRealMethod();
@@ -321,10 +330,11 @@ class GalaxyMapTest {
 
         // ACT
         //We pass initial versions of the variables because we update the variables in order to mock above
-        enterprise.setSector(initialX,initialY);
+        enterprise.setSector(initialX, initialY);
         map.quadrantMap = initialQuadrantMap;
         map.moveEnterprise(course, warp, n, stardate, initialStardate, missionDuration, gameCallback);
-        String resultQuadrantMap = "            <*>                                                                                                              >!<                                                                ";
+        String resultQuadrantMap =
+                "            <*>                                                                                                              >!<                                                                ";
 
         // ASSERT
         assertEquals(2966, enterprise.energy);
@@ -341,11 +351,12 @@ class GalaxyMapTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/galaxyMap_insertMaker_Test.csv", numLinesToSkip = 1)
-    void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker,String currentQuadrantMap, String quadrantMapResult) {
+    void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker, String currentQuadrantMap,
+                                                          String quadrantMapResult) {
         // ARRANGE
         GalaxyMap map = new GalaxyMap(util, enterprise);
 
-        int [] xy = new int [] {x, y};
+        int[] xy = new int[]{x, y};
 
         //Set quadrantMap to later assert quadrantMapResult
         map.quadrantMap = currentQuadrantMap;
@@ -374,16 +385,16 @@ class GalaxyMapTest {
         // ASSERT
         assertEquals(quadrantMapResult, map.quadrantMap);
     }
+
     /**
      * OWNER: MUSTAFA
-     *
      */
     @Test
     void insertMarker_update_quadrantMap_when_markerLengthIsEqualTo3_and_isInvalid() {
         // ARRANGE
         GalaxyMap map = new GalaxyMap(util, enterprise);
 
-        int [] xy = new int [] {5, 4};
+        int[] xy = new int[]{5, 4};
 
         String marker = " <*>";
 
