@@ -12,3 +12,10 @@ Implement full testing environment for the game in `Java`, including, but not li
 4. `Truth Tables`
 5. `Test Plans`
 6. `Lessons Learned`
+
+
+-------
+
+# Current Status
+
+[![Java CI with Gradle](https://github.com/gaaliciA1990/TestingDebugging_GroupProject/actions/workflows/gradle.yml/badge.svg)](https://github.com/gaaliciA1990/TestingDebugging_GroupProject/actions/workflows/gradle.yml)
