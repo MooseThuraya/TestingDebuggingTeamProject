@@ -144,18 +144,84 @@ class GalaxyMapTest {
         verify(util, atLeastOnce()).println(message + any() + "'.");
     }
 
+    /**
+     * OWNER: ALICIA
+     * Test for ensuring we reach the warning message when we have 3 Klingons in the quadrant
+     */
+    @Test
+    void newQuadrant_printsKlingonWarning_whenKlingonsGreaterThanZero() {
+        // ARRANGE
+        String warningKlingonMsg = "COMBAT AREA      CONDITION RED";
+        double initialStardate = 0.1 * 20 + 20;
+        double stardate = 0.3 * 20 + 20;
+        int[] quadrantXY = new int[]{1, 2};
+        int[] sectorXY = new int[]{3, 7};
+        float randNum = 0.98f;
+        int fnrNum = 5;
+
+        when(util.random()).thenReturn(randNum); // generate 3 klingons and 1 starbase in constructor
+        when(util.fnr()).thenReturn(fnrNum);
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        when(enterprise.getSector()).thenReturn(sectorXY);
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.rightStr(any(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+        when(util.leftStr(any(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+        when(util.midStr(any(), anyInt(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.newQuadrant(stardate, initialStardate);
+
+        // ASSERT
+        verify(util).println(warningKlingonMsg);
+    }
 
     /**
-     * OWNER: MUSTAFA
-     * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
-     * Based on:
-     * course = 1
-     * warp = 3
-     * n = 24
-     * stardate = 28, initialStardate = 28
-     * missionDuration = 25
-     * quadrantMap = as seen below
+     * OWNER: ALICIA
+     * Test for ensuring we reach the warning message when we have 3 Klingons in the quadrant
      */
+    @Test
+    void newQuadrant_printsKlingonWarning_and_printsShieldDanger_whenKlingonsGreaterThanZero() {
+        // ARRANGE
+        String warningKlingonMsg = "COMBAT AREA      CONDITION RED";
+        String warningShieldMsg = "   SHIELDS DANGEROUSLY LOW";
+        double initialStardate = 0.1 * 20 + 20;
+        double stardate = 0.3 * 20 + 20;
+        int[] quadrantXY = new int[]{1, 2};
+        int[] sectorXY = new int[]{3, 7};
+        float randNum = 0.97f;
+        int fnrNum = 5;
+
+        when(util.random()).thenReturn(randNum); // generate 2 klingons and 1 starbase in constructor
+        when(util.fnr()).thenReturn(fnrNum);
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        when(enterprise.getSector()).thenReturn(sectorXY);
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.rightStr(any(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+        when(util.leftStr(any(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+        when(util.midStr(any(), anyInt(), anyInt())).thenCallRealMethod(); // we aren't testing this, so any value works
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.newQuadrant(stardate, initialStardate);
+
+        // ASSERT
+        verify(util).println(warningKlingonMsg);
+        verify(util).println(warningShieldMsg);
+
+    }
+
+        /**
+         * OWNER: MUSTAFA
+         * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
+         * Based on:
+         *  course = 1
+         *  warp = 3
+         *  n = 24
+         *  stardate = 28, initialStardate = 28
+         *  missionDuration = 25
+         *  quadrantMap = as seen below
+         */
     @Test
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo3_nEqualTo24() {
         // ARRANGE
