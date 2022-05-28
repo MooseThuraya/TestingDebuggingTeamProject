@@ -631,6 +631,76 @@ class GalaxyMapTest {
     /**
      * OWNER: ALICIA
      */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_getQuadrantName.csv", numLinesToSkip = 1)
+    void getQuadrantName_returnsCorrectQuadrant(int X, int Y, String expectedResult) {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        String result = map.getQuadrantName(false, X, Y);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_getRegionName.csv", numLinesToSkip = 1)
+    void getRegionName_returnsCorrectRegion(int Y, String expectedResult) {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        String result = map.getRegionName(false, Y);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void printNoEnemyShipsMessage_return_expected_string_message(){
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        String expectedResult1 = "SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS";
+        String expectedResult2 = "                                IN THIS QUADRANT'";
+
+        // ACT
+        map.printNoEnemyShipsMessage();
+
+        // ASSERT
+        verify(util).println(expectedResult1);
+        verify(util).println(expectedResult2);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_starbaseNavData.csv", numLinesToSkip = 1)
+    void starbaseNavData_prints_correctMessage_forStarbaseCount(float randNum, String expectedMessage) {
+        // ARRANGE
+        when(util.random()).thenReturn(randNum); // generate 3 klingons and 1 starbase in constructor
+        when(util.fnr()).thenCallRealMethod();
+
+        when(enterprise.getSector()).thenCallRealMethod();
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.starbaseNavData();
+
+        // ASSERT - if we hit this message, we know the directions are printed
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
     @Test
     void klingonsMoveAndFire() {
         // ARRANGE
@@ -730,18 +800,6 @@ class GalaxyMapTest {
      */
     @Test
     void printDirection() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void starbaseNavData() {
         // ARRANGE
 
         // ACT
