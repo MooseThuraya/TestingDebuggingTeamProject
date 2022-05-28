@@ -472,30 +472,6 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
-     */
-    @Test
-    void klingonsMoveAndFire() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void klingonsShoot() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
      * OWNER: Sanchita
      * ship condition red
      * docked = false
@@ -511,12 +487,6 @@ class GalaxyMapTest {
 
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        //initialize gamecallback to pass it as a parameter
-        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
-
-        //initialize mock of SuperStartrekGame
-        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
 
         // ACT
         map.klingons = 1;
@@ -543,12 +513,6 @@ class GalaxyMapTest {
 
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        //initialize gamecallback to pass it as a parameter
-        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
-
-        //initialize mock of SuperStartrekGame
-        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
 
         // ACT
         when(enterprise.getSector()).thenReturn(quadrant);
@@ -587,12 +551,6 @@ class GalaxyMapTest {
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
 
-        //initialize gamecallback to pass it as a parameter
-        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
-
-        //initialize mock of SuperStartrekGame
-        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
-
         // ACT
         when(enterprise.getSector()).thenReturn(quadrant);
 
@@ -628,12 +586,6 @@ class GalaxyMapTest {
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
 
-        //initialize gamecallback to pass it as a parameter
-        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
-
-        //initialize mock of SuperStartrekGame
-        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
-
         //ACT
         when(util.toInt(anyDouble())).thenCallRealMethod();
         when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
@@ -663,12 +615,6 @@ class GalaxyMapTest {
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
 
-        //initialize gamecallback to pass it as a parameter
-        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
-
-        //initialize mock of SuperStartrekGame
-        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
-
         //ACT
         when(util.toInt(anyDouble())).thenCallRealMethod();
 
@@ -680,6 +626,30 @@ class GalaxyMapTest {
         //ASSERT
         assertEquals(false,enterprise.isDocked());
         verify(util).println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsMoveAndFire() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsShoot() {
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
     }
 
 

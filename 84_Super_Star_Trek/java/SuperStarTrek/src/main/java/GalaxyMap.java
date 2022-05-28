@@ -181,7 +181,7 @@ public class GalaxyMap {
             insertMarker(MARKER_STARBASE, emptyCoordinate);
         }
 
-        // position stars
+        // position stars - not really testable
         for (int i = 1; i <= stars; i++) {
             final int[] emptyCoordinate = findEmptyPlaceInQuadrant(quadrantMap);
             insertMarker(MARKER_STAR, emptyCoordinate);
