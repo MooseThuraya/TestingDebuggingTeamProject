@@ -30,11 +30,13 @@ import static org.mockito.Mockito.*;
 class GalaxyMapTest {
     Util util;
     Enterprise enterprise;
+    GameCallback callback;
 
     @BeforeEach
     void galaxyMapSetUp() {
         this.util = mock(Util.class);
         this.enterprise = mock(Enterprise.class);
+        this.callback = mock(GameCallback.class);
 
         //Must mock before initializing GalaxyMap for line 52
         int[] quadrantArr = new int[]{0, 0};
@@ -211,17 +213,209 @@ class GalaxyMapTest {
 
     }
 
-        /**
-         * OWNER: MUSTAFA
-         * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
-         * Based on:
-         *  course = 1
-         *  warp = 3
-         *  n = 24
-         *  stardate = 28, initialStardate = 28
-         *  missionDuration = 25
-         *  quadrantMap = as seen below
-         */
+    /**
+     * OWNER: ALICIA
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_getQuadrantName.csv", numLinesToSkip = 1)
+    void getQuadrantName_returnsCorrectQuadrant(int X, int Y, String expectedResult) {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        String result = map.getQuadrantName(false, X, Y);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_getRegionName.csv", numLinesToSkip = 1)
+    void getRegionName_returnsCorrectRegion(int Y, String expectedResult) {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        String result = map.getRegionName(false, Y);
+
+        // ASSERT
+        assertEquals(expectedResult, result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void printNoEnemyShipsMessage_return_expected_string_message() {
+        // ARRANGE
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        String expectedResult1 = "SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS";
+        String expectedResult2 = "                                IN THIS QUADRANT'";
+
+        // ACT
+        map.printNoEnemyShipsMessage();
+
+        // ASSERT
+        verify(util).println(expectedResult1);
+        verify(util).println(expectedResult2);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_starbaseNavData.csv", numLinesToSkip = 1)
+    void starbaseNavData_prints_correctMessage_forStarbaseCount(float randNum, String expectedMessage) {
+        // ARRANGE
+        when(util.random()).thenReturn(randNum); // generate 3 klingons and 1 starbase in constructor
+        when(util.fnr()).thenCallRealMethod();
+
+        when(enterprise.getSector()).thenCallRealMethod();
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.starbaseNavData();
+
+        // ASSERT - if we hit this message, we know the directions are printed
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     * This method doesn't have anything returned and isn't testable in terms of what to look for. This test is
+     * verifying that the method correctly goes through the for loop and calls klingonsShoot
+     *
+     */
+    @ParameterizedTest
+    @CsvFileSource(resources = "/galaxyMap_klingonsMoveAndFire.csv", numLinesToSkip = 1)
+    void klingonsMoveAndFire_executes_whenCalled_andGoesTo_klingonsShootFunction(float randNum,
+                                                                                 String expectedMessage) {
+        // ARRANGE
+        when(util.random()).thenReturn(randNum); // generate Klingons on the map
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        map.klingonsMoveAndFire(callback);
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsShoot_returnsFalse_when_no_klingonsAreGenerated() {
+        // ARRANGE
+        float randNum = 0.79f;
+
+        when(util.random()).thenReturn(randNum);
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        // ACT
+        boolean result = map.klingonsShoot(callback);
+
+        // ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsShoot_returnsFalse_when_enterpiseDocked_plusProtectedMsg() {
+        // ARRANGE
+        String expectedMessage = "STARBASE SHIELDS PROTECT THE ENTERPRISE";
+        float randNum = 0.99f;
+
+        when(util.random()).thenReturn(randNum);
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        when(enterprise.isDocked()).thenReturn(true);
+
+        // ACT
+        boolean result = map.klingonsShoot(callback);
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+        assertFalse(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsShoot_gameEnds_whenShields_equalZero_returnsTrue() {
+        // ARRANGE
+        float randNum = 0.99f;
+        int shields = 0;
+
+
+        when(util.random()).thenReturn(randNum);
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.klingonQuadrants[2][3] = 1;
+
+
+        when(enterprise.isDocked()).thenReturn(false);
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.random()).thenReturn(0.5f);
+        when(enterprise.getShields()).thenReturn(shields);
+
+
+        // ACT
+        boolean result = map.klingonsShoot(callback);
+
+        // ASSERT
+        verify(callback).endGameFail(true);
+        assertTrue(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void klingonsShoot_returnsTrue_whenShields_areGreater_thanZero() {
+        // ARRANGE
+        float randNum = 0.99f;
+        int shields = 100;
+        double[] deviceStatus = new double[]{100, 100, 60, 100, 100, 100, 100};
+
+
+                when(util.random()).thenReturn(randNum);
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.klingonQuadrants[2][3] = 1;
+
+
+        when(enterprise.isDocked()).thenReturn(false);
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.random()).thenReturn(0.5f);
+        when(enterprise.getShields()).thenReturn(shields);
+        when(util.fnr()).thenReturn(3);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+
+        // ACT
+        boolean result = map.klingonsShoot(callback);
+
+        // ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * OWNER: MUSTAFA
+     * We verify that the quadrantMap is updated correctly, and we also make sure that moving the ship will decrease energy to 2966
+     * Based on:
+     * course = 1
+     * warp = 3
+     * n = 24
+     * stardate = 28, initialStardate = 28
+     * missionDuration = 25
+     * quadrantMap = as seen below
+     */
     @Test
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo3_nEqualTo24() {
         // ARRANGE
@@ -480,8 +674,8 @@ class GalaxyMapTest {
     @Test
     void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_red() {
         // ARRANGE
-        int [] quadrant = new int [] {6,4};
-        double [] deviceStatus = new double [] {1.00,2.00};
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{1.00, 2.00};
         when(enterprise.getSector()).thenReturn(quadrant);
         when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
 
@@ -508,8 +702,8 @@ class GalaxyMapTest {
     @Test
     void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_yellow() {
         // ARRANGE
-        int [] quadrant = new int [] {6,4};
-        double [] deviceStatus = new double [] {1.00,2.00};
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{1.00, 2.00};
 
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
@@ -545,8 +739,8 @@ class GalaxyMapTest {
     @Test
     void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_green() {
         // ARRANGE
-        int [] quadrant = new int [] {6,4};
-        double [] deviceStatus = new double [] {1.00,2.00};
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{1.00, 2.00};
 
         //initialize Galaxymap to test it
         GalaxyMap map = new GalaxyMap(util, enterprise);
@@ -592,10 +786,10 @@ class GalaxyMapTest {
         map.klingons = 1;
         map.shortRangeSensorScan(10.00);
 
-        String message ="SHIELDS DROPPED FOR DOCKING PURPOSES";
+        String message = "SHIELDS DROPPED FOR DOCKING PURPOSES";
 
         //ASSERT
-        assertEquals(false,enterprise.isDocked());
+        assertEquals(false, enterprise.isDocked());
         verify(util, atLeastOnce()).println(message + any() + "'.");
     }
 
@@ -608,7 +802,7 @@ class GalaxyMapTest {
     void shortRangeSensorScan_check_docked_status_true_shrot_range_sensors_out() {
         // ARRANGE
         int[] quadrant = new int[]{6, 4};
-        double[] deviceStatus = new double[]{1.00,-2.00};
+        double[] deviceStatus = new double[]{1.00, -2.00};
         when(enterprise.getSector()).thenReturn(quadrant);
         when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
 
@@ -624,102 +818,8 @@ class GalaxyMapTest {
         map.shortRangeSensorScan(10.00);
 
         //ASSERT
-        assertEquals(false,enterprise.isDocked());
+        assertEquals(false, enterprise.isDocked());
         verify(util).println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/galaxyMap_getQuadrantName.csv", numLinesToSkip = 1)
-    void getQuadrantName_returnsCorrectQuadrant(int X, int Y, String expectedResult) {
-        // ARRANGE
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        // ACT
-        String result = map.getQuadrantName(false, X, Y);
-
-        // ASSERT
-        assertEquals(expectedResult, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/galaxyMap_getRegionName.csv", numLinesToSkip = 1)
-    void getRegionName_returnsCorrectRegion(int Y, String expectedResult) {
-        // ARRANGE
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-
-        // ACT
-        String result = map.getRegionName(false, Y);
-
-        // ASSERT
-        assertEquals(expectedResult, result);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void printNoEnemyShipsMessage_return_expected_string_message(){
-        // ARRANGE
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-        String expectedResult1 = "SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS";
-        String expectedResult2 = "                                IN THIS QUADRANT'";
-
-        // ACT
-        map.printNoEnemyShipsMessage();
-
-        // ASSERT
-        verify(util).println(expectedResult1);
-        verify(util).println(expectedResult2);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/galaxyMap_starbaseNavData.csv", numLinesToSkip = 1)
-    void starbaseNavData_prints_correctMessage_forStarbaseCount(float randNum, String expectedMessage) {
-        // ARRANGE
-        when(util.random()).thenReturn(randNum); // generate 3 klingons and 1 starbase in constructor
-        when(util.fnr()).thenCallRealMethod();
-
-        when(enterprise.getSector()).thenCallRealMethod();
-
-        // ACT
-        GalaxyMap map = new GalaxyMap(util, enterprise);
-        map.starbaseNavData();
-
-        // ASSERT - if we hit this message, we know the directions are printed
-        verify(util).println(expectedMessage);
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void klingonsMoveAndFire() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER: ALICIA
-     */
-    @Test
-    void klingonsShoot() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
     }
 
 

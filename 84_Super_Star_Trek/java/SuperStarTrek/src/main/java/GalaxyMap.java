@@ -207,17 +207,22 @@ public class GalaxyMap {
             insertMarker(MARKER_KLINGON, newKlingonQuadrants);
         }
 
-        klingonsShoot(callback);
+        boolean action = klingonsShoot(callback);
+        if (action) {
+            util.println("KLINGONS ATTACKED!");
+        } else {
+            util.println("NO ATTACK DAMAGE!");
+        }
     }
 
-    void klingonsShoot(GameCallback callback) {
+    boolean klingonsShoot(GameCallback callback) {
         if (klingons <= 0) {
-            return; // no klingons
+            return false; // no klingons
         }
 
         if (enterprise.isDocked()) {
             util.println("STARBASE SHIELDS PROTECT THE ENTERPRISE");
-            return;
+            return false;
         }
 
         for (int i = 1; i <= 3; i++) {
@@ -237,6 +242,7 @@ public class GalaxyMap {
 
             if (enterprise.getShields() <= 0) {
                 callback.endGameFail(true);
+                break; // we lost, game ends
             }
 
             util.println("      <SHIELDS DOWN TO " + enterprise.getShields() + " UNITS>");
@@ -256,6 +262,7 @@ public class GalaxyMap {
                                                      .5 * util.random());
             util.println("DAMAGE CONTROL REPORTS " + Enterprise.printDeviceName(randomDevice) + " DAMAGED BY THE HIT'");
         }
+        return true;
     }
 
     public void moveEnterprise(final float course, final float warp, final int n, final double stardate,
