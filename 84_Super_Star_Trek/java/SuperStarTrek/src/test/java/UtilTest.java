@@ -131,9 +131,9 @@ class UtilTest {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         System.setOut(new PrintStream(bo));
         Util util = new Util(rand, inputReader);
-        String expectedResult = "blah?";
+        String expectedResult = "Input?";
         // ACT
-        util.inputStr("blah");
+        util.inputStr("Input");
         bo.flush();
         String allWrittenLines = new String(bo.toByteArray());
 

@@ -430,16 +430,192 @@ class GalaxyMapTest {
     }
 
     /**
-     * OWNER:
+     * OWNER: Sanchita
+     * ship condition red
+     * docked = false
+     * Klingons = 1
      */
     @Test
-    void shortRangeSensorScan() {
+    void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_red() {
         // ARRANGE
+        int [] quadrant = new int [] {6,4};
+        double [] deviceStatus = new double [] {1.00,2.00};
+        when(enterprise.getSector()).thenReturn(quadrant);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        //initialize Galaxymap to test it
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        //initialize gamecallback to pass it as a parameter
+        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
+
+        //initialize mock of SuperStartrekGame
+        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
 
         // ACT
+        map.klingons = 1;
+        map.shortRangeSensorScan(10.00);
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
 
         // ASSERT
+        assertEquals(false, enterprise.isDocked());
     }
+
+    /**
+     * OWNER: Sanchita
+     * ship condition yellow
+     * docked = false
+     * Klingons = 0
+     * energy less than initial energy
+     */
+    @Test
+    void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_yellow() {
+        // ARRANGE
+        int [] quadrant = new int [] {6,4};
+        double [] deviceStatus = new double [] {1.00,2.00};
+
+        //initialize Galaxymap to test it
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        //initialize gamecallback to pass it as a parameter
+        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
+
+        //initialize mock of SuperStartrekGame
+        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
+
+        // ACT
+        when(enterprise.getSector()).thenReturn(quadrant);
+
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        when(enterprise.getEnergy()).thenReturn(20);
+
+        when(enterprise.getInitialEnergy()).thenReturn(3000);
+
+        map.klingons = 0;
+
+        map.shortRangeSensorScan(12.00);
+
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+
+        when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
+
+        // ASSERT
+        assertEquals(false, enterprise.isDocked());
+    }
+
+    /**
+     * OWNER: Sanchita
+     * ship condition green
+     * docked = false
+     * Klingons = 0
+     * energy = initial energy
+     */
+    @Test
+    void shortRangeSensorScan_check_docked_status_and_calculate_the_ship_condition_green() {
+        // ARRANGE
+        int [] quadrant = new int [] {6,4};
+        double [] deviceStatus = new double [] {1.00,2.00};
+
+        //initialize Galaxymap to test it
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        //initialize gamecallback to pass it as a parameter
+        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
+
+        //initialize mock of SuperStartrekGame
+        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
+
+        // ACT
+        when(enterprise.getSector()).thenReturn(quadrant);
+
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        map.klingons = 0;
+
+        map.shortRangeSensorScan(12.00);
+
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+
+        when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
+
+        // ASSERT
+        assertEquals(false, enterprise.isDocked());
+    }
+
+
+    /**
+     * OWNER: Sanchita
+     * docked = true
+     * klingons = 1
+     * ship condition = docked
+     */
+    @Test
+    void shortRangeSensorScan_check_docked_status_false() {
+        // ARRANGE
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{1.00, 2.00};
+        when(enterprise.getSector()).thenReturn(quadrant);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        //initialize Galaxymap to test it
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        //initialize gamecallback to pass it as a parameter
+        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
+
+        //initialize mock of SuperStartrekGame
+        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
+
+        //ACT
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+        when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
+        map.klingons = 1;
+        map.shortRangeSensorScan(10.00);
+
+        String message ="SHIELDS DROPPED FOR DOCKING PURPOSES";
+
+        //ASSERT
+        assertEquals(false,enterprise.isDocked());
+        verify(util, atLeastOnce()).println(message + any() + "'.");
+    }
+
+    /**
+     * OWNER: Sanchita
+     * docked = true
+     * device status less than 0. short range sensors are out
+     */
+    @Test
+    void shortRangeSensorScan_check_docked_status_true_shrot_range_sensors_out() {
+        // ARRANGE
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{1.00,-2.00};
+        when(enterprise.getSector()).thenReturn(quadrant);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        //initialize Galaxymap to test it
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+
+        //initialize gamecallback to pass it as a parameter
+        GameCallback gameCallback = mock(GameCallback.class, CALLS_REAL_METHODS);
+
+        //initialize mock of SuperStartrekGame
+        SuperStarTrekGame superStarTrekGame = mock(SuperStarTrekGame.class);
+
+        //ACT
+        when(util.toInt(anyDouble())).thenCallRealMethod();
+
+        when(util.midStr(anyString(), anyInt(), anyInt())).thenReturn(">!<");
+
+        map.klingons = 0;
+        map.shortRangeSensorScan(10.00);
+
+        //ASSERT
+        assertEquals(false,enterprise.isDocked());
+        verify(util).println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
+    }
+
 
     /**
      * OWNER:
