@@ -1,6 +1,10 @@
-import net.bytebuddy.asm.Advice;
+package sstproject;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sstproject.Enterprise;
+import sstproject.GameCallback;
+import sstproject.Util;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -615,16 +619,16 @@ class EnterpriseTest {
         int x1 = 0;
         int x2 = 1;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
 
-        when(util.toInt(sectorX)).thenCallRealMethod(); // line 247 in Enterprise class
-        when(util.toInt(sectorY)).thenCallRealMethod(); // line 247 in Enterprise class
+        when(util.toInt(sectorX)).thenCallRealMethod(); // line 247 in sstproject.Enterprise class
+        when(util.toInt(sectorY)).thenCallRealMethod(); // line 247 in sstproject.Enterprise class
 
-        when(util.toInt(sectorX - x1)).thenCallRealMethod(); // line 249 in Enterprise class
-        when(util.toInt(sectorY - x2)).thenCallRealMethod(); // line 250 in Enterprise class
+        when(util.toInt(sectorX - x1)).thenCallRealMethod(); // line 249 in sstproject.Enterprise class
+        when(util.toInt(sectorY - x2)).thenCallRealMethod(); // line 250 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialQuadrantX;
@@ -676,7 +680,7 @@ class EnterpriseTest {
         float x = sectorX;
         float y = sectorY;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
@@ -685,14 +689,14 @@ class EnterpriseTest {
         x = 8 * quadrantX + x + n * x1;
         y = 8 * quadrantY + y + n * x2;
 
-        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
-        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in sstproject.Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in sstproject.Enterprise class
 
         quadrantX = util.toInt(x/8);
         quadrantY = util.toInt(y/8);
 
-        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
-        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in sstproject.Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialSectorX;
@@ -757,7 +761,7 @@ class EnterpriseTest {
         float x = sectorX;
         float y = sectorY;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
@@ -766,14 +770,14 @@ class EnterpriseTest {
         x = 8 * quadrantX + x + n * x1;
         y = 8 * quadrantY + y + n * x2;
 
-        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
-        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in sstproject.Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in sstproject.Enterprise class
 
         quadrantX = util.toInt(x/8);
         quadrantY = util.toInt(y/8);
 
-        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
-        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in sstproject.Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialSectorX;
@@ -838,7 +842,7 @@ class EnterpriseTest {
         float x = sectorX;
         float y = sectorY;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
@@ -847,14 +851,14 @@ class EnterpriseTest {
         x = 8 * quadrantX + x + n * x1;
         y = 8 * quadrantY + y + n * x2;
 
-        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
-        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in sstproject.Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in sstproject.Enterprise class
 
         quadrantX = util.toInt(x/8);
         quadrantY = util.toInt(y/8);
 
-        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
-        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in sstproject.Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialSectorX;
@@ -919,7 +923,7 @@ class EnterpriseTest {
         float x = sectorX;
         float y = sectorY;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
@@ -928,14 +932,14 @@ class EnterpriseTest {
         x = 8 * quadrantX + x + n * x1;
         y = 8 * quadrantY + y + n * x2;
 
-        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
-        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in sstproject.Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in sstproject.Enterprise class
 
         quadrantX = util.toInt(x/8);
         quadrantY = util.toInt(y/8);
 
-        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
-        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in sstproject.Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialSectorX;
@@ -1000,7 +1004,7 @@ class EnterpriseTest {
         float x = sectorX;
         float y = sectorY;
 
-        when(util.toInt(course)).thenCallRealMethod(); // line 159 in Enterprise class
+        when(util.toInt(course)).thenCallRealMethod(); // line 159 in sstproject.Enterprise class
 
         sectorX = sectorX + x1; // line 170 sectorX updates
         sectorY = sectorY + x2;// line 171 sectorY updates
@@ -1009,20 +1013,20 @@ class EnterpriseTest {
         x = 8 * quadrantX + x + n * x1;
         y = 8 * quadrantY + y + n * x2;
 
-        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in Enterprise class
-        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in Enterprise class
+        when(util.toInt(x/8)).thenCallRealMethod(); // line 176 in sstproject.Enterprise class
+        when(util.toInt(y/8)).thenCallRealMethod(); // line 177 in sstproject.Enterprise class
 
         quadrantX = util.toInt(x/8);
         quadrantY = util.toInt(y/8);
 
-        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in Enterprise class
-        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in Enterprise class
+        when(util.toInt(x - quadrantX * 8)).thenCallRealMethod(); // line 178 in sstproject.Enterprise class
+        when(util.toInt(y - quadrantY * 8)).thenCallRealMethod(); // line 179 in sstproject.Enterprise class
 
         sectorX = 8;
         sectorY = 8;
 
-        when(util.toInt(sectorX)).thenCallRealMethod(); // line 257 in Enterprise class
-        when(util.toInt(sectorY)).thenCallRealMethod(); // line 258 in Enterprise class
+        when(util.toInt(sectorX)).thenCallRealMethod(); // line 257 in sstproject.Enterprise class
+        when(util.toInt(sectorY)).thenCallRealMethod(); // line 258 in sstproject.Enterprise class
 
         //reset sectorX and sectorY for ACT so that the logic above is applied as intended
         sectorX = initialSectorX;

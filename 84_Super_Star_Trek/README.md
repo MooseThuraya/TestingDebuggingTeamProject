@@ -20,12 +20,12 @@ We have configured the gradle to install the required environment onto your IDE,
 
 ### Super Star Trek† Rules and Notes
 
-1. OBJECTIVE: You are Captain of the starship “Enterprise”† with a mission to seek and destroy a fleet of Klingon† warships (usually about 17) which are menacing the United Federation of Planets.† You have a specified number of stardates in which to complete your mission. You also have two or three Federation Starbases† for resupplying your ship.
+1. OBJECTIVE: You are Captain of the starship “sstproject.Enterprise”† with a mission to seek and destroy a fleet of Klingon† warships (usually about 17) which are menacing the United Federation of Planets.† You have a specified number of stardates in which to complete your mission. You also have two or three Federation Starbases† for resupplying your ship.
 
 2. You will be assigned a starting position somewhere in the galaxy. The galaxy is divided into an 8 x 8 quadrant grid. The astronomical name of a quadrant is called out upon entry into a new region. (See “Quadrant Nomenclature.”) Each quadrant is further divided into an 8 x 8 section grid.
 
 3. On a section diagram, the following symbols are used:
-    - `<*>` Enterprise
+    - `<*>` sstproject.Enterprise
     - `†††` Klingon
     - `>!<` Starbase
     - `*`   Star
@@ -48,7 +48,7 @@ We have configured the gradle to install the required environment onto your IDE,
     - `4` Direction/distance calculator
     - `5` Quadrant nomenclature map
 
-6. Certain reports on the ship’s status are made by officers of the Enterprise who appears on the original TV Show—Spock,† Scott,† Uhura,† Chekov,† etc.
+6. Certain reports on the ship’s status are made by officers of the sstproject.Enterprise who appears on the original TV Show—Spock,† Scott,† Uhura,† Chekov,† etc.
 
 7. Klingons are non-stationary within their quadrants. If you try to maneuver on them, they will move and fire on you.
 

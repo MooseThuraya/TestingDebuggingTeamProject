@@ -1,8 +1,10 @@
+package sstproject;
+
 import java.util.stream.IntStream;
 
 /**
  * Map of the galaxy divided in Quadrants and Sectors,
- * populated with stars, starbases, klingons, and the Enterprise.
+ * populated with stars, starbases, klingons, and the sstproject.Enterprise.
  */
 public class GalaxyMap {
 
@@ -38,7 +40,7 @@ public class GalaxyMap {
 
     public GalaxyMap(Util util, Enterprise enterprise) {
         this.util = util;
-        //this.enterprise = new Enterprise(util);
+        //this.enterprise = new sstproject.Enterprise(util);
         this.enterprise = enterprise;
         this.quadrantMap = QUADRANT_ROW +
                            QUADRANT_ROW +

@@ -1,8 +1,10 @@
+package sstproject;
+
 import java.util.Locale;
 import java.util.stream.IntStream;
 
 /**
- * The starship Enterprise.
+ * The starship sstproject.Enterprise.
  */
 public class Enterprise {
     public Util util;
@@ -74,7 +76,7 @@ public class Enterprise {
     }
 
     /**
-     * Enterprise is hit by enemies.
+     * sstproject.Enterprise is hit by enemies.
      *
      * @param hits the number of hit points
      */

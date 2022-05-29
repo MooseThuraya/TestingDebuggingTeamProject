@@ -1,9 +1,10 @@
-import net.bytebuddy.implementation.bind.annotation.Super;
+package sstproject;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.mockito.Mockito;
+import sstproject.*;
 
 import java.util.Locale;
 
@@ -38,7 +39,7 @@ class GalaxyMapTest {
         this.enterprise = mock(Enterprise.class);
         this.callback = mock(GameCallback.class);
 
-        //Must mock before initializing GalaxyMap for line 52
+        //Must mock before initializing sstproject.GalaxyMap for line 52
         int[] quadrantArr = new int[]{0, 0};
         when(enterprise.getQuadrant()).thenReturn(quadrantArr);
 
@@ -466,7 +467,7 @@ class GalaxyMapTest {
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo3_nEqualTo24() {
         // ARRANGE
         int[] quadrant = new int[]{6, 4};
-        //Must mock before initializing GalaxyMap for line 52
+        //Must mock before initializing sstproject.GalaxyMap for line 52
         when(enterprise.getQuadrant()).thenReturn(quadrant);
 
         //initialize Galaxymap to test it
@@ -564,7 +565,7 @@ class GalaxyMapTest {
     void moveEnterprise_verify_quadrantMap_will_update_and_energy_will_decrease_when_courseEqualTo1_warpEqualTo0_missionEqualTo0() {
         // ARRANGE
         int[] quadrant = new int[]{6, 4};
-        //Must mock before initializing GalaxyMap for line 52
+        //Must mock before initializing sstproject.GalaxyMap for line 52
         when(enterprise.getQuadrant()).thenReturn(quadrant);
 
         //initialize Galaxymap to test it
