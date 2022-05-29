@@ -51,3 +51,5 @@ pitest {
     //adds dependency to org.pitest:pitest-junit5-plugin and sets "testPlugin" to "junit5"
     junit5PluginVersion = '0.15+'
 }
+
+build.dependsOn 'pitest'
