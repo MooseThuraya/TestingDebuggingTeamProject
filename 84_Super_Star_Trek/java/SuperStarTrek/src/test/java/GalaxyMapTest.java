@@ -285,10 +285,9 @@ class GalaxyMapTest {
 
     /**
      * OWNER: ALICIA
-     *
+     * <p>
      * This method doesn't have anything returned and isn't testable in terms of what to look for. This test is
      * verifying that the method correctly goes through the for loop and calls klingonsShoot
-     *
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/galaxyMap_klingonsMoveAndFire.csv", numLinesToSkip = 1)
@@ -385,7 +384,7 @@ class GalaxyMapTest {
         double[] deviceStatus = new double[]{100, 100, 60, 100, 100, 100, 100};
 
 
-                when(util.random()).thenReturn(randNum);
+        when(util.random()).thenReturn(randNum);
         GalaxyMap map = new GalaxyMap(util, enterprise);
         map.klingonQuadrants[2][3] = 1;
 
@@ -403,6 +402,53 @@ class GalaxyMapTest {
 
         // ASSERT
         assertTrue(result);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void longRangeSensorScan_inOperable_when_lrsLessThanZero() {
+        // ARRANGE
+        String expectedMessage = "LONG RANGE SENSORS ARE INOPERABLE";
+        int[] quadrantXY = new int[]{1, 2};
+        float randNum = 0.97f;
+        double[] deviceStatus = new double[]{100, 100, -10, 100, 100, 100, 100, 100};
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.longRangeSensorScan();
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     *
+     * Given this method is only printing values but doens't return anything, if we have a valid LRS value, the
+     * function should complete.
+     */
+    @Test
+    void longRangeSensorScan_worksAsIntended_when_lrsGreaterThanZero_functionCompletes() {
+        // ARRANGE
+        String expectedMessage = "SCAN COMPLETE!";
+        int[] quadrantXY = new int[]{1, 2};
+        float randNum = 0.97f;
+        double[] deviceStatus = new double[]{100, 100, 10, 100, 100, 100, 100, 100};
+
+        when(enterprise.getQuadrant()).thenReturn(quadrantXY);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.longRangeSensorScan();
+
+        // ASSERT - if printed once, we know the scanners ran successfully
+        verify(util, atLeastOnce()).println(expectedMessage);
     }
 
     /**
@@ -822,18 +868,6 @@ class GalaxyMapTest {
         verify(util).println("\n*** SHORT RANGE SENSORS ARE OUT ***\n");
     }
 
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void longRangeSensorScan() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
 
     /**
      * OWNER:

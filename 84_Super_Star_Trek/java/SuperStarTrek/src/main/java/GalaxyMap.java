@@ -402,6 +402,7 @@ public class GalaxyMap {
                 util.print(util.rightStr(Integer.toString(n[l] + 1000), 3) + " ");
             }
             util.println(": \n" + rowStr);
+            util.println("SCAN COMPLETE!");
         }
     }
 
