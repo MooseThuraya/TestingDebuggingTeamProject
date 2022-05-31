@@ -429,6 +429,90 @@ class GalaxyMapTest {
 
     /**
      * OWNER: ALICIA
+     */
+    @Test
+    void firePhasers_isNotValid_when_phaserStatus_lessThanZero() {
+        // ARRANGE
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{100, 100, 100, -10, 100, 100, 100, 100};
+        String expectedMessage = "PHASERS INOPERATIVE";
+
+
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+        when(enterprise.getQuadrant()).thenReturn(quadrant);
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.firePhasers(callback);
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void firePhasers_isNotValid_when_noKlingons_present() {
+        // ARRANGE
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{100, 100, 100, 100, 100, 100, 100, 100};
+        String expectedMessage = "SCIENCE OFFICER SPOCK REPORTS  'SENSORS SHOW NO ENEMY SHIPS";
+
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+        when(enterprise.getQuadrant()).thenReturn(quadrant);
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.firePhasers(callback);
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+    }
+
+    /**
+     * OWNER: ALICIA
+     */
+    @Test
+    void firePhasers_isValid_whenComputerFails_warningMsgPrinted() {
+        // ARRANGE
+        int[] quadrant = new int[]{6, 4};
+        double[] deviceStatus = new double[]{100, 100, 100, 100, 100, 100, 100, -10};
+        float randNum = 0.99f;
+        String expectedMessage = "COMPUTER FAILURE HAMPERS ACCURACY";
+
+        when(util.random()).thenReturn(randNum);
+        when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
+        when(enterprise.getQuadrant()).thenReturn(quadrant);
+
+        when(util.inputFloat(anyString())).thenReturn(50f);
+        when(util.toInt(anyFloat())).thenCallRealMethod();
+        when(enterprise.getEnergy()).thenCallRealMethod();
+
+
+        // ACT
+        GalaxyMap map = new GalaxyMap(util, enterprise);
+        map.firePhasers(callback);
+
+        // ASSERT
+        verify(util).println(expectedMessage);
+    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void firePhasers() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//
+//    }
+
+    /**
+     * OWNER: ALICIA
      *
      * Given this method is only printing values but doens't return anything, if we have a valid LRS value, the
      * function should complete.
@@ -848,9 +932,9 @@ class GalaxyMapTest {
     @Test
     void shortRangeSensorScan_check_docked_status_true_shrot_range_sensors_out() {
         // ARRANGE
-        int[] quadrant = new int[]{6, 4};
+        int[] sector = new int[]{6, 4};
         double[] deviceStatus = new double[]{1.00, -2.00};
-        when(enterprise.getSector()).thenReturn(quadrant);
+        when(enterprise.getSector()).thenReturn(sector);
         when(enterprise.getDeviceStatus()).thenReturn(deviceStatus);
 
         //initialize Galaxymap to test it
@@ -870,111 +954,99 @@ class GalaxyMapTest {
     }
 
 
-    /**
-     * OWNER:
-     */
-    @Test
-    void firePhasers() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void firePhotonTorpedo() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void cumulativeGalacticRecord() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void photonTorpedoData() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void directionDistanceCalculator() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void printDirection() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void printNoEnemyShipsMessage() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void findEmptyPlaceInQuadrant() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
-
-    /**
-     * OWNER:
-     */
-    @Test
-    void compareMarker() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void firePhotonTorpedo() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void cumulativeGalacticRecord() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void photonTorpedoData() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void directionDistanceCalculator() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void printDirection() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void printNoEnemyShipsMessage() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void findEmptyPlaceInQuadrant() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
+//
+//    /**
+//     * OWNER:
+//     */
+//    @Test
+//    void compareMarker() {
+//        // ARRANGE
+//
+//        // ACT
+//
+//        // ASSERT
+//    }
 }

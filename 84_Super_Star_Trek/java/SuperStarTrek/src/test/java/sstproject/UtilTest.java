@@ -110,17 +110,6 @@ class UtilTest {
         assertEquals(expectedResult, result);
     }
 
-    /**
-     * OWNER: Sanchita - no point in testing since we have verified this in other tests
-     */
-    @Test
-    void println() {
-        // ARRANGE
-
-        // ACT
-
-        // ASSERT
-    }
 
     /**
      * OWNER: Sanchita
