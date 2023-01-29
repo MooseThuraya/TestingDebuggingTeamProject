@@ -43,8 +43,10 @@ spotless {
 }
 
 pitest {
-    targetClasses = ['sstproject.*']  //by default "${project.group}.*"
-    targetTests = ['sstproject.*']
+    targetClasses = ['sstproject.Util*']  //by default "${project.group}.*"
+    targetTests = ['sstproject.Util*']
+    //includedTestMethods = ['fnr']
+    //mutators = ['AOR1'] //AOR is Arithmetic Operator Replacement Mutator. Check https://pitest.org/quickstart/mutators/
     threads = 4
     outputFormats = ['XML', 'HTML']
     timestampedReports = false

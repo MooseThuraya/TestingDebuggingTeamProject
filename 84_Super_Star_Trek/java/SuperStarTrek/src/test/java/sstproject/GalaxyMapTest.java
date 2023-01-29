@@ -741,7 +741,7 @@ class GalaxyMapTest {
      * 3. x = 5, y = 23
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "/galaxyMap_insertMaker_Test.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/galaxyMap_insertMarker_Test.csv", numLinesToSkip = 1)
     void insertMarker_update_quadrantMap_when_pos_isValid(int x, int y, String marker, String currentQuadrantMap,
                                                           String quadrantMapResult) {
         // ARRANGE
