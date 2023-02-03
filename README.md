@@ -1,4 +1,4 @@
-# SuperStarTrek Game Development Tests (Apr. 2022 – Jun. 2022)
+# SuperStarTrek Tests (Apr. 2022 – Jun. 2022)
 
 - This is a class project for implementing tests for an open source project. We are working with the SuperStarTrek game from the **https://github.com/coding-horror/basic-computer-games** open source repo. You can find their details in their README file for the [BASIC Computer Games](https://en.wikipedia.org/wiki/BASIC_Computer_Games) update project!
 
