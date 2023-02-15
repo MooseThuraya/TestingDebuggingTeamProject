@@ -4,7 +4,7 @@
 
 ## Project goals
 
-Implement full testing environment for the game in `Java`, including, but not limited to 
+Implement full testing environment for the game in `Java`, including, but not limited to:
 
 1. `Regression and Unit Testing`
 2. `Mutant`
