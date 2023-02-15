@@ -14,7 +14,7 @@ Implement full testing environment for the game in `Java`, including, but not li
 6. `Lessons Learned`
 
 ## Key Contributions
-- Implemented automated unit tests for various functionalities, resulting in nearly 100% code coverage.
+- Implemented automated unit tests for various functionalities increasing code coverage.
 - Refactored code as needed to make the code testable.
 - Conducted boundary testing and analysis to ensure that the game works as intended in various scenarios.
 - Conducted decision/condition coverage to test all possible outcomes of the game.
